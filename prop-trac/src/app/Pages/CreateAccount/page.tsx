@@ -34,11 +34,11 @@ const CreateAccount = () => {
     console.log(userInfo)
     createAccount(userInfo)
 
-    if(isManager){
-      router.push('/pages/AdminDash')
-    }else{
-      router.push('/page/TenantDash')
-    }
+    // if(isManager){
+    //   router.push('/pages/AdminDash')
+    // }else{
+    //   router.push('/page/TenantDash')
+    // }
 
   }
 
@@ -47,7 +47,7 @@ const CreateAccount = () => {
     <>
       <div className='background h-screen w-screen flex'>
         <div className='bg-white w-2/5 h-3/4 m-auto rounded-xl'>
-            <p className='underline underline-offset-4 text-2xl text-center py-6'>Create Account</p>
+            <p className='text-2xl text-center py-6'>Create Account</p>
             <div>
               <form className='px-8 space-y-2'>
 

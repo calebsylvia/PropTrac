@@ -6,7 +6,7 @@ const url = 'https://proptracapi.azurewebsites.net';
 export const createAccount = async(createdUser: IUserInfo) => {
     
 
-    const res = await fetch(url + '/User/AddUser', {
+    const res = await fetch(url + "/User/AddUser", {
         method: "POST",
         headers: {
             'Content-Type': "application/json"
