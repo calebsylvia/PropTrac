@@ -27,14 +27,14 @@ const LoginComponent = () => {
       //Check to see if logged in
       if(token.token != null){
         localStorage.setItem("Token", token.token)
-        router.push('/pages/AdminDash');
+        router.push('/AdminDash');
       }else{
         alert("Login Failed");
       }
   }
 
   const handleCreate = () => {
-    router.push('/pages/CreateAccount')
+    router.push('/CreateAccount')
   }
 
 
