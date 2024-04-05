@@ -8,6 +8,7 @@ export interface IToken{
 }
 
 export interface IUserInfo{
+    ID: number,
     Username: string,
     Password: string,
     Email: string,

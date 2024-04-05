@@ -9,7 +9,8 @@ export const createAccount = async(createdUser: IUserInfo) => {
     const res = await fetch( url + "/User/AddUser", {
         method: "POST",
         headers: {
-            'Content-Type': "application/json"
+            'Content-Type': "application/json",
+            'charset'
         },
         body:JSON.stringify(createdUser)
     });
@@ -20,7 +21,7 @@ export const createAccount = async(createdUser: IUserInfo) => {
     }
 
     const data = await res.json();
-    console.log(data);
+    console.log(data)
 }
 
 

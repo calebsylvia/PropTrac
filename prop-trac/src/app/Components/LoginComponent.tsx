@@ -34,7 +34,7 @@ const LoginComponent = () => {
   }
 
   const handleCreate = () => {
-    router.push('./pages/CreateAccount')
+    router.push('/pages/CreateAccount')
   }
 
 

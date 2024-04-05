@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 
 const CreateAccount = () => {
 
+  const [id, setId] = useState<number>(0)
   const [username, setUsername] = useState<string>("")
   const [testPass, setTestPass] = useState<string>("")
   const [password, setPassword] = useState<string>("")
@@ -21,6 +22,7 @@ const CreateAccount = () => {
   const handleCreate = () => {
     
     let userInfo = {
+      ID: id,
       Username: username,
       Password: password,
       Email: email,
