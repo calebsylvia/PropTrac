@@ -51,7 +51,7 @@ const CreateAccount = () => {
         <div className='bg-white w-2/5 h-3/4 m-auto rounded-xl'>
             <p className='text-2xl text-center py-6'>Create Account</p>
             <div>
-              <form className='px-8 space-y-2'>
+              <div className='px-8 space-y-2'>
 
                 <div className='flex justify-between'>
                   <div className='mb-2 block'>
@@ -116,7 +116,7 @@ const CreateAccount = () => {
                   </Button>
                 </div>
 
-              </form>
+              </div>
             </div>
         </div>
       </div>
