@@ -1,8 +1,9 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Label, TextInput, Select, Button } from 'flowbite-react'
-import { createAccount } from '@/Utils/DataService'
+import { createAccount, getSecurityQuestions } from '@/Utils/DataService'
 import { useRouter } from 'next/navigation'
+
 
 const CreateAccount = () => {
 
@@ -16,8 +17,26 @@ const CreateAccount = () => {
   const [lastName, setLastName] = useState<string>("")
   const [securityId, setSecurityId] = useState<number>(1)
   const [securityAns, setSecurityAns] = useState<string>("")
+  const [securityArray, setSecurityArray] = useState<string[]>([])
 
   const router = useRouter()
+
+
+  useEffect(() => {
+
+    let newArray: string[] = []
+    const getQuestions = async() => {
+
+      for(let i = 0; i < 3; i++){
+        let question: string = await getSecurityQuestions(i)
+        newArray.push(question)
+      }
+
+      getQuestions()
+      setSecurityArray(newArray);
+      console.log(newArray)
+    }
+  }, [])
 
   const handleCreate = () => {
     
@@ -30,11 +49,14 @@ const CreateAccount = () => {
       FirstName: firstName,
       LastName: lastName,
       SecurityAnswer: securityAns,
-      SecurityQuestion: securityId
+      SecurityQuestionID: securityId
     }
 
-    console.log(userInfo)
-    createAccount(userInfo)
+    try{
+      createAccount(userInfo)
+    }catch{
+      alert("Not working")
+    }
 
     // if(isManager){
     //   router.push('/pages/AdminDash')
@@ -99,9 +121,11 @@ const CreateAccount = () => {
                   <div className='mb-2 block'>
                   <Label htmlFor='securityQ' value='Security Question'/>
                   <Select className='w-56' id='securityQ' onChange={(e) => {setSecurityId(parseInt(e.target.value))}} required>
-                    <option value={1}>What is the name of your first pet?</option>
-                    <option value={2}>What was your favorite teacher&apos;s name?</option>
-                    <option value={3}>What was the name of your first stuffed animal?</option>
+                    {
+                      securityArray && securityArray.map((question, idx) => 
+                          <option key={idx} value={idx}>{question}</option>
+                      )
+                    }
                   </Select>
                   </div>
                   <div className='mb-2 block'>

@@ -4,8 +4,7 @@ const url = 'https://proptracapi.azurewebsites.net';
 
 
 export const createAccount = async(createdUser: IUserInfo) => {
-    
-    const res = await fetch( url + "/User/AddUser", {
+    const res = await fetch( url + "/User/AddUser/", {
         method: "POST",
         headers: {
             'Content-Type': "application/json",
@@ -50,4 +49,10 @@ export const checkToken = () => {
         result = true
     }
     return result
+}
+
+export const getSecurityQuestions = async(questionId: number) => {
+   const res = await fetch(url + `/Password/SecurityQuestion/${questionId}`);
+   const data = res.json()
+   return data
 }

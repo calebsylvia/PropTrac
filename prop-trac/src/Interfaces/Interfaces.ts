@@ -16,5 +16,5 @@ export interface IUserInfo{
     FirstName: string,
     LastName: string
     SecurityAnswer: string,
-    SecurityQuestion: number
+    SecurityQuestionID: number
 }
