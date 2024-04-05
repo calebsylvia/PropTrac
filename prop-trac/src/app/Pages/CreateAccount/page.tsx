@@ -98,7 +98,7 @@ const CreateAccount = () => {
                   <Label htmlFor='securityQ' value='Security Question'/>
                   <Select className='w-56' id='securityQ' onChange={(e) => {setSecurityId(parseInt(e.target.value))}} required>
                     <option value={1}>What is the name of your first pet?</option>
-                    <option value={2}>What was your favorite teacher's name?</option>
+                    <option value={2}>What was your favorite teacher&apos;s name?</option>
                     <option value={3}>What was the name of your first stuffed animal?</option>
                   </Select>
                   </div>
