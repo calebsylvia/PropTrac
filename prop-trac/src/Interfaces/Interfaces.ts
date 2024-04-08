@@ -27,3 +27,14 @@ export interface IPosition {
     lat: number,
     lng: number
 }
+
+export interface IResponse {
+    UsernameOrEmail: string,
+    SecurityAnswer: string
+}
+
+export interface IReset{
+    UsernameOrEmail: string,
+    SecurityAnswer: string,
+    NewPassword: string
+}

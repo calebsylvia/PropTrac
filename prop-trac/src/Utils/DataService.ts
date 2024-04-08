@@ -1,4 +1,4 @@
-import { IForgot, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
+import { IForgot, IReset, IResponse, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
 
 const url = 'https://proptracapi.azurewebsites.net';
 
@@ -73,5 +73,41 @@ export const passwordRequest = async(UsernameOrEmail: IForgot) => {
 
     const data = await res.text()
     return data
+}
+
+export const answerCheck = async(answerCheck: IResponse) => {
+    const res = await fetch(url + "/Password/ResponseForReset", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(answerCheck)
+    })
+
+    if(!res.ok){
+        const message = "An error has occured " + res.status;
+        throw new Error(message);
+    }
+
+    const data = await res.json()
+    return data
+}
+
+export const changePassword = async(passChange: IReset) => {
+    const res = await fetch(url + "/Password/ResetPassword", {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(passChange)
+    })
+
+    if(!res.ok){
+        const message = "An error has occured " + res.status;
+        throw new Error(message);
+    }
+
+    const data = await res.json()
+    return data;
 }
 

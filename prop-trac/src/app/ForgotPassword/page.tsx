@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { TextInput, Label, Button } from "flowbite-react";
 import { useRouter } from "next/navigation";
-import { passwordRequest } from "@/Utils/DataService";
+import { answerCheck, changePassword, passwordRequest } from "@/Utils/DataService";
 import { IForgot } from "@/Interfaces/Interfaces";
 
 const ForgotPassword = () => {
@@ -13,9 +13,39 @@ const ForgotPassword = () => {
   const [newPass, setNewPass] = useState<string>("");
   const [showQuestion, setShowQuestion] = useState<boolean>(false);
   const [showNewPass, setShowNewPass] = useState<boolean>(false);
-  const [load, setLoad] = useState<boolean>(false)
 
   const router = useRouter();
+
+  const handleAnswer = async() => {
+    let answer = {
+      UsernameOrEmail: input,
+      SecurityAnswer: securityAnswer
+    }
+
+    let result = await answerCheck(answer);
+    console.log(result)
+    if(result === true){
+      setShowNewPass(true);
+    }else{
+      alert('Incorrect Answer. Try again')
+    }
+  }
+
+  const handleNewPass = async() => {
+    let newPassword = {
+      UsernameOrEmail: input,
+      SecurityAnswer: securityAnswer,
+      NewPassword: newPass
+    }
+
+    let result = await changePassword(newPassword);
+
+    if(result === true){
+      router.push('/')
+    }else{
+      alert('Something went wrong')
+    }
+  }
 
   const UsernameOrEmail = {
     UsernameOrEmail: input
@@ -31,9 +61,6 @@ const ForgotPassword = () => {
     setShowQuestion(true);
   };
 
-  const handleNewPass = () => {
-    setShowNewPass(true);
-  };
 
   const handleCancel = () => {
     router.push("/");
@@ -47,7 +74,6 @@ const ForgotPassword = () => {
     setShowNewPass(false);
   };
 
-  const confirmPass = () => {};
 
   return (
     <>
@@ -97,8 +123,23 @@ const ForgotPassword = () => {
                 !showQuestion || !showNewPass ? "hidden" : "block"
               }`}
               id="newPass"
-              type="text"
-              onChange={(e) => setNewPass(e.target.value)}
+              type="password"
+              onChange={(e) => setNewTestPass(e.target.value)}
+            />
+            <Label
+              className={`${
+                !showQuestion || !showNewPass ? "hidden" : "block"
+              }`}
+              htmlFor="confirmPass"
+              value="Confirm Password"
+            />
+            <TextInput
+              className={`${
+                !showQuestion || !showNewPass ? "hidden" : "block"
+              }`}
+              id="confirmPass"
+              type="password"
+              onChange={(e) => e.target.value === newTestPass ? setNewPass(e.target.value) : console.log('Password does not match')}
             />
           </div>
 
@@ -126,7 +167,7 @@ const ForgotPassword = () => {
             </Button>
             <Button
               className={`${!showQuestion || showNewPass ? "hidden" : "block"}`}
-              onClick={handleNewPass}
+              onClick={handleAnswer}
               color="light"
             >
               Next
@@ -140,8 +181,9 @@ const ForgotPassword = () => {
             </Button>
             <Button
               className={`${showNewPass ? "block" : "hidden"}`}
-              onClick={confirmPass}
+              onClick={handleNewPass}
               color="light"
+              disabled={newPass ? false : true}
             >
               Confirm Password
             </Button>
