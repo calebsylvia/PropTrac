@@ -18,3 +18,7 @@ export interface IUserInfo{
     SecurityAnswer: string,
     SecurityQuestionID: number
 }
+
+export interface IForgot{
+    UsernameOrEmail: string
+}

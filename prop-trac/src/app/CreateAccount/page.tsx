@@ -23,19 +23,11 @@ const CreateAccount = () => {
 
 
   useEffect(() => {
-
-    let newArray: string[] = []
-    const getQuestions = async() => {
-
-      for(let i = 0; i < 3; i++){
-        let question: string = await getSecurityQuestions(i)
-        newArray.push(question)
+      const getQuestions = async() => {
+        let questions = await getSecurityQuestions()
+        setSecurityArray(questions)
       }
-
       getQuestions()
-      setSecurityArray(newArray);
-      console.log(newArray)
-    }
   }, [])
 
   const handleCreate = () => {
@@ -65,6 +57,7 @@ const CreateAccount = () => {
     // }
 
   }
+
 
 
   return (

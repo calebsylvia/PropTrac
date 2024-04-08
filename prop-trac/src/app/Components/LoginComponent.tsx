@@ -27,7 +27,7 @@ const LoginComponent = () => {
       //Check to see if logged in
       if(token.token != null){
         localStorage.setItem("Token", token.token)
-        router.push('/AdminDash');
+        router.push('/TenantDash');
       }else{
         alert("Login Failed");
       }
@@ -35,6 +35,10 @@ const LoginComponent = () => {
 
   const handleCreate = () => {
     router.push('/CreateAccount')
+  }
+
+  const handleForgot = () => {
+    router.push('/ForgotPassword')
   }
 
 
@@ -76,7 +80,7 @@ const LoginComponent = () => {
               >
                 Log In
               </Button>
-              <a href="#" className="underline text-sm my-auto">
+              <a onClick={handleForgot} className="underline text-sm my-auto">
                 Forget Password?
               </a>
             </div>
