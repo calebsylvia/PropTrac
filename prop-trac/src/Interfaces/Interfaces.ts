@@ -22,3 +22,8 @@ export interface IUserInfo{
 export interface IForgot{
     UsernameOrEmail: string
 }
+
+export interface IPosition {
+    lat: number,
+    lng: number
+}

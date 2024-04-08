@@ -6,7 +6,7 @@ import { passwordRequest } from "@/Utils/DataService";
 import { IForgot } from "@/Interfaces/Interfaces";
 
 const ForgotPassword = () => {
-  const [UsernameOrEmail, setUsernameOrEmail] = useState<string>("caleb");
+  const [input, setInput] = useState<string>("");
   const [securityQuestion, setSecurityQuestion] = useState<string>("");
   const [securityAnswer, setSecurityAnswer] = useState<string>("");
   const [newTestPass, setNewTestPass] = useState<string>("");
@@ -17,15 +17,17 @@ const ForgotPassword = () => {
 
   const router = useRouter();
 
-  useEffect(() => {
-      const getUserQ = async() => {
-        let question = await passwordRequest(UsernameOrEmail);
-        setSecurityQuestion(question);
-      }
-      getUserQ();
-  }, []);
+  const UsernameOrEmail = {
+    UsernameOrEmail: input
+  }
+
+  const getQuestion = async() => {
+    let question = await passwordRequest(UsernameOrEmail)
+    setSecurityQuestion(question)
+  }
 
   const handleSecure = () => {
+    getQuestion()
     setShowQuestion(true);
   };
 
@@ -70,7 +72,7 @@ const ForgotPassword = () => {
               className={`${showQuestion || showNewPass ? "hidden" : "block"}`}
               id="usernameOrEmail"
               type="text"
-              onChange={(e) => setUsernameOrEmail(e.target.value)}
+              onChange={(e) => setInput(e.target.value)}
             />
             <Label
               className={`${!showQuestion || showNewPass ? "hidden" : "block"}`}
@@ -147,7 +149,7 @@ const ForgotPassword = () => {
 
           <p className="text-sm pt-8 text-center">
             Remember password?{" "}
-            <a className="underline text-[#0744A0]">Login Here</a>
+            <a className="underline text-[#0744A0]" onClick={handleCancel}>Login Here</a>
           </p>
         </div>
       </div>

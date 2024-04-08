@@ -57,7 +57,7 @@ export const getSecurityQuestions = async() => {
    return data;
 }
 
-export const passwordRequest = async(UsernameOrEmail: string) => {
+export const passwordRequest = async(UsernameOrEmail: IForgot) => {
     const res = await fetch( url + "/Password/RequestReset", {
         method: "POST",
         headers: {
@@ -71,7 +71,7 @@ export const passwordRequest = async(UsernameOrEmail: string) => {
         throw new Error(message);
     }
 
-    const data = await res.json()
+    const data = await res.text()
     return data
 }
 
