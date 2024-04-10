@@ -111,3 +111,15 @@ export const changePassword = async(passChange: IReset) => {
     return data;
 }
 
+export const getUserInfo = async(UsernameOrEmail:string) => {
+    const res = await fetch(url + `/User/GetUserInfoByUsernameOrEmail/${UsernameOrEmail}`)
+    const data = await res.json()
+    return data
+}
+
+
+export const getTenantInfo = async(ID: number) => {
+    const res = await fetch(url + `/Tenant/GetTenantDashboardInfo/${ID}`);
+    const data = await res.json()
+    return data[0];
+}

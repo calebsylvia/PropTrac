@@ -9,10 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.4",
     "@vis.gl/react-google-maps": "^0.8.3",
+    "chart.js": "^4.4.2",
     "flowbite-react": "^0.7.8",
     "next": "14.1.4",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18"
   },
   "devDependencies": {

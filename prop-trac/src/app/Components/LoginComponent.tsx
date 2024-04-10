@@ -1,9 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { Label, TextInput, Button } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { IToken } from "../../Interfaces/Interfaces";
-import { login } from "../../Utils/DataService";
+import { getUserInfo, login } from "../../Utils/DataService";
+
+const LoginContext = createContext(null)
 
 const LoginComponent = () => {
 
@@ -20,14 +22,24 @@ const LoginComponent = () => {
       Password: password
     }
 
+
     let token: IToken = await login(userData);
+    let data = await getUserInfo(username);
 
       console.log(token);
 
       //Check to see if logged in
       if(token.token != null){
         localStorage.setItem("Token", token.token)
-        router.push('/TenantDash');
+        
+        if(data.isManager === true){
+          localStorage.setItem("ID", data.id);
+          router.push('/AdminDash')
+        }else{
+          localStorage.setItem("ID", data.id);
+          router.push('/TenantDash')
+        }
+
       }else{
         alert("Login Failed");
       }

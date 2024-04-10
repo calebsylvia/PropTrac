@@ -2,11 +2,13 @@
 import { Button, Textarea, Select, Label, FileInput } from 'flowbite-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import logout from '@/app/Assets/SignOut.png'
 import house from '@/app/Assets/House 2.png'
 import download from '@/app/Assets/FileArrowDown.png'
 import wallet from '@/app/Assets/Vector 2.png'
+import { ITenant } from '@/Interfaces/Interfaces'
+import { getTenantInfo } from '@/Utils/DataService'
 
 const TenantDash = () => {
 
@@ -17,7 +19,7 @@ const TenantDash = () => {
   const [leaseStart, setLeaseStart] = useState<string>("11-11-11")
   const [leaseEnd, setLeaseEnd] = useState<string>("11-11-11")
   const [manager, setManager] = useState<string>("Caleb Sylvia")
-  const [managerNumber, setManagerNumber] = useState<number>()
+  const [managerNumber, setManagerNumber] = useState<number>(1000)
   const [managerEmail, setManagerEmail] = useState<string>("csprop@codestack.co")
   const [balance, setBalance] = useState<number>(1000)
   const [dueDate, setDueDate] = useState<string>("Today")
@@ -27,9 +29,26 @@ const TenantDash = () => {
 
   const router = useRouter()
 
+  useEffect(() => {
+    const getTenant = async() => {
+      let ID = localStorage.getItem("ID")
+      let tenantInfo: ITenant = await getTenantInfo(parseInt(ID!))
+      console.log(tenantInfo)
+      setName(tenantInfo.name)
+      setAddress(`${tenantInfo.houseNumber} ${tenantInfo.street}, ${tenantInfo.state} ${tenantInfo.zip}`)
+      setId(tenantInfo.id)
+      setLeaseType(tenantInfo.leaseType)
+      setLeaseStart(tenantInfo.leaseStart)
+      setLeaseEnd(tenantInfo.leaseEnd)
+    }
+    getTenant()
+  },[])
+
   const handleLogout = () => {
     router.push('/')
   }
+
+
 
   return (
     <>

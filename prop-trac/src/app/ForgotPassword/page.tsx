@@ -86,7 +86,7 @@ const ForgotPassword = () => {
           </h1>
           <p className="">Property management at your fingertips</p>
         </div>
-        <div className="w-[400px] h-2/5 m-auto bg-white rounded-xl">
+        <div className="w-[400px] min-h-2/5 m-auto bg-white rounded-xl">
           <p className="text-center text-2xl pt-6">Reset Password</p>
           <div className="mb-2 block w-2/3 m-auto pt-8">
             <Label
@@ -189,7 +189,7 @@ const ForgotPassword = () => {
             </Button>
           </div>
 
-          <p className="text-sm pt-8 text-center">
+          <p className="text-sm pt-8 text-center pb-4">
             Remember password?{" "}
             <a className="underline text-[#0744A0]" onClick={handleCancel}>Login Here</a>
           </p>
