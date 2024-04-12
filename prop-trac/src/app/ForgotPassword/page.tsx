@@ -34,7 +34,7 @@ const ForgotPassword = () => {
     }else{
       setSuccessTwo(false)
       setShowNewPass(false)
-      return toast({description: "Invalid answer"})
+      return toast({description: "Invalid answer", variant: "destructive"})
     }
   }
 
@@ -50,7 +50,7 @@ const ForgotPassword = () => {
     if(result === true){
       router.push('/')
     }else{
-      return toast({description: "Something went wrong. Try Again!"})
+      return toast({description: "Something went wrong. Try Again!", variant: "destructive"})
     }
   }
 
@@ -63,7 +63,7 @@ const ForgotPassword = () => {
     console.log(question)
     if(question === false || input === ""){
       setSuccessOne(false)
-      return toast({description: "Invalid Username"})
+      return toast({description: "Invalid Username", variant: "destructive"})
     }else{
       setSuccessOne(true)
       setSecurityQuestion(question)

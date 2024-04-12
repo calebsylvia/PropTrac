@@ -12,6 +12,7 @@ const LoginComponent = () => {
 
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
+  const [logged, setLogged] = useState<boolean>(false)
 
   const router = useRouter();
   const { toast } = useToast()
@@ -25,13 +26,14 @@ const LoginComponent = () => {
     }
 
 
-    let token: IToken = await login(userData);
+    let token = await login(userData);
     let data = await getUserInfo(username);
 
       console.log(token);
 
       //Check to see if logged in
       if(token.token != null){
+        setLogged(true)
         localStorage.setItem("Token", token.token)
         
         if(data.isManager === true){
@@ -41,7 +43,7 @@ const LoginComponent = () => {
           localStorage.setItem("ID", data.id);
           router.push('/TenantDash')
         }
-      }else{
+      }else if(!data || logged === false){
         return toast({
           variant: 'destructive',
           title: 'Invalid username or password',

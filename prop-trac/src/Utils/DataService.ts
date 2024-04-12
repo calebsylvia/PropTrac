@@ -32,11 +32,12 @@ export const login = async(loginUser: IUser) => {
     });
 
     if(!res.ok){
-        const message = "An Error has occured " + res.status;
-        throw new Error(message);
+        if(res.status === 401){
+            return false
+        }
     }
 
-    const data: IToken = await res.json();
+    const data = await res.json();
     return data;
 }
 
@@ -110,6 +111,10 @@ export const changePassword = async(passChange: IReset) => {
 
 export const getUserInfo = async(UsernameOrEmail:string) => {
     const res = await fetch(url + `/User/GetUserInfoByUsernameOrEmail/${UsernameOrEmail}`)
+
+    if(!res.ok){
+        return false
+    }
     const data = await res.json()
     return data
 }

@@ -4,6 +4,7 @@ import { Label, TextInput, Select, Button } from 'flowbite-react'
 import { createAccount, getSecurityQuestions } from '@/Utils/DataService'
 import { useRouter } from 'next/navigation'
 import {  ArrowBendUpLeft } from '@phosphor-icons/react'
+import { toast, useToast } from '@/components/ui/use-toast'
 
 
 const CreateAccount = () => {
@@ -21,8 +22,11 @@ const CreateAccount = () => {
   const [securityArray, setSecurityArray] = useState<string[]>([])
   const [isEight, setIsEight] = useState<boolean>()
   const [match, setMatch] = useState<boolean>(true)
+  const [disable, setDisable] = useState<boolean>(true)
 
   const router = useRouter()
+  const { toast } = useToast()
+
 
 
   useEffect(() => {
@@ -30,37 +34,39 @@ const CreateAccount = () => {
         let questions = await getSecurityQuestions()
         setSecurityArray(questions)
       }
+
+      console.log(username.length)
       getQuestions()
   }, [])
 
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
 
-  const handleCreate = () => {
-    
-    let userInfo = {
-      ID: id,
-      Username: username,
-      Password: password,
-      Email: email,
-      IsManager: isManager,
-      FirstName: firstName,
-      LastName: lastName,
-      SecurityAnswer: securityAns,
-      SecurityQuestionID: securityId
+        if(password.length < 8 && testPass.length < 8){
+          return toast({variant: "destructive", description: "Password must be 8 characters long"})
+        }
+          else{
+          let userInfo = {
+            ID: id,
+            Username: username,
+            Password: password,
+            Email: email,
+            IsManager: isManager,
+            FirstName: firstName,
+            LastName: lastName,
+            SecurityAnswer: securityAns,
+            SecurityQuestionID: securityId
+          }
+          createAccount(userInfo)
+            toast({description: "Account creation successful!"})
+            router.push('/')
+        }
     }
 
-    try{
-      createAccount(userInfo)
-      router.push('/')
-    }catch{
-      
-    }
-
-  }
 
   const handleBack = () => {
     router.push('/')
   }
-
 
 
   return (
@@ -72,7 +78,7 @@ const CreateAccount = () => {
             </button>
             <p className='text-2xl text-center py-6'>Create Account</p>
             <div>
-              <div className='px-8 space-y-2'>
+              <form className='px-8 space-y-2' onSubmit={handleSubmit}>
 
                 <div className='flex justify-between'>
                   <div className='mb-2 block'>
@@ -108,7 +114,7 @@ const CreateAccount = () => {
                 <div className='mb-2 block'>
                     <Label htmlFor='password' value='Password'/>
                     <TextInput min={8} className='w-56' id='password' placeholder='Password' type='password' onChange={(e) => {setTestPass(e.target.value);
-                    testPass.length <= 6 ? setIsEight(false) : setIsEight(true)
+                    testPass.length < 8 ? setIsEight(false) : setIsEight(true)
                     }} required/>
                     <p className={`text-red-600 text-[10px] pl-1 pt-1 ${isEight ? "hidden" : ""}`}>Password must be 8 characters long</p>
                 </div>
@@ -134,17 +140,19 @@ const CreateAccount = () => {
                   </div>
                   <div className='mb-2 block'>
                     <Label htmlFor='securityA' value='Security Answer'/>
-                    <TextInput className='w-56' id='securityA' placeholder='Security Answer' type='text' onChange={(e) => {setSecurityAns(e.target.value)}} required/>
+                    <TextInput className='w-56' id='securityA' placeholder='Security Answer' type='text' onChange={(e) => {
+                      setSecurityAns(e.target.value)
+                      }} required/>
                   </div>
                 </div>
 
                 <div className='flex justify-center pb-5'>
-                  <Button className='mt-3' color="light" onClick={handleCreate}>
+                  <Button className='mt-3' color="light"  type='submit'>
                     Create Account
                   </Button>
                 </div>
 
-              </div>
+              </form>
             </div>
         </div>
       </div>
