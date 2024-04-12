@@ -4,6 +4,7 @@ import { Label, TextInput, Button } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { IToken } from "../../Interfaces/Interfaces";
 import { getUserInfo, login } from "../../Utils/DataService";
+import { toast, useToast } from "@/components/ui/use-toast";
 
 const LoginContext = createContext(null)
 
@@ -13,6 +14,7 @@ const LoginComponent = () => {
   const [password, setPassword] = useState<string>("")
 
   const router = useRouter();
+  const { toast } = useToast()
 
 
   const handleLogin = async() => {
@@ -39,9 +41,12 @@ const LoginComponent = () => {
           localStorage.setItem("ID", data.id);
           router.push('/TenantDash')
         }
-
       }else{
-        alert("Login Failed");
+        return toast({
+          variant: 'destructive',
+          title: 'Invalid username or password',
+          description: 'Please try again'
+        })
       }
   }
 

@@ -84,8 +84,7 @@ export const answerCheck = async(answerCheck: IResponse) => {
     })
 
     if(!res.ok){
-        const message = "An error has occured " + res.status;
-        throw new Error(message);
+        return false
     }
 
     const data = await res.json()
@@ -102,8 +101,7 @@ export const changePassword = async(passChange: IReset) => {
     })
 
     if(!res.ok){
-        const message = "An error has occured " + res.status;
-        throw new Error(message);
+        return false
     }
 
     const data = await res.json()

@@ -29,11 +29,12 @@ const ForgotPassword = () => {
     let result = await answerCheck(answer);
     console.log(result)
     if(result === true){
-      setSuccessOne(true)
+      setSuccessTwo(true)
       setShowNewPass(true);
     }else{
       setSuccessTwo(false)
-      alert('Incorrect Answer. Try again')
+      setShowNewPass(false)
+      return toast({description: "Invalid answer"})
     }
   }
 
@@ -49,7 +50,7 @@ const ForgotPassword = () => {
     if(result === true){
       router.push('/')
     }else{
-      alert('Something went wrong')
+      return toast({description: "Something went wrong. Try Again!"})
     }
   }
 
@@ -60,9 +61,9 @@ const ForgotPassword = () => {
   const getQuestion = async() => {
     let question = await passwordRequest(UsernameOrEmail)
     console.log(question)
-    if(question === false){
+    if(question === false || input === ""){
       setSuccessOne(false)
-      setShowQuestion(false)
+      return toast({description: "Invalid Username"})
     }else{
       setSuccessOne(true)
       setSecurityQuestion(question)
@@ -70,8 +71,9 @@ const ForgotPassword = () => {
   }
 
   const handleSecure = () => {
-    getQuestion()
-    setShowQuestion(true);
+  getQuestion()
+   console.log("pressed")
+   setShowQuestion(true);
   };
 
 
@@ -80,10 +82,12 @@ const ForgotPassword = () => {
   };
 
   const firstBack = () => {
+    setSuccessOne(false)
     setShowQuestion(false);
   };
 
   const secondBack = () => {
+    setSuccessTwo(false)
     setShowNewPass(false);
   };
 
@@ -103,23 +107,23 @@ const ForgotPassword = () => {
           <p className="text-center text-2xl pt-6">Reset Password</p>
           <div className="mb-2 block w-2/3 m-auto pt-8">
             <Label
-              className={`${showQuestion || showNewPass ? "hidden" : "block"}`}
+              className={`${(showQuestion && successOne) || showNewPass  ? "hidden" : "block"}`}
               htmlFor="usernameOrEmail"
               value="Username / Email"
             />
             <TextInput
-              className={`${showQuestion || showNewPass ? "hidden" : "block"}`}
+              className={`${(showQuestion && successOne) || showNewPass  ? "hidden" : "block"}`}
               id="usernameOrEmail"
               type="text"
               onChange={(e) => setInput(e.target.value)}
             />
             <Label
-              className={`${!showQuestion || (showNewPass && successOne) ? "hidden" : "block"}`}
+              className={`${!showQuestion || !showNewPass && !successOne || successTwo ? "hidden" : "block"}`}
               htmlFor="securityAns"
               value={securityQuestion}
             />
             <TextInput
-              className={`${!showQuestion || (showNewPass && successOne) ? "hidden" : "block"}`}
+              className={`${!showQuestion || !showNewPass && !successOne || successTwo ? "hidden" : "block"}`}
               id="securityAns"
               type="text"
               onChange={(e) => setSecurityAnswer(e.target.value)}
@@ -158,46 +162,42 @@ const ForgotPassword = () => {
 
           <div className="flex justify-evenly pt-8 pb-4">
             <Button
-              className={`${showQuestion ? "hidden" : "block"}`}
+              className={`${(showQuestion && successOne) ? "hidden" : "block"}`}
               onClick={handleCancel}
               color="light"
             >
               Cancel
             </Button>
             <Button
-              className={`${showQuestion && !successOne ? "hidden" : "block"}`}
-              onClick={() => {
-              !successOne ? toast({
-                description: "Invalid Username"
-              }) : handleSecure
-              }}
+              className={`${(showQuestion && successOne) ? "hidden" : "block"}`}
+              onClick={handleSecure}
               color="light"
             >
               Next
             </Button>
             <Button
-              className={`${!showQuestion || showNewPass ? "hidden" : "block"}`}
+              className={`${!showQuestion || !showNewPass && !successOne || successTwo ? "hidden" : "block"}`}
               onClick={firstBack}
               color="light"
             >
               Back
             </Button>
             <Button
-              className={`${!showQuestion || showNewPass ? "hidden" : "block"}`}
+              className={`${!showQuestion || !showNewPass && !successOne || successTwo ? "hidden" : "block"}`}
               onClick={handleAnswer}
               color="light"
             >
               Next
             </Button>
             <Button
-              className={`${showNewPass ? "block" : "hidden"}`}
+              className={`${showNewPass || successTwo  ? "block" : "hidden"}`}
               onClick={secondBack}
               color="light"
             >
               Back
             </Button>
             <Button
-              className={`${showNewPass ? "block" : "hidden"}`}
+              className={`${showNewPass || successTwo ? "block" : "hidden"}`}
               onClick={handleNewPass}
               color="light"
               disabled={newPass ? false : true}
