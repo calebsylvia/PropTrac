@@ -63,8 +63,8 @@ const AdminDash = () => {
                   <p className='text-center text-xl pt-3 pb-5'>Maintenance Request:</p>
                   <div>
                       {
-                        mainReqArr && mainReqArr.map((req) => 
-                          <div className='py-3 mx-10'>
+                        mainReqArr && mainReqArr.map((req, idx) => 
+                          <div className='py-3 mx-10' key={idx}>
                             <div className='flex justify-between'>
                                 <p>{`Property ID: ${req.propertyInfoID}`}</p>
                                 <p>{req.status}</p>
