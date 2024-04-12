@@ -9,6 +9,7 @@ import download from '@/app/Assets/FileArrowDown.png'
 import wallet from '@/app/Assets/Vector 2.png'
 import { ITenant } from '@/Interfaces/Interfaces'
 import { getTenantInfo } from '@/Utils/DataService'
+import {Table, TableHeader, TableBody, TableHead, TableRow} from '@/components/ui/table'
 
 const TenantDash = () => {
 
@@ -34,12 +35,15 @@ const TenantDash = () => {
       let ID = localStorage.getItem("ID")
       let tenantInfo: ITenant = await getTenantInfo(parseInt(ID!))
       console.log(tenantInfo)
-      setName(tenantInfo.name)
+      setName(tenantInfo.firstName)
       setAddress(`${tenantInfo.houseNumber} ${tenantInfo.street}, ${tenantInfo.state} ${tenantInfo.zip}`)
       setId(tenantInfo.id)
       setLeaseType(tenantInfo.leaseType)
       setLeaseStart(tenantInfo.leaseStart)
       setLeaseEnd(tenantInfo.leaseEnd)
+      setManager(`${tenantInfo.managerFirst} ${tenantInfo.managerLast}`)
+      setManagerEmail(tenantInfo.managerEmail)
+      setManagerNumber(tenantInfo.managerPhone)
     }
     getTenant()
   },[])
@@ -62,8 +66,8 @@ const TenantDash = () => {
 
 
       <div className='flex justify-evenly'>
-        <div className='space-y-4'>
-          <div className='flex bg-white rounded-2xl border-black border-2 p-8 w-full space-x-6'>
+        <div className='w-2/3 space-y-4'>
+          <div className='flex bg-white rounded-2xl border-black border-2 p-8 w-full space-x-4'>
               <div className='w-1/2'>
                 <p className='text-3xl pb-4'>Address:</p>
                 <p className='text-wrap pb-4 w-5/6'>{address}</p>
@@ -85,7 +89,7 @@ const TenantDash = () => {
               <div className=''>
                   <p className='text-3xl pb-4'>Property Manager:</p>
                   <p className='pb-4'>{manager} <a className='underline text-[#0744A0]'>Contact</a></p>
-                  <p className='pb-4'>{`Phone: ${managerNumber}`}</p>
+                  <p className='pb-4'><a href={`tel:${managerNumber}`}>{`Phone: ${managerNumber}`}</a></p>
                   <p className='pb-4'>{`Email: ${managerEmail}`}</p>
               </div>
           </div>
@@ -113,27 +117,24 @@ const TenantDash = () => {
         </div>
       </div>
 
-      <div className='flex justify-evenly mt-4 pb-8'>
-        <div className='bg-white rounded-2xl border-black border-2 w-1/2 p-4'>
+      <div className='flex justify-evenly mt-4 pb-8 w-full'>
+        <div className='bg-white rounded-2xl border-black border-2 w-3/5 p-4'>
           <p>Payment History</p>
-          <table className='table-auto'>
-              <thead className='font-normal'>
-                <tr>
-                  <th>Date Processed</th>
-                  <th>Type</th>
-                  <th>Amount</th>
-                  <th>Balance</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>4/8/24</td>
-                  <td>Stripe</td>
-                  <td>$1200</td>
-                  <td>$0</td>
-                </tr>
-              </tbody>
-          </table>
+          <Table>   
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className='w-[250px]'>Date Processed</TableHead>
+                      <TableHead>Type</TableHead>
+                      <TableHead className='w-[250px]'>Amount</TableHead>
+                      <TableHead>Balance</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                      {
+
+                      }
+                  </TableBody>
+                </Table>
         </div>
         <div className='bg-white rounded-2xl border-black border-2 w-1/4 p-4'>
             <p>Submit Maintenance Request</p>
@@ -160,13 +161,13 @@ const TenantDash = () => {
               </div>
               </div>
               <div>
-                <div>
+                <div className='pb-5'>
                   <Label>
                     <div>
                       <p>Upload Image(s)</p>
                     </div>
                   </Label>
-                  <FileInput className='' multiple/>
+                  <FileInput/>
                 </div>
                   <button className='bg-[#A0E6EF] rounded-xl px-6 py-2'>
                       Submit

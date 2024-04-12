@@ -67,8 +67,7 @@ export const passwordRequest = async(UsernameOrEmail: IForgot) => {
     });
 
     if(!res.ok){
-        const message = "An error has occured " + res.status;
-        throw new Error(message);
+        return false
     }
 
     const data = await res.text()
@@ -122,4 +121,16 @@ export const getTenantInfo = async(ID: number) => {
     const res = await fetch(url + `/Tenant/GetTenantDashboardInfo/${ID}`);
     const data = await res.json()
     return data[0];
+}
+
+export const getListingStats = async(userId: number) => {
+    const res = await fetch(url + `/Manager/GetPropertyStatsByUserID/${userId}`)
+    const data = await res.json()
+    return data;
+}
+
+export const getMaintenance = async(userId: number) => {
+    const res = await fetch(url + `/Manager/GetMaintenanceStatsByUserID/${userId}`)
+    const data = await res.json()
+    return data
 }

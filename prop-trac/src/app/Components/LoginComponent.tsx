@@ -86,20 +86,20 @@ const LoginComponent = () => {
 
             <div className="flex space-x-6 mb-4 mx-auto">
               <Button
-                className="w-36 bg-[#F5F5F5] text-black border-black"
+                className="w-36"
                 color="light"
                 onClick={handleLogin}
               >
                 Log In
               </Button>
-              <a onClick={handleForgot} className="underline text-sm my-auto">
+              <a onClick={handleForgot} className="underline text-sm my-auto hover:cursor-pointer">
                 Forget Password?
               </a>
             </div>
             <div className="mx-auto">
               <a
                 onClick={handleCreate}
-                className="underline text-[#0744A0] text-sm text-center"
+                className="underline text-[#0744A0] text-sm text-center hover:cursor-pointer"
               >
                 New User? Create an Account
               </a>

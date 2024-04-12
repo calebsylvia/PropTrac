@@ -63,5 +63,25 @@ export interface ITenant {
     name:            string,
     type:            string,
     content:         string,
-    uploadDate:      number
+    uploadDate:      number,
+    managerFirst:    string,
+    managerLast:     string,
+    managerPhone:    number,
+    managerEmail:    string
+}
+
+
+export interface IPropStats {
+    activeTenants: number;
+    openListings:  number;
+    properties:    number;
+}
+
+export interface IMaintenance {
+    id:             number;
+    status:         string;
+    category:       string;
+    priority:       string;
+    dateRequested:  string;
+    propertyInfoID: number;
 }

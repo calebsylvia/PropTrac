@@ -4,6 +4,7 @@ import { TextInput, Label, Button } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { answerCheck, changePassword, passwordRequest } from "@/Utils/DataService";
 import { IForgot } from "@/Interfaces/Interfaces";
+import { useToast } from "@/components/ui/use-toast";
 
 const ForgotPassword = () => {
   const [input, setInput] = useState<string>("");
@@ -13,8 +14,11 @@ const ForgotPassword = () => {
   const [newPass, setNewPass] = useState<string>("");
   const [showQuestion, setShowQuestion] = useState<boolean>(false);
   const [showNewPass, setShowNewPass] = useState<boolean>(false);
+  const [successOne, setSuccessOne] = useState<boolean>()
+  const [successTwo, setSuccessTwo] = useState<boolean>() 
 
   const router = useRouter();
+  const { toast } = useToast()
 
   const handleAnswer = async() => {
     let answer = {
@@ -25,8 +29,10 @@ const ForgotPassword = () => {
     let result = await answerCheck(answer);
     console.log(result)
     if(result === true){
+      setSuccessOne(true)
       setShowNewPass(true);
     }else{
+      setSuccessTwo(false)
       alert('Incorrect Answer. Try again')
     }
   }
@@ -53,7 +59,14 @@ const ForgotPassword = () => {
 
   const getQuestion = async() => {
     let question = await passwordRequest(UsernameOrEmail)
-    setSecurityQuestion(question)
+    console.log(question)
+    if(question === false){
+      setSuccessOne(false)
+      setShowQuestion(false)
+    }else{
+      setSuccessOne(true)
+      setSecurityQuestion(question)
+    }
   }
 
   const handleSecure = () => {
@@ -92,7 +105,7 @@ const ForgotPassword = () => {
             <Label
               className={`${showQuestion || showNewPass ? "hidden" : "block"}`}
               htmlFor="usernameOrEmail"
-              value="Enter Username or Email"
+              value="Username / Email"
             />
             <TextInput
               className={`${showQuestion || showNewPass ? "hidden" : "block"}`}
@@ -101,12 +114,12 @@ const ForgotPassword = () => {
               onChange={(e) => setInput(e.target.value)}
             />
             <Label
-              className={`${!showQuestion || showNewPass ? "hidden" : "block"}`}
+              className={`${!showQuestion || (showNewPass && successOne) ? "hidden" : "block"}`}
               htmlFor="securityAns"
               value={securityQuestion}
             />
             <TextInput
-              className={`${!showQuestion || showNewPass ? "hidden" : "block"}`}
+              className={`${!showQuestion || (showNewPass && successOne) ? "hidden" : "block"}`}
               id="securityAns"
               type="text"
               onChange={(e) => setSecurityAnswer(e.target.value)}
@@ -143,7 +156,7 @@ const ForgotPassword = () => {
             />
           </div>
 
-          <div className="flex justify-evenly pt-8">
+          <div className="flex justify-evenly pt-8 pb-4">
             <Button
               className={`${showQuestion ? "hidden" : "block"}`}
               onClick={handleCancel}
@@ -152,8 +165,12 @@ const ForgotPassword = () => {
               Cancel
             </Button>
             <Button
-              className={`${showQuestion ? "hidden" : "block"}`}
-              onClick={handleSecure}
+              className={`${showQuestion && !successOne ? "hidden" : "block"}`}
+              onClick={() => {
+              !successOne ? toast({
+                description: "Invalid Username"
+              }) : handleSecure
+              }}
               color="light"
             >
               Next
@@ -188,11 +205,6 @@ const ForgotPassword = () => {
               Confirm Password
             </Button>
           </div>
-
-          <p className="text-sm pt-8 text-center pb-4">
-            Remember password?{" "}
-            <a className="underline text-[#0744A0]" onClick={handleCancel}>Login Here</a>
-          </p>
         </div>
       </div>
     </>

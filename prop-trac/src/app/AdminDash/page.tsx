@@ -1,6 +1,6 @@
 'use client'
 import Image, { StaticImageData } from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import downGreen from '@/app/Assets/downGreen.png'
 import downRed from '@/app/Assets/downRed.png'
 import upGreen from '@/app/Assets/upGreen.png'
@@ -8,6 +8,8 @@ import upRed from '@/app/Assets/upRed.png'
 import house from '@/app/Assets/propHouse.png'
 import BarChartComponent from '../Components/BarChartComponent'
 import SideNav from '../Components/SideNav'
+import { IMaintenance, IPropStats } from '@/Interfaces/Interfaces'
+import { getListingStats, getMaintenance } from '@/Utils/DataService'
 
 const AdminDash = () => {
 
@@ -19,24 +21,65 @@ const AdminDash = () => {
   const [activeTenants, setActiveTenants] = useState<number>(3)
   const [openListing, setOpenListing] = useState<number>(5)
   const [propertyCount, setPropertyCount] = useState<number>(7)
+  const [mainReqArr, setMainReqArr] = useState<IMaintenance []>([])
+  
+
+  useEffect(() => {
+      let id = localStorage.getItem("ID")
+      const getPropStats = async(userId: number) => {
+        const propStats: IPropStats = await getListingStats(userId);
+        setActiveTenants(propStats.activeTenants)
+        setOpenListing(propStats.openListings)
+        setPropertyCount(propStats.properties)
+      }
+      getPropStats(parseInt(id!))
+
+      const getMainReq = async(userId: number) => {
+        const mainReq = await getMaintenance(userId)
+        
+        setMainReqArr(mainReq)
+        console.log(mainReqArr)
+      }
+      getMainReq(parseInt(id!))
+  }, [])
 
   return (
     <>
       <SideNav/>
       <div className='bg-[#FEFFF6] w-screen h-screen'>
-          <div className='w-3/4 ml-52'>
-          <p className='text-5xl'>{`Welcome, ${name}`}</p>
+          <div className='w-3/4 ml-60'>
+          <p className='text-5xl py-5'>{`Welcome, ${name}`}</p>
           {/* Chart */}
           <div className='w-full h-[400px] bg-white border-black border-2 rounded-2xl flex pl-8 py-4'>
             <BarChartComponent/>
+            {/* <div>
+              <p>{`This Months Income: $${monthlyRent}`}</p>
+              <p>{`This Months Expenses: $${monthlyExpenses}`}</p>
+            </div> */}
           </div>
 
           <div className='grid grid-cols-3 grid-flow-row gap-6 pt-6 pb-20 h-[675px]'>
               <div className='row-span-3 bg-white border-black border-2 rounded-2xl'>
-                  <p className='text-center text-xl pt-3'>Maintenance Request:</p>
+                  <p className='text-center text-xl pt-3 pb-5'>Maintenance Request:</p>
                   <div>
-
+                      {
+                        mainReqArr && mainReqArr.map((req) => 
+                          <div className='py-3 mx-10'>
+                            <div className='flex justify-between'>
+                                <p>{`Property ID: ${req.propertyInfoID}`}</p>
+                                <p>{req.status}</p>
+                            </div>
+                            <div className='flex justify-between pb-3'>
+                                <p>{req.category}</p>
+                                <p>{req.priority}</p>
+                            </div>
+                            <hr className='mx-auto border-black'/>
+                          </div>
+                          
+                        )
+                      }
                   </div>
+                  {/* <p className='underline text-[#A0B5EF] text-center  hover:cursor-pointer'>View all Requests</p> */}
               </div>
               <div className='bg-white border-black border-2 rounded-2xl'>
                   <p className='pl-5 pt-2'>Monthly Profit:</p>

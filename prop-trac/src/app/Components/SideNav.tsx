@@ -30,29 +30,41 @@ const SideNav = () => {
           <br />
           TRAC
         </p>
-        <div className="flex flex-col pt-10 space-y-8">
+        <div className="flex flex-col pt-20 space-y-16">
           <div className='flex justify-center'>
-            <ChartLine size={48} />
-            <p className={`hover:cursor-pointer my-auto ${isOpen ? 'block' : 'hidden'}`} onClick={() => router.push('/AdminDashboard')}>Dashboard</p>
+            <div className="w-12 justify-center">
+            <ChartLine className="mx-auto" size={48} />
+            </div>
+            <p className={`hover:cursor-pointer my-auto ${isOpen ? 'block' : 'hidden'}`} onClick={() => router.push('/AdminDash')}>Dashboard</p>
           </div>
           <div className='flex justify-center'>
-            <House size={48} />
+          <div className="w-12 justify-center">
+            <House className="mx-auto" size={48} />
+            </div>
             <p className={`hover:cursor-pointer my-auto ${isOpen ? 'block' : 'hidden'}`} onClick={() => router.push('/Properties')}>Properties</p>
           </div>
           <div className='flex justify-center'>
-            <AddressBook size={48} />
+          <div className="w-12 justify-center">
+            <AddressBook className="mx-auto" size={48} />
+            </div>
             <p className={`hover:cursor-pointer my-auto ${isOpen ? 'block' : 'hidden'}`} onClick={() => router.push('/Tenants')}>Tenants</p>
           </div>
           <div className='flex justify-center'>
-            <CreditCard size={48} />
+          <div className="w-12 justify-center">
+            <CreditCard className="mx-auto" size={48} />
+            </div>
             <p className={`hover:cursor-pointer my-auto ${isOpen ? 'block' : 'hidden'}`} onClick={() => router.push('/Payments')}>Payments</p>
           </div>
           <div className='flex justify-center'>
-            <User size={48} />
+          <div className="w-12 justify-center">
+            <User className="mx-auto" size={48} />
+            </div>
             <p className={`hover:cursor-pointer my-auto ${isOpen ? 'block' : 'hidden'}`} onClick={() => router.push('/AccountInfo')}>Account</p>
           </div>
           <div className='flex justify-center'>
-            <Power size={48} />
+          <div className="w-12 justify-center">
+            <Power className="mx-auto" size={48} />
+            </div>
             <p className={`hover:cursor-pointer my-auto ${isOpen ? 'block' : 'hidden'}`} onClick={() => router.push('/')}>Log Out</p>
           </div>
         </div>
