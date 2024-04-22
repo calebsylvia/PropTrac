@@ -63,7 +63,7 @@ const TenantDash = () => {
     router.push('/')
   }
 
-  const handleRequest = async(e: any) => {
+  const handleRequest = async() => {
 
     let request = {
       id: 0,
