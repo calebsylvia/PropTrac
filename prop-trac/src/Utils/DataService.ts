@@ -1,4 +1,4 @@
-import { IForgot, IReset, IResponse, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
+import { IForgot, IRequest, IReset, IResponse, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
 
 const url = 'https://proptracapi.azurewebsites.net';
 
@@ -109,6 +109,23 @@ export const changePassword = async(passChange: IReset) => {
     return data;
 }
 
+export const addRequest = async(request: IRequest) => {
+    const res = await fetch(url + "/Tenant/AddMaintenanceRequest", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(request)
+    })
+    
+    if(!res.ok){
+        return false
+    }
+
+    const data = await res.json()
+    return data;
+}
+
 export const getUserInfo = async(UsernameOrEmail:string) => {
     const res = await fetch(url + `/User/GetUserInfoByUsernameOrEmail/${UsernameOrEmail}`)
 
@@ -134,6 +151,24 @@ export const getListingStats = async(userId: number) => {
 
 export const getMaintenance = async(userId: number) => {
     const res = await fetch(url + `/Manager/GetMaintenanceStatsByUserID/${userId}`)
+    const data = await res.json()
+    return data
+}
+
+export const getMonthly = async(userId: number, month: number, year: number) => {
+    const res = await fetch(url + `/Manager/GetMonthlyProfitOrLoss/${userId}/${month}/${year}`)
+    const data = await res.json()
+    return data
+}
+
+export const getPrevMonths = async(userId: number, month: number, year: number) => {
+    const res = await fetch(url + `/Manager/GetPastSixMonthsProfitOrLoss/${userId}/${month}/${year}`)
+    const data = await res.json()
+    return data
+}
+
+export const projectMonths = async(userId: number, month: number, year: number) => {
+    const res = await fetch(url + `/Manager/GetProjectedProfitOrLoss/${userId}/${month}/${year}`)
     const data = await res.json()
     return data
 }

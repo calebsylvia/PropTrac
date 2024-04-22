@@ -1,9 +1,11 @@
+'use client'
 import {
   AddressBook,
   ChartLine,
   CreditCard,
   House,
   Power,
+  Toolbox,
   User,
 } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
@@ -19,7 +21,7 @@ const SideNav = () => {
   return (
     <>
       <div
-        className={`fixed bg-[#A2D7E2] h-screen transition-all duration-200 ${
+        className={`fixed bg-[#A2D7E2] h-full transition-all duration-200 ${
           isOpen ? "w-56" : "w-32"
         }`}
         onMouseOver={() => setIsOpen(true)}
@@ -30,7 +32,7 @@ const SideNav = () => {
           <br />
           TRAC
         </p>
-        <div className="flex flex-col pt-20 space-y-16">
+        <div className="flex flex-col pt-16 space-y-8">
           <div className='flex justify-center hover:cursor-pointer' onClick={() => router.push('/AdminDash')}>
             <div className="w-12 justify-center">
             <ChartLine className="mx-auto" size={48} />
@@ -60,6 +62,12 @@ const SideNav = () => {
             <User className="mx-auto" size={48} />
             </div>
             <p className={`my-auto ${isOpen ? 'block' : 'hidden'}`}>Account</p>
+          </div>
+          <div className='flex justify-center hover:cursor-pointer' onClick={() => router.push('/Maintenance')}>
+            <div className="w-12 justify-center">
+            <Toolbox className="mx-auto" size={48} />
+            </div>
+            <p className={`my-auto ${isOpen ? 'block' : 'hidden'}`}>Maintenance</p>
           </div>
           <div className='flex justify-center hover:cursor-pointer' onClick={() => router.push('/')}>
           <div className="w-12 justify-center">

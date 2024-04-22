@@ -47,9 +47,13 @@ const ForgotPassword = () => {
 
     let result = await changePassword(newPassword);
 
-    if(result === true){
+    if(result === true && newPass.length >= 8 && newTestPass.length >= 8){
       router.push('/')
-    }else{
+      return toast({description: "Password Change Successful"})
+    }else if(newPass.length < 8 && newTestPass.length < 8){
+      return toast({description: "Password must be 8 or more characters long", variant: "destructive"})
+    }
+    else{
       return toast({description: "Something went wrong. Try Again!", variant: "destructive"})
     }
   }

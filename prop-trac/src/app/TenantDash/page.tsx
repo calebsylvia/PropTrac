@@ -8,8 +8,10 @@ import house from '@/app/Assets/House 2.png'
 import download from '@/app/Assets/FileArrowDown.png'
 import wallet from '@/app/Assets/Vector 2.png'
 import { ITenant } from '@/Interfaces/Interfaces'
-import { getTenantInfo } from '@/Utils/DataService'
+import { addRequest, getTenantInfo } from '@/Utils/DataService'
 import {Table, TableHeader, TableBody, TableHead, TableRow} from '@/components/ui/table'
+import { useToast } from '@/components/ui/use-toast'
+import { Blob } from 'buffer'
 
 const TenantDash = () => {
 
@@ -26,15 +28,24 @@ const TenantDash = () => {
   const [dueDate, setDueDate] = useState<string>("Today")
   const [daysRemaining, setDaysRemaining] = useState<number>(9)
 
+  const [userId, setUserId] = useState<number>(0)
+  const [desc, setDesc] = useState<string>("")
+  const [prio, setPrio] = useState<string>("")
+  const [cate, setCate] = useState<string>("")
+  const [image, setImage] = useState<string>("")
+  
+
   const categories: string[] = ["Appliances", "Electricity", "Flooring", "HVAC", "Pests", "Plumbing", "Roofing", "Safety", "Utilities", "Windows/Doors", "Other"];
 
   const router = useRouter()
+  const { toast } = useToast()
 
   useEffect(() => {
     const getTenant = async() => {
       let ID = localStorage.getItem("ID")
       let tenantInfo: ITenant = await getTenantInfo(parseInt(ID!))
       console.log(tenantInfo)
+      setUserId(parseInt(ID!))
       setName(tenantInfo.firstName)
       setAddress(`${tenantInfo.houseNumber} ${tenantInfo.street}, ${tenantInfo.state} ${tenantInfo.zip}`)
       setId(tenantInfo.id)
@@ -52,6 +63,49 @@ const TenantDash = () => {
     router.push('/')
   }
 
+  const handleRequest = async(e: any) => {
+
+    let request = {
+      id: 0,
+      description: desc,
+      priority: prio,
+      category: cate,
+      image: image,
+      userID: userId
+    }
+
+   addRequest(request)
+   toast({description: "Maintenance Request Sent"})
+
+   setDesc("")
+   setImage("")
+   setCate("")
+   setPrio("")
+  }
+
+
+  const handleImage = async(e:any) => {
+    const file = e.target.files[0]
+    const base = await convert64(file)
+    console.log(base)
+    setImage(`${base}`)
+  }
+
+  const convert64 = (file: any) => {
+    return new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file)
+
+      reader.onload = () => {
+        res(reader.result)
+      }
+
+      reader.onerror = (error: any) => {
+        rej(error)
+      }
+    })
+  }
+
 
 
   return (
@@ -65,7 +119,7 @@ const TenantDash = () => {
       </div>
 
 
-      <div className='flex justify-evenly'>
+      <div className='flex mx-16 space-x-20'>
         <div className='w-2/3 space-y-4'>
           <div className='flex bg-white rounded-2xl border-black border-2 p-8 w-full space-x-4'>
               <div className='w-1/2'>
@@ -117,7 +171,7 @@ const TenantDash = () => {
         </div>
       </div>
 
-      <div className='flex justify-evenly mt-4 pb-8 w-full'>
+      <div className='flex mx-16 space-x-8 mt-4 pb-8 w-full'>
         <div className='bg-white rounded-2xl border-black border-2 w-3/5 p-4'>
           <p>Payment History</p>
           <Table>   
@@ -139,19 +193,19 @@ const TenantDash = () => {
         <div className='bg-white rounded-2xl border-black border-2 w-1/4 p-4'>
             <p>Submit Maintenance Request</p>
             <div>
-              <Textarea placeholder='Description' required/>
+              <Textarea placeholder='Description' value={desc} onChange={(e) => setDesc(e.target.value)} required/>
               <div className='flex justify-between'>
               <div className='mb-2 block w-2/5'>
                 <Label htmlFor='prio' value='Priority'/>
-                <Select id='prio' required>
-                    <option value='low'>Low</option>
-                    <option value='medium'>Medium</option>
-                    <option value='high'>High</option>
+                <Select id='prio' value={prio} onChange={(e) => setPrio(e.target.value)} required>
+                    <option value='Low'>Low</option>
+                    <option value='Medium'>Medium</option>
+                    <option value='High'>High</option>
                 </Select>
               </div>
               <div className='mb-2 block w-1/2'>
                 <Label htmlFor='category' value='Category'/>
-                <Select id='category' required>
+                <Select id='category' value={cate} onChange={(e) => setCate(e.target.value)} required>
                 {
                     categories.map((category, idx) => 
                       <option key={idx} value={idx}>{category}</option>
@@ -167,9 +221,9 @@ const TenantDash = () => {
                       <p>Upload Image(s)</p>
                     </div>
                   </Label>
-                  <FileInput/>
+                  <FileInput id="file-upload" onChange={(e) => handleImage(e)}/>
                 </div>
-                  <button className='bg-[#A0E6EF] rounded-xl px-6 py-2'>
+                  <button onClick={handleRequest} className='bg-[#A0E6EF] rounded-xl px-6 py-2'>
                       Submit
                   </button>
               </div>

@@ -133,7 +133,7 @@ const CreateAccount = () => {
                   <Select className='w-56' id='securityQ' onChange={(e) => {setSecurityId(parseInt(e.target.value))}} required>
                     {
                       securityArray && securityArray.map((question, idx) => 
-                          <option key={idx} value={idx}>{question}</option>
+                          <option key={idx + 1} value={idx}>{question}</option>
                       )
                     }
                   </Select>

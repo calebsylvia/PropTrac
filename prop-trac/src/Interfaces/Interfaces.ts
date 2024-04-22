@@ -85,3 +85,32 @@ export interface IMaintenance {
     dateRequested:  string;
     propertyInfoID: number;
 }
+
+export interface IRequest {
+    id:          number;
+    description: string;
+    priority:    string;
+    category:    string;
+    image:       string;
+    userID:      number;
+}
+
+export interface PrevArr {
+    Items: IPrev[]
+}
+
+export interface IPrev {
+    month:              number;
+    expenseTotal:       number;
+    revenueTotal:       number;
+    profitOrLossAmount: number;
+}
+
+export interface IProfOrLoss {
+    month:              number;
+    expenseTotal:       number;
+    revenueTotal:       number;
+    profitOrLossAmount: number;
+}
+
+

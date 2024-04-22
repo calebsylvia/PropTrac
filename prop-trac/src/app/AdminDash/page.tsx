@@ -8,8 +8,8 @@ import upRed from '@/app/Assets/upRed.png'
 import house from '@/app/Assets/propHouse.png'
 import BarChartComponent from '../Components/BarChartComponent'
 import SideNav from '../Components/SideNav'
-import { IMaintenance, IPropStats } from '@/Interfaces/Interfaces'
-import { getListingStats, getMaintenance } from '@/Utils/DataService'
+import { IMaintenance, IProfOrLoss, IPropStats } from '@/Interfaces/Interfaces'
+import { getListingStats, getMaintenance, getMonthly } from '@/Utils/DataService'
 
 const AdminDash = () => {
 
@@ -43,6 +43,20 @@ const AdminDash = () => {
       getMainReq(parseInt(id!))
   }, [])
 
+  useEffect(() => {
+    let month = new Date().getMonth()
+    let year = new Date().getFullYear()
+    let id = localStorage.getItem("ID")
+
+    const getProfAndLoss = async(userId: number, month: number, year: number) => {
+      const profAndLoss: IProfOrLoss = await getMonthly(userId, month, year)
+      setProfit(profAndLoss.profitOrLossAmount)
+      setExpenses(profAndLoss.expenseTotal)
+    }
+
+    getProfAndLoss(parseInt(id!), month, year)
+  }, [])
+
   return (
     <>
       <SideNav/>
@@ -50,12 +64,8 @@ const AdminDash = () => {
           <div className='w-3/4 ml-60'>
           <p className='text-5xl py-5'>{`Welcome, ${name}`}</p>
           {/* Chart */}
-          <div className='w-full h-[400px] bg-white border-black border-2 rounded-2xl flex pl-8 py-4'>
+          <div className='w-full h-3/5 bg-white border-black border-2 rounded-2xl flex pl-8 py-4'>
             <BarChartComponent/>
-            {/* <div>
-              <p>{`This Months Income: $${monthlyRent}`}</p>
-              <p>{`This Months Expenses: $${monthlyExpenses}`}</p>
-            </div> */}
           </div>
 
           <div className='grid grid-cols-3 grid-flow-row gap-6 pt-6 pb-20 h-[675px]'>
