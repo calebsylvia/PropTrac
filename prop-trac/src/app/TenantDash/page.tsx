@@ -74,11 +74,11 @@ const TenantDash = () => {
       userID: userId
     }
 
+  console.log(request)
    addRequest(request)
    toast({description: "Maintenance Request Sent"})
 
    setDesc("")
-   setImage("")
    setCate("")
    setPrio("")
   }
@@ -105,6 +105,8 @@ const TenantDash = () => {
       }
     })
   }
+
+  
 
 
 

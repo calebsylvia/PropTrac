@@ -13,6 +13,7 @@ import { getListingStats, getMaintenance, getMonthly } from '@/Utils/DataService
 
 const AdminDash = () => {
 
+  const [id, setId] = useState<number>(1)
   const [name, setName] = useState<string>("Caleb")
   const [profit, setProfit] = useState<number>(0)
   const [expenses, setExpenses] = useState<number>(0)
@@ -25,14 +26,18 @@ const AdminDash = () => {
   
 
   useEffect(() => {
-      let id = localStorage.getItem("ID")
+      if(typeof window !== 'undefined'){
+        let id = localStorage.getItem("ID")
+        setId(parseInt(id!))
+      }
+
       const getPropStats = async(userId: number) => {
         const propStats: IPropStats = await getListingStats(userId);
         setActiveTenants(propStats.activeTenants)
         setOpenListing(propStats.openListings)
         setPropertyCount(propStats.properties)
       }
-      getPropStats(parseInt(id!))
+      getPropStats(id)
 
       const getMainReq = async(userId: number) => {
         const mainReq = await getMaintenance(userId)
@@ -40,7 +45,7 @@ const AdminDash = () => {
         setMainReqArr(mainReq)
         console.log(mainReqArr)
       }
-      getMainReq(parseInt(id!))
+      getMainReq(id)
   }, [])
 
   useEffect(() => {
