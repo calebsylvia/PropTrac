@@ -50,8 +50,6 @@ const ForgotPassword = () => {
     if(result === true && newPass.length >= 8 && newTestPass.length >= 8){
       router.push('/')
       return toast({description: "Password Change Successful"})
-    }else if(newPass.length < 8 && newTestPass.length < 8){
-      return toast({description: "Password must be 8 or more characters long", variant: "destructive"})
     }
     else{
       return toast({description: "Something went wrong. Try Again!", variant: "destructive"})
@@ -108,8 +106,8 @@ const ForgotPassword = () => {
           <p className="">Property management at your fingertips</p>
         </div>
         <div className="w-[400px] min-h-2/5 m-auto bg-white rounded-xl">
-          <p className="text-center text-2xl pt-6">Reset Password</p>
-          <div className="mb-2 block w-2/3 m-auto pt-8">
+          <p className="text-center text-2xl pt-8">Reset Password</p>
+          <div className="mb-2 block w-4/5 m-auto pt-8">
             <Label
               className={`${(showQuestion && successOne) || showNewPass  ? "hidden" : "block"}`}
               htmlFor="usernameOrEmail"
@@ -149,7 +147,7 @@ const ForgotPassword = () => {
             />
             <Label
               className={`${
-                !showQuestion || !showNewPass ? "hidden" : "block"
+                !showQuestion || !showNewPass ? "hidden" : "block pt-5"
               }`}
               htmlFor="confirmPass"
               value="Confirm Password"
@@ -164,7 +162,7 @@ const ForgotPassword = () => {
             />
           </div>
 
-          <div className="flex justify-evenly pt-8 pb-4">
+          <div className="flex justify-end pr-10 gap-3 pt-10 pb-8">
             <Button
               className={`${(showQuestion && successOne) ? "hidden" : "block"}`}
               onClick={handleCancel}
@@ -204,7 +202,7 @@ const ForgotPassword = () => {
               className={`${showNewPass || successTwo ? "block" : "hidden"}`}
               onClick={handleNewPass}
               color="light"
-              disabled={newPass ? false : true}
+              disabled={newPass == newTestPass && newPass.length >= 8 ? false : true}
             >
               Confirm Password
             </Button>

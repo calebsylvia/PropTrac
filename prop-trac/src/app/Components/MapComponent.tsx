@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { APIProvider, Map } from '@vis.gl/react-google-maps'
 import { IPosition } from '@/Interfaces/Interfaces'

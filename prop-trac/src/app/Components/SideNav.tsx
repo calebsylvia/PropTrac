@@ -27,7 +27,7 @@ const SideNav = () => {
         onMouseOver={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
-        <p className="text-xl text-center text-[#5A5A5A] pt-3">
+        <p className="text-xl text-center text-[#5A5A5A] pt-5">
           PROP
           <br />
           TRAC
@@ -35,43 +35,43 @@ const SideNav = () => {
         <div className="flex flex-col pt-16 space-y-12">
           <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/AdminDash')}>
             <div className="w-12 justify-center">
-            <ChartLine className="mx-auto" size={29} />
+            <ChartLine className="mx-auto" size={30} />
             </div>
             <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Dashboard</p>
           </div>
           <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/Properties')}>
           <div className="w-12 justify-center">
-            <House className="mx-auto" size={29} />
+            <House className="mx-auto" size={30} />
             </div>
             <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Properties</p>
           </div>
           <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/Tenants')}>
           <div className="w-12 justify-center">
-            <AddressBook className="mx-auto" size={29} />
+            <AddressBook className="mx-auto" size={30} />
             </div>
             <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Tenants</p>
           </div>
           <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/Payments')}>
           <div className="w-12 justify-center">
-            <CreditCard className="mx-auto" size={29} />
+            <CreditCard className="mx-auto" size={30} />
             </div>
             <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Payments</p>
           </div>
           <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/AccountInfo')}>
           <div className="w-12 justify-center">
-            <User className="mx-auto" size={29} />
+            <User className="mx-auto" size={30} />
             </div>
             <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Account</p>
           </div>
           <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/Maintenance')}>
             <div className="w-12 justify-center">
-            <Toolbox className="mx-auto" size={29} />
+            <Toolbox className="mx-auto" size={30} />
             </div>
             <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Maintenance</p>
           </div>
           <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/')}>
           <div className="w-12 justify-center">
-            <Power className="mx-auto" size={29} />
+            <Power className="mx-auto" size={30} />
             </div>
             <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Log Out</p>
           </div>

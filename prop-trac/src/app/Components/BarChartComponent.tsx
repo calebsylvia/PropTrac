@@ -4,12 +4,15 @@ import { Chart as ChartJS, Tooltip, Legend, Title, LinearScale, CategoryScale, B
 import { Bar } from 'react-chartjs-2'
 import { getPrevMonths, projectMonths } from '@/Utils/DataService'
 import { IPrev } from '@/Interfaces/Interfaces'
+import { CaretLeft, CaretRight } from '@phosphor-icons/react'
 
 const BarChartComponent = () => {
 
    const [previous, setPrevious] = useState<IPrev[]>()
    const [next, setNext] = useState<IPrev[]>()
+   const [current, setCurrent] = useState<boolean>(true)
 
+   let monthArr: string[] = []
 
 
     ChartJS.register(
@@ -60,12 +63,17 @@ const BarChartComponent = () => {
     }, [])
 
 
+    const handlePrev = () => {
+        setCurrent(true)
+    }
 
-
-    const labels = [ months[getMonth(date, - 6)], months[getMonth(date, - 5)], months[getMonth(date, - 4)], months[getMonth(date, - 3)], months[getMonth(date, - 2)], months[getMonth(date, - 1)]]
+    const handleNext = () => {
+        setCurrent(false)
+    }
+    
 
     const data = {
-        labels: [ months[getMonth(date, - 6)], months[getMonth(date, - 5)], months[getMonth(date, - 4)], months[getMonth(date, - 3)], months[getMonth(date, - 2)], months[getMonth(date, - 1)]],
+        labels: current ? [months[getMonth(date, - 6)], months[getMonth(date, - 5)], months[getMonth(date, - 4)], months[getMonth(date, - 3)], months[getMonth(date, - 2)], months[getMonth(date, - 1)]] : [ months[getMonth(date, + 0)], months[getMonth(date, + 1)], months[getMonth(date, + 2)], months[getMonth(date, + 3)], months[getMonth(date, + 4)], months[getMonth(date, + 5)]],
         datasets: [
             {
                 label: 'Money In',
@@ -111,9 +119,19 @@ const BarChartComponent = () => {
     }
   return (
     <>
-    <Bar data={data} options={options}/>
+            <Bar data={data} options={options}/>
+            <div className='flex justify-between mt-3'>
+                <button className='flex' onClick={handlePrev}>
+                    <CaretLeft size={24} weight="bold" />
+                    <p className='my-auto text-sm'>Past 6 Months</p>
+                </button>
+                <button className='flex' onClick={handleNext}>
+                    <p className='my-auto text-sm'>Projected 6 Months</p>
+                    <CaretRight size={24} weight="bold" />
+                </button>
+            </div>
     </>
-  )
-}
+  );
+};
 
 export default BarChartComponent

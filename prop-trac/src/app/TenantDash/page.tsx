@@ -114,7 +114,7 @@ const TenantDash = () => {
     <>
     <div className='bg-[#FEFFF6] w-screen h-screen'>
       <div className='flex justify-between mx-20 pt-12 pb-10'>
-        <p className='text-5xl'>{`Welcome, ${name}`}</p>
+        <p className='text-4xl'>{`Welcome, ${name}`}</p>
         <button className='my-auto' onClick={handleLogout}>
             <Image className='w-8' src={logout} alt='Logout Button'/>
         </button>
@@ -125,7 +125,7 @@ const TenantDash = () => {
         <div className='w-2/3 space-y-4'>
           <div className='flex bg-white rounded-2xl border-black border-2 p-8 w-full space-x-4'>
               <div className='w-1/2'>
-                <p className='text-3xl pb-4'>Address:</p>
+                <p className='text-2xl pb-4'>Address:</p>
                 <p className='text-wrap pb-4 w-5/6'>{address}</p>
                 <p className='pb-4'>{`Unit ID: ${id}`}</p>
                 <div className='flex justify-between w-5/6'>
@@ -143,7 +143,7 @@ const TenantDash = () => {
                 </div>
               </div>
               <div className=''>
-                  <p className='text-3xl pb-4'>Property Manager:</p>
+                  <p className='text-2xl pb-4'>Property Manager:</p>
                   <p className='pb-4'>{manager} <a className='underline text-[#0744A0]'>Contact</a></p>
                   <p className='pb-4'><a href={`tel:${managerNumber}`}>{`Phone: ${managerNumber}`}</a></p>
                   <p className='pb-4'>{`Email: ${managerEmail}`}</p>
@@ -173,8 +173,8 @@ const TenantDash = () => {
         </div>
       </div>
 
-      <div className='flex mx-16 space-x-8 mt-4 pb-8 w-full'>
-        <div className='bg-white rounded-2xl border-black border-2 w-3/5 p-4'>
+      <div className='flex mx-16 space-x-4 mt-4 pb-8 w-full'>
+        <div className='bg-white rounded-2xl border-black border-2 w-[62%] p-4'>
           <p>Payment History</p>
           <Table>   
                   <TableHeader>
@@ -192,11 +192,11 @@ const TenantDash = () => {
                   </TableBody>
                 </Table>
         </div>
-        <div className='bg-white rounded-2xl border-black border-2 w-1/4 p-4'>
+        <div className='bg-white rounded-2xl border-black border-2 w-1/4 px-6 py-4'>
             <p>Submit Maintenance Request</p>
             <div>
               <Textarea placeholder='Description' value={desc} onChange={(e) => setDesc(e.target.value)} required/>
-              <div className='flex justify-between'>
+              <div className='flex justify-between pt-2'>
               <div className='mb-2 block w-2/5'>
                 <Label htmlFor='prio' value='Priority'/>
                 <Select id='prio' value={prio} onChange={(e) => setPrio(e.target.value)} required>
@@ -225,9 +225,11 @@ const TenantDash = () => {
                   </Label>
                   <FileInput id="file-upload" onChange={(e) => handleImage(e)}/>
                 </div>
+                <div className='flex justify-end'>
                   <button onClick={handleRequest} className='bg-[#A0E6EF] rounded-xl px-6 py-2'>
                       Submit
                   </button>
+                  </div>
               </div>
             </div>
         </div> 

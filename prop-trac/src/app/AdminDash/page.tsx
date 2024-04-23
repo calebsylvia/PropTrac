@@ -66,10 +66,10 @@ const AdminDash = () => {
     <>
       <SideNav/>
       <div className='bg-[#FEFFF6] w-screen h-screen'>
-          <div className='w-3/4 ml-60'>
-          <p className='text-5xl py-5'>{`Welcome, ${name}`}</p>
+          <div className='w-3/5 ml-80'>
+          <p className='text-4xl pt-8 pb-7'>{`Welcome, ${name}`}</p>
           {/* Chart */}
-          <div className='w-full h-3/5 bg-white border-black border-2 rounded-2xl flex pl-8 py-4'>
+          <div className='w-full h-3/5 bg-white border-black border-2 rounded-2xl px-8 py-4'>
             <BarChartComponent/>
           </div>
 
@@ -99,7 +99,7 @@ const AdminDash = () => {
               <div className='bg-white border-black border-2 rounded-2xl'>
                   <p className='pl-5 pt-2'>Monthly Profit:</p>
                   <div className='flex justify-center py-4 pl-5'>
-                    <p className='text-6xl text-center'>{`$${profit}`}</p>
+                    <p className='text-5xl text-center'>{`$${profit}`}</p>
                     <Image className='my-auto' src={profArrow} alt='Profit Arrow Indicator'/>
                   </div>
               </div>
@@ -124,7 +124,7 @@ const AdminDash = () => {
               <div className='bg-white border-black border-2 rounded-2xl'>
                   <p className='pl-5 pt-2'>Monthly Expenses:</p>
                   <div className='flex justify-center py-4 pl-5'>
-                    <p className='text-6xl text-center'>{`$${expenses}`}</p>
+                    <p className='text-5xl text-center'>{`$${expenses}`}</p>
                     <Image className='my-auto' src={expArrow} alt='Expense Arrow Indicator'/>
                   </div>
               </div>

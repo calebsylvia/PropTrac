@@ -63,8 +63,9 @@ const LoginComponent = () => {
 
   return (
     <>
-    <div className="bg-white rounded-xl py-5">
-      <p className="text-3xl text-center pb-4 tracking-wide">Welcome Back</p>
+    <div className="bg-white rounded-xl py-6"> 
+      <p className="text-3xl text-center mt-4 pb-6 tracking-wide">Welcome Back</p>
+      <hr className="pb-6"/>
       <form className="flex flex-col gap-4">
             <div className="mx-auto">
               <div className="mb-2 block">
@@ -103,7 +104,7 @@ const LoginComponent = () => {
                 Forget Password?
               </a>
             </div>
-            <div className="mx-auto">
+            <div className="mx-auto mb-3">
               <a
                 onClick={handleCreate}
                 className="underline text-[#0744A0] text-sm text-center hover:cursor-pointer"
