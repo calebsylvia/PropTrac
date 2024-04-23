@@ -172,3 +172,9 @@ export const projectMonths = async(userId: number, month: number, year: number) 
     const data = await res.json()
     return data
 }
+
+export const getProperties = async(userId: number) => {
+    const res = await fetch(url + `/Manager/GetAllProperties/${userId}`)
+    const data = await res.json()
+    return data
+}

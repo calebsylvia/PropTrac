@@ -114,3 +114,24 @@ export interface IProfOrLoss {
 }
 
 
+export interface IProperties {
+    id:              number;
+    roomID:          null;
+    houseNumber:     string;
+    street:          string;
+    city:            string;
+    zip:             string;
+    state:           string;
+    houseOrRoomType: string;
+    houseRent:       number;
+    roomRent:        null;
+    rooms:           number;
+    baths:           number;
+    sqft:            number;
+    amenFeatList:    string;
+    description:     string;
+    tenantID:        number;
+    tenantAssigned:  boolean;
+}
+
+

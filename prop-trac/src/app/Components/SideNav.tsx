@@ -22,58 +22,58 @@ const SideNav = () => {
     <>
       <div
         className={`fixed bg-[#A2D7E2] h-full transition-all duration-200 ${
-          isOpen ? "w-56" : "w-32"
+          isOpen ? "w-[11rem]" : "w-24"
         }`}
         onMouseOver={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
-        <p className="text-4xl text-center text-[#5A5A5A] pt-3">
+        <p className="text-xl text-center text-[#5A5A5A] pt-3">
           PROP
           <br />
           TRAC
         </p>
-        <div className="flex flex-col pt-16 space-y-8">
-          <div className='flex justify-center hover:cursor-pointer' onClick={() => router.push('/AdminDash')}>
+        <div className="flex flex-col pt-16 space-y-12">
+          <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/AdminDash')}>
             <div className="w-12 justify-center">
-            <ChartLine className="mx-auto" size={48} />
+            <ChartLine className="mx-auto" size={29} />
             </div>
-            <p className={`my-auto ${isOpen ? 'block' : 'hidden'}`}>Dashboard</p>
+            <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Dashboard</p>
           </div>
-          <div className='flex justify-center hover:cursor-pointer' onClick={() => router.push('/Properties')}>
+          <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/Properties')}>
           <div className="w-12 justify-center">
-            <House className="mx-auto" size={48} />
+            <House className="mx-auto" size={29} />
             </div>
-            <p className={`my-auto ${isOpen ? 'block' : 'hidden'}`}>Properties</p>
+            <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Properties</p>
           </div>
-          <div className='flex justify-center hover:cursor-pointer' onClick={() => router.push('/Tenants')}>
+          <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/Tenants')}>
           <div className="w-12 justify-center">
-            <AddressBook className="mx-auto" size={48} />
+            <AddressBook className="mx-auto" size={29} />
             </div>
-            <p className={`my-auto ${isOpen ? 'block' : 'hidden'}`}>Tenants</p>
+            <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Tenants</p>
           </div>
-          <div className='flex justify-center hover:cursor-pointer' onClick={() => router.push('/Payments')}>
+          <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/Payments')}>
           <div className="w-12 justify-center">
-            <CreditCard className="mx-auto" size={48} />
+            <CreditCard className="mx-auto" size={29} />
             </div>
-            <p className={`my-auto ${isOpen ? 'block' : 'hidden'}`}>Payments</p>
+            <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Payments</p>
           </div>
-          <div className='flex justify-center hover:cursor-pointer' onClick={() => router.push('/AccountInfo')}>
+          <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/AccountInfo')}>
           <div className="w-12 justify-center">
-            <User className="mx-auto" size={48} />
+            <User className="mx-auto" size={29} />
             </div>
-            <p className={`my-auto ${isOpen ? 'block' : 'hidden'}`}>Account</p>
+            <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Account</p>
           </div>
-          <div className='flex justify-center hover:cursor-pointer' onClick={() => router.push('/Maintenance')}>
+          <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/Maintenance')}>
             <div className="w-12 justify-center">
-            <Toolbox className="mx-auto" size={48} />
+            <Toolbox className="mx-auto" size={29} />
             </div>
-            <p className={`my-auto ${isOpen ? 'block' : 'hidden'}`}>Maintenance</p>
+            <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Maintenance</p>
           </div>
-          <div className='flex justify-center hover:cursor-pointer' onClick={() => router.push('/')}>
+          <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/')}>
           <div className="w-12 justify-center">
-            <Power className="mx-auto" size={48} />
+            <Power className="mx-auto" size={29} />
             </div>
-            <p className={`my-auto ${isOpen ? 'block' : 'hidden'}`}>Log Out</p>
+            <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Log Out</p>
           </div>
         </div>
       </div>

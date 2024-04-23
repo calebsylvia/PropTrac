@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { Chart as ChartJS, Tooltip, Legend, Title, LinearScale, CategoryScale, BarElement } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 import { getPrevMonths, projectMonths } from '@/Utils/DataService'
-import { IPrev, PrevArr } from '@/Interfaces/Interfaces'
+import { IPrev } from '@/Interfaces/Interfaces'
 
 const BarChartComponent = () => {
 
-   const [previous, setPrevious] = useState<IPrev []>([])
-   const [next, setNext] = useState<IPrev []>([])
+   const [previous, setPrevious] = useState<IPrev[]>()
+   const [next, setNext] = useState<IPrev[]>()
 
 
 
@@ -24,7 +24,6 @@ const BarChartComponent = () => {
     let months =['January', 'February', 'March', 'April','May', 'June', 'July', 'August','September', 'October', 'November', 'December'];
     let date = new Date().getMonth()
     let year = new Date().getFullYear()
-    let ID = localStorage.getItem("ID")
 
     const getMonth = (month: number, number: number) => {
         if(date + number < 0){
@@ -43,22 +42,23 @@ const BarChartComponent = () => {
         let ID = localStorage.getItem("ID")
         
         const getPrevious = async(userId: number, month: number, year: number) => {
-            const data = await getPrevMonths(userId, month, year)
+            const data: IPrev[] = await getPrevMonths(userId, month, year)
             console.log(data)
             setPrevious(data)
         }
 
         const getNext = async(userId: number, month: number, year: number) => {
-            const data = await projectMonths(userId, month, year)
+            const data: IPrev[] = await projectMonths(userId, month, year)
             console.log(data)
             setNext(data)
         }
 
-        getPrevious(parseInt(ID!), date, year)
-        getNext(parseInt(ID!), date, year)
+        getPrevious(parseInt(ID!), date + 1, year)
+        getNext(parseInt(ID!), date + 1, year)
 
         console.log(previous)
     }, [])
+
 
 
 
@@ -69,12 +69,12 @@ const BarChartComponent = () => {
         datasets: [
             {
                 label: 'Money In',
-                data: labels.map(() => '0'),
+                data: previous && previous.map((mon) => mon.revenueTotal),
                 backgroundColor: 'rgb(141, 211, 148)'
             },
             {
                 label: 'Money Out',
-                data: labels.map(() => '0'),
+                data: previous && previous.map((mon) => mon.expenseTotal),
                 backgroundColor: 'rgb(222, 118, 118)'
             }
         ]
@@ -101,6 +101,11 @@ const BarChartComponent = () => {
                         size: 16
                     }
                 }
+            }
+        },
+        scales: {
+            y: {
+                suggestedMax: 3000
             }
         }
     }
