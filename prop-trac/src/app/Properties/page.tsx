@@ -27,7 +27,13 @@ const Properties = () => {
     <SideNav/>
       <div className='bg-[#FEFFF6] w-screen h-screen'>
           <div className='ml-52'>
-            <div className='flex justify-end pt-5 pr-10'>
+            <div className='flex justify-between pt-5 pr-10'>
+            <div>
+            <button className='flex'>
+              <PlusSquare size={32} />
+              <p className='my-auto'>Add Property</p>
+            </button>
+            </div>
               <div className='relative w-72 '>
               <input type="search" className='w-72 h-10 border-0 rounded-xl bg-gray-200 text-sm' placeholder='Search Properties'/>
               <MagnifyingGlass className='absolute top-[10px] right-3 opacity-65' size={20} />
@@ -56,7 +62,7 @@ const Properties = () => {
                                   <p className='text-xs'>{`${prop.city}, ${prop.state} ${prop.zip}`}</p>
                                 </TableCell>
                                 <TableCell>{prop.id}</TableCell>
-                                <TableCell>{`$${prop.houseRent}`}</TableCell>
+                                <TableCell>{`$${prop.houseOrRoomType === "Rooms" ? prop.roomRent : prop.houseRent}`}</TableCell>
                                 <TableCell>{prop.houseOrRoomType}</TableCell>
                                 <TableCell>{prop.rooms}</TableCell>
                                 <TableCell><p className={`${prop.tenantAssigned ? 'bg-red-400 rounded-xl' : 'bg-green-300 w-10 rounded-xl'} w-16 h-7 text-center pt-1`}>{prop.tenantAssigned ? 'Booked' : 'Vacant'}</p></TableCell>
@@ -67,11 +73,6 @@ const Properties = () => {
                   </TableBody>
                 </Table>
             </div>
-
-            <button className='flex pt-10'>
-              <PlusSquare size={32} />
-              <p className='my-auto'>Add Property</p>
-            </button>
           </div>
       </div>
     </>

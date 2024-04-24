@@ -126,12 +126,12 @@ const TenantDash = () => {
           <div className='flex bg-white rounded-2xl border-black border-2 p-8 w-full space-x-4'>
               <div className='w-1/2'>
                 <p className='text-2xl pb-4'>Address:</p>
-                <p className='text-wrap pb-4 w-5/6'>{address}</p>
+                <p className='text-wrap pb-4 w-5/6'>{address === null ? 'N/A' : address}</p>
                 <p className='pb-4'>{`Unit ID: ${id}`}</p>
                 <div className='flex justify-between w-5/6'>
                   <p className=''>Lease:</p>
                   <div className='text-sm'>
-                    <p>{`Type- ${leaseType}`}</p>
+                    <p>{`Type- ${leaseType === null ? 'N/A' : leaseType}`}</p>
                     <p>{`Start- ${leaseStart}`}</p>
                     <p>{`End- ${leaseEnd}`}</p>
                   </div>
@@ -144,9 +144,9 @@ const TenantDash = () => {
               </div>
               <div className=''>
                   <p className='text-2xl pb-4'>Property Manager:</p>
-                  <p className='pb-4'>{manager} <a className='underline text-[#0744A0]'>Contact</a></p>
-                  <p className='pb-4'><a href={`tel:${managerNumber}`}>{`Phone: ${managerNumber}`}</a></p>
-                  <p className='pb-4'>{`Email: ${managerEmail}`}</p>
+                  <p className='pb-4'>{manager === null ? 'Not Assigned' : manager} <a className='underline text-[#0744A0]'>Contact</a></p>
+                  <p className='pb-4'><a href={`tel:${managerNumber}`}>{`Phone: ${managerNumber === null ? 'N/A' : managerNumber}`}</a></p>
+                  <p className='pb-4'>{`Email: ${managerEmail === null ? 'N/A' : managerEmail}`}</p>
               </div>
           </div>
           <div className='flex'>

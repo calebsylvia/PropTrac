@@ -77,12 +77,12 @@ const BarChartComponent = () => {
         datasets: [
             {
                 label: 'Money In',
-                data: previous && previous.map((mon) => mon.revenueTotal),
+                data: current ? previous && previous.map((mon) => mon.revenueTotal) : next && next.map((mon) => mon.revenueTotal),
                 backgroundColor: 'rgb(141, 211, 148)'
             },
             {
                 label: 'Money Out',
-                data: previous && previous.map((mon) => mon.expenseTotal),
+                data: current ? previous && previous.map((mon) => mon.expenseTotal) : next && next.map((mon) => mon.expenseTotal),
                 backgroundColor: 'rgb(222, 118, 118)'
             }
         ]
@@ -121,11 +121,11 @@ const BarChartComponent = () => {
     <>
             <Bar data={data} options={options}/>
             <div className='flex justify-between mt-5 mb-2'>
-                <button className='flex' onClick={handlePrev}>
+                <button className={`flex ${current ? 'text-transparent' : ''}`} onClick={handlePrev} disabled={current ? true : false}>
                     <CaretLeft size={24} weight="bold" />
                     <p className='my-auto text-sm'>Past 6 Months</p>
                 </button>
-                <button className='flex' onClick={handleNext}>
+                <button className={`flex ${current ? '' : 'text-transparent'}`} onClick={handleNext} disabled={current ? false : true}>
                     <p className='my-auto text-sm'>Projected 6 Months</p>
                     <CaretRight size={24} weight="bold" />
                 </button>

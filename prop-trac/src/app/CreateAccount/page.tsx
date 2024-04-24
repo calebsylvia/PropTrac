@@ -83,25 +83,25 @@ const CreateAccount = () => {
                 <div className='flex justify-between'>
                   <div className='mb-2 block'>
                   <Label htmlFor='accountType' value='Account Type'/>
-                  <Select className='w-72' id='accountType' onChange={(e) => {e.target.value === "manager" ? setIsManager(true) : setIsManager(false)}}  required>
+                  <Select className='w-56' id='accountType' onChange={(e) => {e.target.value === "manager" ? setIsManager(true) : setIsManager(false)}}  required>
                     <option value="manager">Manager</option>
                     <option value="tenant">Tenant</option>
                   </Select>
                   </div>
                   <div className='mb-2 block'>
                     <Label htmlFor='username' value='Username'/>
-                    <TextInput max={20} className='w-72' id='username' placeholder='Username' type='text' onChange={(e) => {setUsername(e.target.value)}} required/>
+                    <TextInput max={20} className='w-56' id='username' placeholder='Username' type='text' onChange={(e) => {setUsername(e.target.value)}} required/>
                   </div>
                 </div>
 
                 <div className='flex justify-between'>
                 <div className='mb-2 block'>
                     <Label htmlFor='firstName' value='First Name'/>
-                    <TextInput className='w-72' id='firstName' placeholder='First Name' type='text' onChange={(e) => {setFirstName(e.target.value)}} required/>
+                    <TextInput className='w-56' id='firstName' placeholder='First Name' type='text' onChange={(e) => {setFirstName(e.target.value)}} required/>
                   </div>
                   <div className='mb-2 block'>
                     <Label htmlFor='lastName' value='Last Name'/>
-                    <TextInput className='w-72' id='lastName' placeholder='Last Name' type='text' onChange={(e) => {setLastName(e.target.value)}} required/>
+                    <TextInput className='w-56' id='lastName' placeholder='Last Name' type='text' onChange={(e) => {setLastName(e.target.value)}} required/>
                   </div>
                 </div>
 
@@ -113,7 +113,7 @@ const CreateAccount = () => {
                 <div className='flex justify-between'>
                 <div className='mb-2 block'>
                     <Label htmlFor='password' value='Password'/>
-                    <TextInput min={8} className='w-72' id='password' placeholder='Password' type='password' onChange={(e) => {setTestPass(e.target.value);
+                    <TextInput min={8} className='w-56' id='password' placeholder='Password' type='password' onChange={(e) => {setTestPass(e.target.value);
                     testPass.length < 8 ? setIsEight(false) : setIsEight(true)
                     }} required/>
                     <p className={`text-red-600 text-[10px] pl-1 pt-1 ${isEight ? "hidden" : ""}`}>Password must be 8 characters long</p>
@@ -121,7 +121,7 @@ const CreateAccount = () => {
                 <div className='mb-2 block'>
                 <Label htmlFor='confirmPass' value='Confirm Password'/>
                 
-                    <TextInput className='w-72' id='confirmPass' placeholder='Confirm Password' type='password' onChange={(e) => {
+                    <TextInput className='w-56' id='confirmPass' placeholder='Confirm Password' type='password' onChange={(e) => {
                       e.target.value === testPass ? (setPassword(e.target.value), setMatch(true)) : setMatch(false)}} required/>
                       <p className={`text-red-600 text-[10px] pl-1 pt-1 ${match ? "hidden" : ""}`}>Password does not match</p>
                 </div>
@@ -130,7 +130,7 @@ const CreateAccount = () => {
                 <div className='flex justify-between'>
                   <div className='mb-2 block'>
                   <Label htmlFor='securityQ' value='Security Question'/>
-                  <Select className='w-72' id='securityQ' onChange={(e) => {setSecurityId(parseInt(e.target.value))}} required>
+                  <Select className='w-56' id='securityQ' onChange={(e) => {setSecurityId(parseInt(e.target.value))}} required>
                     {
                       securityArray && securityArray.map((question, idx) => 
                           <option key={idx} value={idx + 1}>{question}</option>
@@ -140,7 +140,7 @@ const CreateAccount = () => {
                   </div>
                   <div className='mb-2 block'>
                     <Label htmlFor='securityA' value='Security Answer'/>
-                    <TextInput className='w-72' id='securityA' placeholder='Security Answer' type='text' onChange={(e) => {
+                    <TextInput className='w-56' id='securityA' placeholder='Security Answer' type='text' onChange={(e) => {
                       setSecurityAns(e.target.value)
                       }} required/>
                   </div>
