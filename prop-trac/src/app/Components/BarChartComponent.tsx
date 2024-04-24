@@ -120,7 +120,7 @@ const BarChartComponent = () => {
   return (
     <>
             <Bar data={data} options={options}/>
-            <div className='flex justify-between mt-3'>
+            <div className='flex justify-between mt-5 mb-2'>
                 <button className='flex' onClick={handlePrev}>
                     <CaretLeft size={24} weight="bold" />
                     <p className='my-auto text-sm'>Past 6 Months</p>
