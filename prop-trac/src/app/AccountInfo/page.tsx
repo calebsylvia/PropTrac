@@ -27,11 +27,11 @@ const AccountInfo = () => {
                 <p className=''>{`Name: ${name}`}</p>
                 <p>{`Email: ${email}`}</p>
                 <p>{`Phone: ${phone}`}</p>
-                <div className='flex flex-cols-2'>
+                <div className='grid grid-cols-2 gap-20'>
                     <p>{`Role: ${role ? "Manager" : "N/A"}`}</p>
                     <p>{`Location: ${location}`}</p>
                 </div>
-                <div className='flex justify-between'> 
+                <div className='grid grid-cols-2 gap-20'> 
                     <p>{`Total Properties: ${propCount}`}</p>
                     <p>{`Language: ${language}`}</p>
                 </div>

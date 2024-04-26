@@ -8,7 +8,7 @@ import house from '@/app/Assets/House 2.png'
 import download from '@/app/Assets/FileArrowDown.png'
 import wallet from '@/app/Assets/Vector 2.png'
 import { ITenant } from '@/Interfaces/Interfaces'
-import { addRequest, getTenantInfo } from '@/Utils/DataService'
+import { addRequest, checkToken, getTenantInfo } from '@/Utils/DataService'
 import {Table, TableHeader, TableBody, TableHead, TableRow} from '@/components/ui/table'
 import { useToast } from '@/components/ui/use-toast'
 import { Blob } from 'buffer'
@@ -40,6 +40,11 @@ const TenantDash = () => {
   const router = useRouter()
   const { toast } = useToast()
 
+  
+  if(!checkToken()){
+    router.push('/')
+  }
+
   useEffect(() => {
     const getTenant = async() => {
       let ID = localStorage.getItem("ID")
@@ -47,12 +52,20 @@ const TenantDash = () => {
       console.log(tenantInfo)
       setUserId(parseInt(ID!))
       setName(tenantInfo.firstName)
-      setAddress(`${tenantInfo.houseNumber} ${tenantInfo.street}, ${tenantInfo.state} ${tenantInfo.zip}`)
+      if(tenantInfo.houseNumber === null){
+        setAddress('Not Assigned')
+      }else{
+        setAddress(`${tenantInfo.houseNumber} ${tenantInfo.street}, ${tenantInfo.state} ${tenantInfo.zip}`)
+      }
       setId(tenantInfo.id)
       setLeaseType(tenantInfo.leaseType)
-      setLeaseStart(tenantInfo.leaseStart)
-      setLeaseEnd(tenantInfo.leaseEnd)
-      setManager(`${tenantInfo.managerFirst} ${tenantInfo.managerLast}`)
+      setLeaseStart((tenantInfo.leaseStart).substring(0,10))
+      setLeaseEnd((tenantInfo.leaseEnd).substring(0,10))
+      if(tenantInfo.managerFirst === null){
+        setManager('Not Assigned')
+      }else{
+        setManager(`${tenantInfo.managerFirst} ${tenantInfo.managerLast}`)
+      }
       setManagerEmail(tenantInfo.managerEmail)
       setManagerNumber(tenantInfo.managerPhone)
     }
@@ -112,28 +125,28 @@ const TenantDash = () => {
 
   return (
     <>
-    <div className='bg-[#FEFFF6] w-screen h-screen'>
-      <div className='flex justify-between mx-20 pt-12 pb-10'>
-        <p className='text-4xl'>{`Welcome, ${name}`}</p>
-        <button className='my-auto' onClick={handleLogout}>
+    <div className='bg-[#FEFFF6]'>
+      <div className='flex justify-between px-44 pt-12 pb-10'>
+        <p className='text-3xl'>{`Welcome, ${name}!`}</p>
+        <button className='my-auto pr-3' onClick={handleLogout}>
             <Image className='w-8' src={logout} alt='Logout Button'/>
         </button>
       </div>
 
 
-      <div className='flex mx-16 space-x-20'>
+      <div className='flex px-44 space-x-14'>
         <div className='w-2/3 space-y-4'>
           <div className='flex bg-white rounded-2xl border-black border-2 p-8 w-full space-x-4'>
               <div className='w-1/2'>
-                <p className='text-2xl pb-4'>Address:</p>
+                <p className='text-xl pb-4'>Address:</p>
                 <p className='text-wrap pb-4 w-5/6'>{address === null ? 'N/A' : address}</p>
                 <p className='pb-4'>{`Unit ID: ${id}`}</p>
                 <div className='flex justify-between w-5/6'>
                   <p className=''>Lease:</p>
                   <div className='text-sm'>
-                    <p>{`Type- ${leaseType === null ? 'N/A' : leaseType}`}</p>
-                    <p>{`Start- ${leaseStart}`}</p>
-                    <p>{`End- ${leaseEnd}`}</p>
+                    <p>{`Type: ${leaseType === null ? 'N/A' : leaseType}`}</p>
+                    <p>{`Start: ${leaseStart}`}</p>
+                    <p>{`End: ${leaseEnd}`}</p>
                   </div>
                   <div>
                       <a>
@@ -143,7 +156,7 @@ const TenantDash = () => {
                 </div>
               </div>
               <div className=''>
-                  <p className='text-2xl pb-4'>Property Manager:</p>
+                  <p className='text-xl pb-4'>Property Manager:</p>
                   <p className='pb-4'>{manager === null ? 'Not Assigned' : manager} <a className='underline text-[#0744A0]'>Contact</a></p>
                   <p className='pb-4'><a href={`tel:${managerNumber}`}>{`Phone: ${managerNumber === null ? 'N/A' : managerNumber}`}</a></p>
                   <p className='pb-4'>{`Email: ${managerEmail === null ? 'N/A' : managerEmail}`}</p>
@@ -173,8 +186,8 @@ const TenantDash = () => {
         </div>
       </div>
 
-      <div className='flex mx-16 space-x-4 mt-4 pb-8 w-full'>
-        <div className='bg-white rounded-2xl border-black border-2 w-[62%] p-4'>
+      <div className='flex px-44 space-x-4 mt-4 pb-8 w-full'>
+        <div className='bg-white rounded-2xl border-black border-2 w-[67%] p-4'>
           <p>Payment History</p>
           <Table>   
                   <TableHeader>
@@ -192,7 +205,7 @@ const TenantDash = () => {
                   </TableBody>
                 </Table>
         </div>
-        <div className='bg-white rounded-2xl border-black border-2 w-1/4 px-6 py-4'>
+        <div className='bg-white rounded-2xl border-black border-2 w-[30%] px-6 py-4'>
             <p>Submit Maintenance Request</p>
             <div>
               <Textarea placeholder='Description' value={desc} onChange={(e) => setDesc(e.target.value)} required/>
@@ -223,7 +236,7 @@ const TenantDash = () => {
                       <p>Upload Image(s)</p>
                     </div>
                   </Label>
-                  <FileInput id="file-upload" onChange={(e) => handleImage(e)}/>
+                  <FileInput disabled={true} id="file-upload" onChange={(e) => handleImage(e)}/>
                 </div>
                 <div className='flex justify-end'>
                   <button onClick={handleRequest} className='bg-[#A0E6EF] rounded-xl px-6 py-2'>

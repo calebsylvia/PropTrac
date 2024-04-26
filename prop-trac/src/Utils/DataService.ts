@@ -1,4 +1,4 @@
-import { IForgot, IRequest, IReset, IResponse, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
+import { IAddProp, IForgot, IRequest, IReset, IResponse, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
 
 const url = 'https://proptracapi.azurewebsites.net';
 
@@ -13,12 +13,12 @@ export const createAccount = async(createdUser: IUserInfo) => {
     });
 
     if(!res.ok){
-        const message = "An error has occured " + res.status;
-        throw new Error(message);
+        return false;
     }
 
     const data = await res.json();
     console.log(data)
+    return data
 }
 
 
@@ -124,6 +124,23 @@ export const addRequest = async(request: IRequest) => {
 
     const data = await res.json()
     return data;
+}
+
+export const addProperty = async(property: IAddProp) => {
+    const res = await fetch(url + '/Manager/AddProperty', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(property)
+    })
+
+    if(!res.ok){
+        return false
+    }
+
+    const data = await res.json()
+    return data
 }
 
 export const getUserInfo = async(UsernameOrEmail:string) => {

@@ -3,11 +3,22 @@ import React, { useState } from 'react'
 import SideNav from '../Components/SideNav'
 import PieChartComponent from '../Components/PieChartComponent'
 import {Table, TableHeader, TableBody, TableHead, TableRow} from '@/components/ui/table'
+import { checkToken } from '@/Utils/DataService'
+import { useRouter } from 'next/navigation'
 
 const Payments = () => {
 
   const [manager, setManager] = useState<string>("Baleb")
   const [active, setActive] = useState<number>(20)
+
+  const router = useRouter()
+
+  
+  if(!checkToken()){
+    router.push('/')
+  }
+
+  
   return (
     <>
     <SideNav/>

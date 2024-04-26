@@ -1,5 +1,6 @@
 'use client'
 import Image, { StaticImageData } from 'next/image'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import downGreen from '@/app/Assets/downGreen.png'
 import downRed from '@/app/Assets/downRed.png'
@@ -9,7 +10,7 @@ import house from '@/app/Assets/propHouse.png'
 import BarChartComponent from '../Components/BarChartComponent'
 import SideNav from '../Components/SideNav'
 import { IMaintenance, IProfOrLoss, IPropStats } from '@/Interfaces/Interfaces'
-import { getListingStats, getMaintenance, getMonthly } from '@/Utils/DataService'
+import { checkToken, getListingStats, getMaintenance, getMonthly } from '@/Utils/DataService'
 
 const AdminDash = () => {
 
@@ -24,6 +25,7 @@ const AdminDash = () => {
   const [propertyCount, setPropertyCount] = useState<number>(7)
   const [mainReqArr, setMainReqArr] = useState<IMaintenance[]>([])
 
+  const router = useRouter()
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString('en-US', {
     weekday: 'long',
@@ -32,7 +34,12 @@ const AdminDash = () => {
     day: 'numeric',
   });
 
+  if(!checkToken()){
+    router.push('/')
+  }
+
   useEffect(() => {
+  
     if (typeof window !== 'undefined') {
       let id = localStorage.getItem("ID")
       setId(parseInt(id!))
@@ -43,6 +50,7 @@ const AdminDash = () => {
       setActiveTenants(propStats.activeTenants)
       setOpenListing(propStats.openListings)
       setPropertyCount(propStats.properties)
+      setName(propStats.firstName)
     }
     getPropStats(id)
 
@@ -73,9 +81,9 @@ const AdminDash = () => {
     <>
       <SideNav />
       <div className='bg-[#FEFFF6] w-screen h-screen'>
-        <div className='w-3/5 ml-80'>
+        <div className='w-2/3 ml-56'>
           <div className='flex justify-between items-baseline pt-12 pb-9'>
-            <p className='text-3xl'>{`Welcome, ${name}`}</p>
+            <p className='text-3xl'>{`Welcome, ${name}!`}</p>
             <p className='text-lg text-[#5A5A5A]'>{formattedDate}</p>
           </div>
           {/* Chart */}
@@ -84,7 +92,7 @@ const AdminDash = () => {
           </div>
 
           <div className='grid grid-cols-3 grid-flow-row gap-6 pt-6 pb-20 h-[675px]'>
-            <div className='row-span-3 bg-white border-black border-2 rounded-2xl'>
+            <div className='row-span-2 bg-white border-black border-2 rounded-2xl'>
               <p className='text-center text-xl pt-3 pb-5'>Maintenance Request:</p>
               <div>
                 {
@@ -104,18 +112,17 @@ const AdminDash = () => {
                   )
                 }
               </div>
-              {/* <p className='underline text-[#A0B5EF] text-center  hover:cursor-pointer'>View all Requests</p> */}
             </div>
             <div className='bg-white border-black border-2 rounded-2xl'>
               <p className='pl-5 pt-2'>Monthly Profit:</p>
-              <div className='flex justify-center py-4 pl-5'>
+              <div className='flex justify-center py-6 pl-5'>
                 <p className='text-5xl text-center'>{`$${profit}`}</p>
                 <Image className='my-auto' src={profArrow} alt='Profit Arrow Indicator' />
               </div>
             </div>
             <div className='row-span-2 bg-white border-black border-2 rounded-2xl'>
               <Image className='mx-auto pb-3 pt-2' src={house} alt='White house with Red Roof' />
-              <hr className='w-5/6 mx-auto border-gray-400 pb-4' />
+              <hr className='w-5/6 mx-auto border-gray-400 py-3' />
               <div className='flex justify-evenly'>
                 <div className='text-center'>
                   <p>Active Tenants</p>
@@ -133,12 +140,12 @@ const AdminDash = () => {
             </div>
             <div className='bg-white border-black border-2 rounded-2xl'>
               <p className='pl-5 pt-2'>Monthly Expenses:</p>
-              <div className='flex justify-center py-4 pl-5'>
+              <div className='flex justify-center py-6 pl-5'>
                 <p className='text-5xl text-center'>{`$${expenses}`}</p>
                 <Image className='my-auto' src={expArrow} alt='Expense Arrow Indicator' />
               </div>
             </div>
-            <div className='col-span-2 bg-white border-black border-2 rounded-2xl h-[250px]'>
+            <div className='col-span-3 h-[250px]'>
 
             </div>
           </div>

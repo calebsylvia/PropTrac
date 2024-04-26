@@ -39,7 +39,7 @@ const CreateAccount = () => {
       getQuestions()
   }, [])
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async(e: any) => {
         e.preventDefault();
 
         if(password.length < 8 && testPass.length < 8){
@@ -57,9 +57,14 @@ const CreateAccount = () => {
             SecurityAnswer: securityAns,
             SecurityQuestionID: securityId
           }
-          createAccount(userInfo)
+          let success: boolean = await createAccount(userInfo)
+          
+          if(success === true){
             toast({description: "Account creation successful!"})
             router.push('/')
+          }else{
+            toast({description: "Username or Email is already exists", variant: 'destructive'})
+          }
         }
     }
 
@@ -113,8 +118,8 @@ const CreateAccount = () => {
                 <div className='flex justify-between'>
                 <div className='mb-2 block'>
                     <Label htmlFor='password' value='Password'/>
-                    <TextInput min={8} className='w-56' id='password' placeholder='Password' type='password' onChange={(e) => {setTestPass(e.target.value);
-                    testPass.length < 8 ? setIsEight(false) : setIsEight(true)
+                    <TextInput className='w-56' id='password' placeholder='Password' type='password' onChange={(e) => {setTestPass(e.target.value);
+                    testPass.length < 7 ? setIsEight(false) : setIsEight(true)
                     }} required/>
                     <p className={`text-red-600 text-[10px] pl-1 pt-1 ${isEight ? "hidden" : ""}`}>Password must be 8 characters long</p>
                 </div>

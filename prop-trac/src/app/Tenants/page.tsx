@@ -10,7 +10,13 @@ const Tenants = () => {
     <div className='bg-[#FEFFF6] w-screen h-screen'>
       <SideNav/>
       <div className='ml-60'>
-      <div className='flex justify-end pt-5 pr-10'>
+      <div className='flex justify-between pt-5 pr-10'>
+        <div>
+        <button className='flex'>
+              <PlusSquare size={32} />
+              <p className='my-auto'>Add Tenant</p>
+            </button>
+        </div>
               <div className='relative w-72 '>
               <input type="search" className='w-72 h-10 border-0 rounded-xl bg-gray-200' placeholder='Search Properties'/>
               <MagnifyingGlass className='absolute top-[5px] right-2 opacity-65' size={30} />
@@ -38,11 +44,6 @@ const Tenants = () => {
                   </TableBody>
                 </Table>
             </div>
-
-            <button className='flex pt-10'>
-              <PlusSquare size={32} />
-              <p className='my-auto'>Add Tenant</p>
-            </button>
       </div>
     </div>
     </>

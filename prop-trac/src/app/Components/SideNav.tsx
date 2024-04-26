@@ -5,6 +5,7 @@ import {
   CreditCard,
   House,
   Power,
+  SignOut,
   Toolbox,
   User,
 } from "@phosphor-icons/react";
@@ -17,6 +18,10 @@ const SideNav = () => {
   const router = useRouter()
 
 
+  const handleLog = () => {
+    localStorage.clear()
+    router.push('/')
+  }
 
   return (
     <>
@@ -69,9 +74,9 @@ const SideNav = () => {
             </div>
             <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Maintenance</p>
           </div>
-          <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={() => router.push('/')}>
+          <div className={`flex ${isOpen ? 'justify-start pl-4' : 'justify-center'} hover:cursor-pointer`} onClick={handleLog}>
           <div className="w-12 justify-center">
-            <Power className="mx-auto" size={30} />
+          <SignOut className="mx-auto" size={30} />
             </div>
             <p className={`my-auto text-sm ${isOpen ? 'block' : 'hidden'}`}>Log Out</p>
           </div>
