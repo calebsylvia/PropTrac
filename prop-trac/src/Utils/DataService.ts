@@ -43,8 +43,11 @@ export const login = async(loginUser: IUser) => {
 
 export const checkToken = () => {
     let result = false;
+    let localData;
 
-    let localData = localStorage.getItem("Token");
+    if(typeof window !== undefined){
+     localData = localStorage.getItem("Token");
+    }
 
     if(localData !=null){
         result = true
