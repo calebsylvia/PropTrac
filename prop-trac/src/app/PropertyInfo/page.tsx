@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import SideNav from '../Components/SideNav'
 import { Bathtub, Bed, CaretCircleLeft, NotePencil, Trash } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'
@@ -10,6 +10,7 @@ import upGreen from '@/app/Assets/upGreen.png'
 import upRed from '@/app/Assets/upRed.png'
 import MapComponent from '../Components/MapComponent'
 import test from '@/app/Assets/bg.png'
+import { PropContext } from '../Context/PropContext'
 
 
 const PropertyInfo = () => {
@@ -31,10 +32,15 @@ const PropertyInfo = () => {
   const [lng, setLng] = useState<number>(0)
 
   const router = useRouter()
+  const prop = useContext(PropContext)
 
   const handleBack = () => {
     router.push('/Properties')
   }
+
+  useEffect(() => {
+    
+  },[])
 
 
   return (
@@ -50,7 +56,7 @@ const PropertyInfo = () => {
             <div className='w-2/5'>
               <div className='pb-16'>
                 <Image src={image} alt='Property Image' className='w-4/5 max-h-[200px] mb-3 rounded-xl shadow-[0_5px_5px_2px_rgba(60,60,60,0.4)]'/>
-                <p className='font-semibold text-lg'>123 Dreary Ln</p>
+                <p className='font-semibold text-lg'>123 Random Street</p>
                 <p className='text-sm'>Stockton, CA 95209</p>
               </div>
               <div className='bg-white border-black border-2 rounded-xl w-3/5'>

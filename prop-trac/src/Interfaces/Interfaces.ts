@@ -156,5 +156,19 @@ export interface RoomsList {
     roomRent: number;
 }
 
+export interface PropInfo {
+    address: string,
+    cityState: string,
+    income: number,
+    expenses: number,
+    profit: number,
+    rooms: number,
+    baths: number,
+    sqft: number,
+    description: string,
+    featsAmen: string,
+    roomList: RoomsList[]
+}
+
 
 

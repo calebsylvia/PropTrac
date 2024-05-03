@@ -96,18 +96,18 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <div className="background w-screen h-screen flex">
-        <div className="w-1/3 text-center pl-20 pt-20">
-          <h1 className="text-9xl text-[#5A5A5A]">
+      <div className="background w-screen h-screen lg:flex">
+        <div className="lg:w-1/3 text-center lg:pl-20 pt-20">
+          <h1 className="text-7xl lg:text-9xl text-[#5A5A5A]">
             PROP
             <br />
             TRAC
           </h1>
-          <p className="">Property management at your fingertips</p>
+          <p className="max-lg:text-xs">Property management at your fingertips</p>
         </div>
-        <div className="w-[400px] min-h-2/5 m-auto bg-white rounded-xl">
-          <p className="text-center text-2xl pt-8">Reset Password</p>
-          <div className="mb-2 block w-4/5 m-auto pt-8">
+        <div className="w-72 md:w-96 lg:w-[400px] max-lg:mt-8 min-h-2/5 m-auto bg-white rounded-xl">
+          <p className="text-center text-lg lg:text-2xl pt-8">Reset Password</p>
+          <div className="mb-2 block w-2/3 lg:w-4/5 m-auto pt-8">
             <Label
               className={`${(showQuestion && successOne) || showNewPass  ? "hidden" : "block"}`}
               htmlFor="usernameOrEmail"
@@ -162,7 +162,7 @@ const ForgotPassword = () => {
             />
           </div>
 
-          <div className="flex justify-end pr-10 gap-3 pt-10 pb-8">
+          <div className="flex justify-end pr-16 lg:pr-10 gap-3 pt-5 lg:pt-10 pb-8">
             <Button
               className={`${(showQuestion && successOne) ? "hidden" : "block"}`}
               onClick={handleCancel}

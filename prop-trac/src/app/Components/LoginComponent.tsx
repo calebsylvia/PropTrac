@@ -63,7 +63,7 @@ const LoginComponent = () => {
 
   return (
     <>
-    <div className="bg-white rounded-xl py-6"> 
+    <div className="max-sm:w-5/6 w-[400px] bg-white rounded-xl py-6"> 
       <p className="text-3xl text-center mt-4 pb-6 tracking-wide">Welcome Back</p>
       <hr className="pb-6"/>
       <form className="flex flex-col gap-4">
@@ -74,27 +74,27 @@ const LoginComponent = () => {
               <TextInput
                 id="email1"
                 type="text"
-                className="w-72 border-black"
+                className="w-48 md:w-72 border-black"
                 onChange={(e) => {setUsername(e.target.value)}}
                 required
               />
             </div>
-            <div className="mb-8 mx-auto">
+            <div className="mb-3 md:mb-8 mx-auto">
               <div className="mb-2 block">
                 <Label htmlFor="password1" value="Password" />
               </div>
               <TextInput
                 id="password1"
                 type="password"
-                className="w-72 border-black"
+                className="w-48 md:w-72 border-black"
                 onChange={(e) => {setPassword(e.target.value)}}
                 required
               />
             </div>
 
-            <div className="flex space-x-6 mb-4 mx-auto">
+            <div className="md:flex md:space-x-6 mb-4 mx-auto">
               <Button
-                className="w-36"
+                className="w-28 md:w-36 max-sm:mb-3"
                 color="light"
                 onClick={handleLogin}
               >

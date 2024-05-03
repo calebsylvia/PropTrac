@@ -40,17 +40,23 @@ const TenantDash = () => {
   const router = useRouter()
   const { toast } = useToast()
 
+  let iD: any;
   
   if(!checkToken()){
     router.push('/')
   }
 
+  if (typeof window !== 'undefined') {
+    iD = localStorage.getItem("ID")
+    
+  }
+
   useEffect(() => {
     const getTenant = async() => {
-      let ID = localStorage.getItem("ID")
-      let tenantInfo: ITenant = await getTenantInfo(parseInt(ID!))
+      setUserId(parseInt(iD!))
+      let tenantInfo: ITenant = await getTenantInfo(iD)
       console.log(tenantInfo)
-      setUserId(parseInt(ID!))
+      
       setName(tenantInfo.firstName)
       if(tenantInfo.houseNumber === null){
         setAddress('Not Assigned')
@@ -126,7 +132,7 @@ const TenantDash = () => {
   return (
     <>
     <div className='bg-[#FEFFF6]'>
-      <div className='flex justify-between px-44 pt-12 pb-10'>
+      <div className='flex justify-between lg:px-44 pt-12 pb-10'>
         <p className='text-3xl'>{`Welcome, ${name}!`}</p>
         <button className='my-auto pr-3' onClick={handleLogout}>
             <Image className='w-8' src={logout} alt='Logout Button'/>
@@ -135,7 +141,7 @@ const TenantDash = () => {
 
 
       <div className='flex px-44 space-x-14'>
-        <div className='w-2/3 space-y-4'>
+        <div className='w-full lg:w-2/3 space-y-4'>
           <div className='flex bg-white rounded-2xl border-black border-2 p-8 w-full space-x-4'>
               <div className='w-1/2'>
                 <p className='text-xl pb-4'>Address:</p>

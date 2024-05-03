@@ -76,66 +76,66 @@ const CreateAccount = () => {
 
   return (
     <>
-      <div className='background h-screen w-screen flex'>
-        <div className='bg-white w-2/5 min-h-2/3 m-auto rounded-xl relative'>
+      <div className='background h-full md:h-screen w-screen flex'>
+        <div className='bg-white w-5/6 md:w-2/3 lg:w-2/5 min-h-2/3 m-auto rounded-xl relative max-md:my-6'>
             <button className='absolute top-5 left-8' onClick={handleBack}>
             <ArrowBendUpLeft size={28} />
             </button>
-            <p className='text-2xl text-center pt-10 pb-6'>Create Account</p>
+            <p className='text-xl lg:text-2xl text-center pt-10 pb-6'>Create Account</p>
             <div>
-              <form className='px-8 space-y-2' onSubmit={handleSubmit}>
+              <form className='px-8 md:space-y-2' onSubmit={handleSubmit}>
 
-                <div className='flex justify-between'>
-                  <div className='mb-2 block'>
+                <div className='flex max-md:flex-col md:justify-between'>
+                  <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                   <Label htmlFor='accountType' value='Account Type'/>
-                  <Select className='w-56' id='accountType' onChange={(e) => {e.target.value === "manager" ? setIsManager(true) : setIsManager(false)}}  required>
+                  <Select className='w-full md:w-48 lg:w-56' id='accountType' onChange={(e) => {e.target.value === "manager" ? setIsManager(true) : setIsManager(false)}}  required>
                     <option value="manager">Manager</option>
                     <option value="tenant">Tenant</option>
                   </Select>
                   </div>
-                  <div className='mb-2 block'>
+                  <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='username' value='Username'/>
-                    <TextInput max={20} className='w-56' id='username' placeholder='Username' type='text' onChange={(e) => {setUsername(e.target.value)}} required/>
+                    <TextInput max={20} className='w-full md:w-48 lg:w-56' id='username' placeholder='Username' type='text' onChange={(e) => {setUsername(e.target.value)}} required/>
                   </div>
                 </div>
 
-                <div className='flex justify-between'>
-                <div className='mb-2 block'>
+                <div className='flex max-md:flex-col md:justify-between'>
+                <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='firstName' value='First Name'/>
-                    <TextInput className='w-56' id='firstName' placeholder='First Name' type='text' onChange={(e) => {setFirstName(e.target.value)}} required/>
+                    <TextInput className='w-full md:w-48 lg:w-56' id='firstName' placeholder='First Name' type='text' onChange={(e) => {setFirstName(e.target.value)}} required/>
                   </div>
-                  <div className='mb-2 block'>
+                  <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='lastName' value='Last Name'/>
-                    <TextInput className='w-56' id='lastName' placeholder='Last Name' type='text' onChange={(e) => {setLastName(e.target.value)}} required/>
+                    <TextInput className='w-full md:w-48 lg:w-56' id='lastName' placeholder='Last Name' type='text' onChange={(e) => {setLastName(e.target.value)}} required/>
                   </div>
                 </div>
 
-                <div className='mb-2 block pb-2'>
+                <div className='mb-2 block pb-2 max-md:w-48  max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='email' value='Email'/>
                     <TextInput id='email' placeholder='Email' type='email' onChange={(e) => {setEmail(e.target.value)}} required/>
                 </div>
 
-                <div className='flex justify-between'>
-                <div className='mb-2 block'>
+                <div className='flex max-md:flex-col md:justify-between'>
+                <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='password' value='Password'/>
-                    <TextInput className='w-56' id='password' placeholder='Password' type='password' onChange={(e) => {setTestPass(e.target.value);
+                    <TextInput className='w-full md:w-48 lg:w-56' id='password' placeholder='Password' type='password' onChange={(e) => {setTestPass(e.target.value);
                     testPass.length < 7 ? setIsEight(false) : setIsEight(true)
                     }} required/>
                     <p className={`text-red-600 text-[10px] pl-1 pt-1 ${isEight ? "hidden" : ""}`}>Password must be 8 characters long</p>
                 </div>
-                <div className='mb-2 block'>
+                <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                 <Label htmlFor='confirmPass' value='Confirm Password'/>
                 
-                    <TextInput className='w-56' id='confirmPass' placeholder='Confirm Password' type='password' onChange={(e) => {
+                    <TextInput className='md:w-48 lg:w-56' id='confirmPass' placeholder='Confirm Password' type='password' onChange={(e) => {
                       e.target.value === testPass ? (setPassword(e.target.value), setMatch(true)) : setMatch(false)}} required/>
                       <p className={`text-red-600 text-[10px] pl-1 pt-1 ${match ? "hidden" : ""}`}>Password does not match</p>
                 </div>
                 </div>
 
-                <div className='flex justify-between'>
-                  <div className='mb-2 block'>
+                <div className='flex max-md:flex-col md:justify-between'>
+                  <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                   <Label htmlFor='securityQ' value='Security Question'/>
-                  <Select className='w-56' id='securityQ' onChange={(e) => {setSecurityId(parseInt(e.target.value))}} required>
+                  <Select className='w-full md:w-48 lg:w-56' id='securityQ' onChange={(e) => {setSecurityId(parseInt(e.target.value))}} required>
                     {
                       securityArray && securityArray.map((question, idx) => 
                           <option key={idx} value={idx + 1}>{question}</option>
@@ -143,15 +143,15 @@ const CreateAccount = () => {
                     }
                   </Select>
                   </div>
-                  <div className='mb-2 block'>
+                  <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='securityA' value='Security Answer'/>
-                    <TextInput className='w-56' id='securityA' placeholder='Security Answer' type='text' onChange={(e) => {
+                    <TextInput className='w-full md:w-48 lg:w-56' id='securityA' placeholder='Security Answer' type='text' onChange={(e) => {
                       setSecurityAns(e.target.value)
                       }} required/>
                   </div>
                 </div>
 
-                <div className='flex justify-end pt-2 pb-7'>
+                <div className='flex justify-center md:justify-end pt-2 pb-7'>
                   <Button className='mt-3 w-36' color="light"  type='submit'>
                     Create Account
                   </Button>

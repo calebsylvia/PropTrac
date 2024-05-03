@@ -79,9 +79,14 @@ const AdminDash = () => {
 
   return (
     <>
-      <SideNav />
+      <div className='hidden lg:block'>
+        <SideNav/>
+      </div>
+      <div className='block lg:hidden'>
+
+      </div>
       <div className='bg-[#FEFFF6] w-screen h-screen'>
-        <div className='w-2/3 ml-56'>
+        <div className='w-3/4 lg:w-2/3 max-lg:mx-auto lg:ml-56'>
           <div className='flex justify-between items-baseline pt-12 pb-9'>
             <p className='text-3xl'>{`Welcome, ${name}!`}</p>
             <p className='text-lg text-[#5A5A5A]'>{formattedDate}</p>
@@ -91,18 +96,18 @@ const AdminDash = () => {
             <BarChartComponent />
           </div>
 
-          <div className='grid grid-cols-3 grid-flow-row gap-6 pt-6 pb-20 h-[675px]'>
-            <div className='row-span-2 bg-white border-black border-2 rounded-2xl'>
-              <p className='text-center text-xl pt-3 pb-5'>Maintenance Request:</p>
+          <div className='grid grid-cols-3 grid-flow-row gap-3 lg:gap-6 pt-6 pb-20 h-96 lg:h-[675px]'>
+            <div className='row-span-4 lg:row-span-2 bg-white border-black border-2 rounded-2xl'>
+              <p className='text-center text-base lg:text-xl pt-3 pb-5'>Maintenance Request:</p>
               <div>
                 {
                   mainReqArr && mainReqArr.map((req, idx) =>
-                    <div className='py-3 mx-10' key={idx}>
+                    <div className='max-lg:text-xs py-2 lg:py-3 mx-2 lg:mx-10' key={idx}>
                       <div className='flex justify-between'>
                         <p>{`Property ID: ${req.propertyInfoID}`}</p>
                         <p>{req.status}</p>
                       </div>
-                      <div className='flex justify-between pb-3'>
+                      <div className='flex justify-between pb-2 lg:pb-3'>
                         <p>{req.category}</p>
                         <p>{req.priority}</p>
                       </div>
@@ -113,35 +118,35 @@ const AdminDash = () => {
                 }
               </div>
             </div>
-            <div className='bg-white border-black border-2 rounded-2xl'>
+            <div className='bg-white border-black border-2 rounded-2xl max-lg:row-span-2'>
               <p className='pl-5 pt-2'>Monthly Profit:</p>
-              <div className='flex justify-center py-6 pl-5'>
-                <p className='text-5xl text-center'>{`$${profit}`}</p>
+              <div className='flex justify-center max-lg:pt-7 lg:py-6 pl-5'>
+                <p className='text-4xl lg:text-5xl text-center'>{`$${profit}`}</p>
                 <Image className='my-auto' src={profArrow} alt='Profit Arrow Indicator' />
               </div>
             </div>
-            <div className='row-span-2 bg-white border-black border-2 rounded-2xl'>
-              <Image className='mx-auto pb-3 pt-2' src={house} alt='White house with Red Roof' />
-              <hr className='w-5/6 mx-auto border-gray-400 py-3' />
-              <div className='flex justify-evenly'>
+            <div className='row-span-4 lg:row-span-2 bg-white border-black border-2 rounded-2xl'>
+              <Image className='max-lg:w-32 mx-auto pb-3 pt-2' src={house} alt='White house with Red Roof' />
+              <hr className='w-5/6 mx-auto border-gray-400 py-1 lg:py-3' />
+              <div className='grid grid-flow-row grid-col-2 lg:flex lg:justify-evenly'>
                 <div className='text-center'>
-                  <p>Active Tenants</p>
+                  <p className='max-lg:text-sm'>Active Tenants</p>
                   <p className='font-semibold text-xl'>{activeTenants}</p>
                 </div>
                 <div className='text-center'>
-                  <p>Open Listings</p>
+                  <p className='max-lg:text-sm'>Open Listings</p>
                   <p className='font-semibold text-xl'>{openListing}</p>
                 </div>
                 <div className='text-center'>
-                  <p>Properties</p>
+                  <p className='max-lg:text-sm'>Properties</p>
                   <p className='font-semibold text-xl'>{propertyCount}</p>
                 </div>
               </div>
             </div>
-            <div className='bg-white border-black border-2 rounded-2xl'>
+            <div className='bg-white border-black border-2 rounded-2xl max-lg:row-span-2'>
               <p className='pl-5 pt-2'>Monthly Expenses:</p>
-              <div className='flex justify-center py-6 pl-5'>
-                <p className='text-5xl text-center'>{`$${expenses}`}</p>
+              <div className='flex justify-center max-lg:pt-7 lg:py-6 pl-5'>
+                <p className='text-4xl lg:text-5xl text-center'>{`$${expenses}`}</p>
                 <Image className='my-auto' src={expArrow} alt='Expense Arrow Indicator' />
               </div>
             </div>
