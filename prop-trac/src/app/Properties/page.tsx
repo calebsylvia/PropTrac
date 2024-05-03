@@ -363,7 +363,7 @@ const addProp = async() => {
                           </p>
                         </TableCell>
                         <TableCell>
-                          <a className="underline text-[#4E8AFF] hover:cursor-pointer" onClick={() => {setPropInfo(properties.filter((proper) => proper.id === prop.id));}}>
+                          <a className="underline text-[#4E8AFF] hover:cursor-pointer" onClick={() => {setPropInfo(properties && properties.filter((proper) => proper.id === prop.id));}}>
                             Details
                           </a>
                         </TableCell>
