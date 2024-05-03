@@ -27,6 +27,7 @@ const BarChartComponent = () => {
     let months =['January', 'February', 'March', 'April','May', 'June', 'July', 'August','September', 'October', 'November', 'December'];
     let date = new Date().getMonth()
     let year = new Date().getFullYear()
+    let ID;
 
     const getMonth = (month: number, number: number) => {
         if(date + number < 0){
@@ -36,13 +37,20 @@ const BarChartComponent = () => {
         }
     }
 
+    useEffect(() => {
+        if(typeof window !== undefined){
+            ID = localStorage.getItem("ID")
+        }else{
+            ID = "1"
+        }
+    },[])
+
     
 
     useEffect(() => {
 
         let date = new Date().getMonth()
         let year = new Date().getFullYear()
-        let ID = localStorage.getItem("ID")
         
         const getPrevious = async(userId: number, month: number, year: number) => {
             const data: IPrev[] = await getPrevMonths(userId, month, year)

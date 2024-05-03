@@ -32,7 +32,7 @@ const LoginComponent = () => {
       console.log(token);
 
       //Check to see if logged in
-      if(token.token != null){
+      if(token.token != null && typeof window !== undefined){
         setLogged(true)
         localStorage.setItem("Token", token.token)
         

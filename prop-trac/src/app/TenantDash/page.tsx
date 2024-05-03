@@ -46,10 +46,11 @@ const TenantDash = () => {
     router.push('/')
   }
 
-  if (typeof window !== 'undefined') {
-    iD = localStorage.getItem("ID")
-    
-  }
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      iD = localStorage.getItem("ID")
+    }
+  }, [])
 
   useEffect(() => {
     const getTenant = async() => {

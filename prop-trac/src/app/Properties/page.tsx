@@ -61,11 +61,14 @@ const Properties = () => {
     router.push("/");
   }
 
-  if (typeof window !== 'undefined') {
-    id = localStorage.getItem("ID")
-  }
 
   let roomsArr: RoomsList[] = []
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      id = localStorage.getItem("ID")
+    }
+  },[])
 
   useEffect(() => {
     const getPropertyList = async () => {
