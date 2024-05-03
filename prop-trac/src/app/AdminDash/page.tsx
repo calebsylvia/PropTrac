@@ -26,6 +26,7 @@ const AdminDash = () => {
   const [openListing, setOpenListing] = useState<number>(5)
   const [propertyCount, setPropertyCount] = useState<number>(7)
   const [mainReqArr, setMainReqArr] = useState<IMaintenance[]>([])
+  const [re, setRe] = useState()
 
   const router = useRouter()
   const currentDate = new Date();
@@ -36,9 +37,13 @@ const AdminDash = () => {
     day: 'numeric',
   });
 
-  if(!checkToken()){
-    router.push('/')
-  }
+  useEffect(() => {
+    if(typeof window !== undefined){
+      if(!checkToken()){
+        router.push('/')
+      }
+    }
+  },[re])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

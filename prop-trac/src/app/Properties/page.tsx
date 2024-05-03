@@ -57,9 +57,13 @@ const Properties = () => {
 
   const router = useRouter();
 
-  if (!checkToken()) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if(typeof window !== undefined){
+      if(!checkToken()){
+        router.push('/')
+      }
+    }
+  },[])
 
 
   let roomsArr: RoomsList[] = []

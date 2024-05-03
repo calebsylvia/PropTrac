@@ -42,9 +42,13 @@ const TenantDash = () => {
 
   let iD: any;
   
-  if(!checkToken()){
-    router.push('/')
-  }
+  useEffect(() => {
+    if(typeof window !== undefined){
+      if(!checkToken()){
+        router.push('/')
+      }
+    }
+  },[])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
