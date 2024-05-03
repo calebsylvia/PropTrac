@@ -14,6 +14,8 @@ import { checkToken, getListingStats, getMaintenance, getMonthly } from '@/Utils
 
 const AdminDash = () => {
 
+  let iD;
+
   const [id, setId] = useState<number>(1)
   const [name, setName] = useState<string>("Manager!")
   const [profit, setProfit] = useState<number>(0)
@@ -38,12 +40,12 @@ const AdminDash = () => {
     router.push('/')
   }
 
+  if (typeof window !== 'undefined') {
+    iD = localStorage.getItem("ID")
+    setId(parseInt(iD!))
+  }
+
   useEffect(() => {
-  
-    if (typeof window !== 'undefined') {
-      let id = localStorage.getItem("ID")
-      setId(parseInt(id!))
-    }
 
     const getPropStats = async (userId: number) => {
       const propStats: IPropStats = await getListingStats(userId);
