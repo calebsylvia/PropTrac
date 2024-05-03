@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SideNav from '../Components/SideNav'
 import PieChartComponent from '../Components/PieChartComponent'
 import {Table, TableHeader, TableBody, TableHead, TableRow} from '@/components/ui/table'
@@ -14,9 +14,13 @@ const Payments = () => {
   const router = useRouter()
 
   
-  if(!checkToken()){
-    router.push('/')
-  }
+  useEffect(() => {
+    if(typeof window !== undefined){
+      if(!checkToken()){
+        router.push('/')
+      }
+    }
+  },[])
 
   
   return (
