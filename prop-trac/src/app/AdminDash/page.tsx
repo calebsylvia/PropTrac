@@ -40,10 +40,12 @@ const AdminDash = () => {
     router.push('/')
   }
 
-  if (typeof window !== 'undefined') {
-    iD = localStorage.getItem("ID")
-    setId(parseInt(iD!))
-  }
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      iD = localStorage.getItem("ID")
+      setId(parseInt(iD!))
+    }
+  },[])
 
   useEffect(() => {
 

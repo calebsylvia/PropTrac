@@ -110,7 +110,7 @@ const CreateAccount = () => {
                   </div>
                 </div>
 
-                <div className='mb-2 block pb-2 max-md:w-48  max-md:mx-auto max-md:w-full'>
+                <div className='mb-2 block pb-2 max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='email' value='Email'/>
                     <TextInput id='email' placeholder='Email' type='email' onChange={(e) => {setEmail(e.target.value)}} required/>
                 </div>
