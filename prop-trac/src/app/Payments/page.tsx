@@ -33,18 +33,9 @@ const Payments = () => {
       <TopNav/>
    </div>
     <div className='bg-[#FEFFF6] w-full h-full'>
-        <div className='w-5/6 mx-auto lg:ml-60'>
-              <div className='flex justify-evenly h-1/3 pt-6'>
-                <div className='bg-white rounded-xl border-black border-2 w-2/3 lg:w-1/2 h-[200px] lg:h-[300px] my-auto text-xl lg:text-2xl pl-5 pt-2 lg:pt-12 space-y-10'>
-                    <p>{`Manager: ${manager}`}</p>
-                    <p>{`Active Tenants: ${active}`}</p>
-                    <p>Stripe Dashboard:<a href='#'>url.com</a></p>
-                </div>
-                <div className='lg:h-96 w-2/5 flex items-center ml-10 lg:ml-20 xl:ml-40 mt-3 lg:mt-0'>
-                  <PieChartComponent/>
-                </div>
-              </div>
-              <div className='bg-white rounded-xl border-black border-2 w-full mb-10 lg:w-11/12 h-[400px] overflow-y-auto'>
+        <div className='w-5/6 mx-auto lg:ml-60 lg:pt-12'>
+              <div className='flex justify-between h-1/3 pt-6'>
+              <div className='bg-white rounded-xl border-black border-2 w-full mb-10 lg:w-2/3 min-h-[685px] overflow-y-auto'>
               <Table>   
                   <TableHeader>
                     <TableRow>
@@ -61,6 +52,17 @@ const Payments = () => {
                       }
                   </TableBody>
                 </Table>
+              </div>
+              <div>
+              <div className='lg:h-96 w-11/12 flex items-center mr-10 ml-20 mt-3 lg:mt-0'>
+                  <PieChartComponent/>
+                </div>
+                <div className='bg-white rounded-xl border-black border-2 w-2/3 h-[200px] lg:h-[300px] m-auto text-xl lg:text-xl pl-5 pt-2 lg:pt-12 space-y-10'>
+                    <p>{`Manager: ${manager}`}</p>
+                    <p>{`Active Tenants: ${active}`}</p>
+                    <p>Stripe Dashboard:<a href='#'>url.com</a></p>
+                </div>
+              </div>
               </div>
         </div>
     </div>

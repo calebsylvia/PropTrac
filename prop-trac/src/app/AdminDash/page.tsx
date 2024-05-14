@@ -107,7 +107,7 @@ const AdminDash = () => {
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-3 md:grid-flow-row gap-3 lg:gap-6 pt-6 pb-20 h-96 lg:h-[675px]'>
-            <div className='col-span-1 md:row-span-4 lg:row-span-2 bg-white border-black border-2 rounded-2xl'>
+            <div className='md:col-span-1 md:row-span-4 lg:row-span-2 bg-white border-black border-2 rounded-2xl'>
               <p className='overflow-y-auto text-center text-base xl:text-xl pt-3 pb-5'>Maintenance Request:</p>
               <div>
                 {
@@ -135,7 +135,7 @@ const AdminDash = () => {
                 <Image className='my-auto' src={profArrow} alt='Profit Arrow Indicator' />
               </div>
             </div>
-            <div className='col-span-1 md:row-span-4 lg:row-span-2 bg-white border-black border-2 rounded-2xl'>
+            <div className='md:col-span-1 md:row-span-4 lg:row-span-2 bg-white border-black border-2 rounded-2xl'>
               <Image className='max-lg:w-32 mx-auto pb-3 pt-2' src={house} alt='White house with Red Roof' />
               <hr className='w-5/6 mx-auto border-gray-400 py-1 lg:py-3' />
               <div className='grid grid-flow-row grid-col-2 lg:flex lg:justify-evenly'>
