@@ -1,4 +1,4 @@
-import { IAddProp, IForgot, IRequest, IReset, IResponse, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
+import { IAccount, IAddProp, IForgot, IRequest, IReset, IResponse, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
 
 const url = 'https://proptracapi.azurewebsites.net';
 
@@ -197,4 +197,27 @@ export const getProperties = async(userId: number) => {
     const res = await fetch(url + `/Manager/GetAllProperties/${userId}`)
     const data = await res.json()
     return data
+}
+
+export const getAccountInfo = async(userId: number) => {
+    const res = await fetch(url + `/Manager/GetManagerInfo/${userId}`)
+    const data = await res.json()
+    return data
+}
+
+export const editAccount = async(accountInfo: IAccount) => {
+    const res = await fetch(url + '/Manager/EditManagerInfo', {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(accountInfo)
+    })
+
+    if(!res.ok){
+        return false
+    }
+
+    const data = await res.json()
+    return data;
 }

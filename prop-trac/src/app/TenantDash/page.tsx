@@ -85,6 +85,10 @@ const TenantDash = () => {
 
   const handleLogout = () => {
     router.push('/')
+
+    if(typeof window !== undefined){
+      localStorage.removeItem("ID")
+    }
   }
 
   const handleRequest = async() => {
@@ -137,7 +141,7 @@ const TenantDash = () => {
   return (
     <>
     <div className='bg-[#FEFFF6]'>
-      <div className='flex justify-between lg:px-44 pt-12 pb-10'>
+      <div className='flex justify-between mx-10 lg:px-44 pt-12 pb-10'>
         <p className='text-3xl'>{`Welcome, ${name}!`}</p>
         <button className='my-auto pr-3' onClick={handleLogout}>
             <Image className='w-8' src={logout} alt='Logout Button'/>
@@ -145,7 +149,7 @@ const TenantDash = () => {
       </div>
 
 
-      <div className='flex px-44 space-x-14'>
+      <div className='flex mx-10 lg:px-44 lg:space-x-14'>
         <div className='w-full lg:w-2/3 space-y-4'>
           <div className='flex bg-white rounded-2xl border-black border-2 p-8 w-full space-x-4'>
               <div className='w-1/2'>
@@ -193,12 +197,12 @@ const TenantDash = () => {
         </div>
 
         <div>
-          <Image className='w-72' src={house} alt='House Image'/>
+          <Image className='w-72 hidden lg:block' src={house} alt='House Image'/>
         </div>
       </div>
 
-      <div className='flex px-44 space-x-4 mt-4 pb-8 w-full'>
-        <div className='bg-white rounded-2xl border-black border-2 w-[67%] p-4'>
+      <div className='lg:flex px-10 lg:px-44 lg:space-x-4 mt-4 pb-8 w-full'>
+        <div className='bg-white rounded-2xl border-black border-2 max-lg:min-h-56 w-full lg:w-[67%] p-4'>
           <p>Payment History</p>
           <Table>   
                   <TableHeader>
@@ -216,7 +220,7 @@ const TenantDash = () => {
                   </TableBody>
                 </Table>
         </div>
-        <div className='bg-white rounded-2xl border-black border-2 w-[30%] px-6 py-4'>
+        <div className='bg-white rounded-2xl border-black border-2 lg:w-[30%] mt-4 lg:mt-0 px-6 py-4'>
             <p>Submit Maintenance Request</p>
             <div>
               <Textarea placeholder='Description' value={desc} onChange={(e) => setDesc(e.target.value)} required/>

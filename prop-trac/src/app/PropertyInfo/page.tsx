@@ -10,11 +10,13 @@ import upGreen from '@/app/Assets/upGreen.png'
 import upRed from '@/app/Assets/upRed.png'
 import MapComponent from '../Components/MapComponent'
 import test from '@/app/Assets/bg.png'
-import { PropContext } from '../Context/PropContext'
+import { useSearchParams } from 'next/navigation'
+import { IProperties, RoomsList } from '@/Interfaces/Interfaces'
 
 
 const PropertyInfo = () => {
 
+  
   const [image, setImage] = useState<string | StaticImageData>(test)
   const [address, setAddress] = useState<string>('')
   const [cityState, setCityState] = useState<string>('')
@@ -25,21 +27,37 @@ const PropertyInfo = () => {
   const [baths, setBaths] = useState<number>(2.5)
   const [sqft, setSqft] = useState<number>(1000)
   const [description, setDescription] = useState<string>('A random description of absolutely nothing just to fill up space so I can adjust the design of it')
-  const [featsAmen, setFeatsAmen] = useState<string[]>()
-  const [roomCost, setRoomCost] = useState<number[]>()
+  const [featsAmen, setFeatsAmen] = useState<string[]>([])
+  const [roomCost, setRoomCost] = useState<RoomsList[] | null[]>([])
   
   const [lat, setLat] = useState<number>(0)
   const [lng, setLng] = useState<number>(0)
 
   const router = useRouter()
-  const prop = useContext(PropContext)
+  const searchParams = useSearchParams()
+
+  
 
   const handleBack = () => {
     router.push('/Properties')
   }
 
   useEffect(() => {
-    
+    console.log(JSON.parse(searchParams.get('propInfo')!))
+    const propData: IProperties[] = JSON.parse(searchParams.get("propInfo")!)
+
+    const feats = propData[0].amenFeatList.split(', ')
+    const roomArr = propData.map((room) => room.roomRent)
+    console.log(roomArr)
+
+    setAddress(`${propData[0].houseNumber} ${propData[0].street}`)
+    setCityState(`${propData[0].city}, ${propData[0].state} ${propData[0].zip}`)
+    setRooms(propData[0].rooms)
+    setBaths(propData[0].baths)
+    setDescription(propData[0].description)
+    setSqft(propData[0].sqft)
+    setFeatsAmen(feats)
+    setRoomCost(roomArr)
   },[])
 
 
@@ -56,8 +74,8 @@ const PropertyInfo = () => {
             <div className='w-2/5'>
               <div className='pb-16'>
                 <Image src={image} alt='Property Image' className='w-4/5 max-h-[200px] mb-3 rounded-xl shadow-[0_5px_5px_2px_rgba(60,60,60,0.4)]'/>
-                <p className='font-semibold text-lg'>123 Random Street</p>
-                <p className='text-sm'>Stockton, CA 95209</p>
+                <p className='font-semibold text-lg'>{address}</p>
+                <p className='text-sm'>{cityState}</p>
               </div>
               <div className='bg-white border-black border-2 rounded-xl w-3/5'>
                   <div className='py-2'>
@@ -125,22 +143,28 @@ const PropertyInfo = () => {
                     <p className='text-sm pl-2'>{description}</p>
                   </div>
 
-                  <div className='mx-5 flex justify-between'>
+                  <div className='mx-10 flex justify-between'>
                       <div>
                         <p>Features and Amenities:</p>
-                          <ul>
+                          <ul className='list-disc pl-5 pt-1 overflow-y-auto'>
                             {
-
+                              featsAmen && featsAmen.map((feat, idx) => 
+                              <li key={idx}>{feat}</li>) 
                             }
                           </ul>
                       </div>
                       <div>
                         <p>Costs:</p>
-                      </div>
-                      <div>
+                      
+                      <div className='flex flex-col pl-2'>
                           {
-
+                            roomCost.length > 1 && roomCost.map((room, idx) => 
+                            <div key={idx}>
+                                <p>{`Room ${idx+1}: $${room}`}</p>
+                            </div>
+                            )
                           }
+                      </div>
                       </div>
                   </div>
                 </div>

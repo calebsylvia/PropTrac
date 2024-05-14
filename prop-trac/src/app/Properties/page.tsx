@@ -18,6 +18,7 @@ import { Button, Label, Select, TextInput, Textarea } from "flowbite-react";
 import { useToast } from "@/components/ui/use-toast";
 import { PropContext } from "../Context/PropContext";
 import Link from "next/link";
+import TopNav from "../Components/TopNav";
 
 const Properties = () => {
 
@@ -112,6 +113,12 @@ const handleFinance = () => {
   }
 }
 
+const handleExit = () => {
+  setFirst(false)
+  setSecond(false)
+  setIsOpen(false)
+}
+
 const addProp = async() => {
 
   setRoomRent(roomsArr)
@@ -142,16 +149,25 @@ const addProp = async() => {
     return toast({description: 'Something went wrong. Try again!', variant:'destructive'})
   }else{
     setIsOpen(false)
+    setFirst(false)
+    setSecond(false)
     setRe(" ")
     return toast({description:'Property Added Successfully'})
   }
 }
 
+const createQueryString = (name: string, value: IProperties[]) => {
+  const params = new URLSearchParams();
+  params.set(name, JSON.stringify(value));
+
+  return params.toString();
+};
+
   return (
-    <PropContext.Provider value={propInfo}>
+    <>
               <div className={`${isOpen ? 'block' : 'hidden'}`}>
               <div className='bg-black bg-opacity-25 z-50 w-screen h-screen absolute'>
-            <div className=' bg-white rounded-xl w-1/3 min-h-[400px] mx-auto mt-40'>
+            <div className=' bg-white rounded-xl w-3/5 lg:w-1/3 min-h-[400px] mx-auto mt-40'>
                 <p className={`${first || second ? 'hidden' : 'block'} text-center text-xl py-4`}>Add Property</p>
                 <p className={`${first && !second ? 'block' : 'hidden'} text-center text-xl py-4`}>Property Details</p>
                 <p className={`${second ? 'block' : 'hidden'} text-center text-xl py-4`}>Financial Information</p>
@@ -176,12 +192,12 @@ const addProp = async() => {
                           <TextInput className='' placeholder='City' id='city' type='text' onChange={((e) => setCity(e.target.value))} required/>
                         </div>
                         <div className='block mb-2 w-2/5'>
-                          <Label value="ZIP" htmlFor='city'/>
-                          <TextInput id='city' type='number' placeholder='ZIP' onChange={((e) => setZip(e.target.value))} required/>
+                          <Label value="ZIP" htmlFor='zip'/>
+                          <TextInput id='zip' type='number' placeholder='ZIP' onChange={((e) => setZip(e.target.value))} required/>
                         </div>
                         <div className='block mb-2'>
-                          <Label value="City" htmlFor='city'/>
-                          <Select onChange={(e) => setState(e.target.value)} required>
+                          <Label value="State" htmlFor='state'/>
+                          <Select id="state" onChange={(e) => setState(e.target.value)} required>
                             {
                               states.map((state, idx) => 
                                 <option key={idx} value={state}>{state}</option>
@@ -205,7 +221,10 @@ const addProp = async() => {
                           <TextInput id='houseRent' placeholder='Amount' type='number' onChange={((e) => setHouseRent(parseInt(e.target.value)))} required/>
                         </div>
                     </div>
-                    <div className='flex justify-end w-5/6 mx-auto pt-2'>
+                    <div className='flex justify-between w-5/6 mx-auto pt-2'>
+                          <Button color='light' onClick={handleExit}>
+                            <p>Cancel</p>
+                          </Button>
                         <Button color='light' className='flex' onClick={handleDetails}>
                           <p className='my-auto'>Property Details</p>
                           <CaretRight size={18} className='my-auto' />
@@ -217,7 +236,7 @@ const addProp = async() => {
                       <div className='flex mx-auto w-5/6 space-x-4'>
                           <div className='block mb-2'>
                               <Label value='Room(s)' htmlFor='rooms'/>
-                              <TextInput placeholder='Rooms' id='rooms' type='number' onChange={(e) => setRooms(parseInt(e.target.value))} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
+                              <TextInput max={8} placeholder='Rooms' id='rooms' type='number' onChange={(e) => {parseInt(e.target.value) < 8 ? setRooms(parseInt(e.target.value)) : toast({description: 'Max Rooms is 8', variant:'destructive'})}} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
                           </div>
                           <div className='block mb-2'>
                               <Label value='Bath(s)' htmlFor='baths'/>
@@ -239,7 +258,10 @@ const addProp = async() => {
                               <Textarea className='min-h-28' id='desc' value={description} placeholder='Description' onChange={(e) => setDescription(e.target.value)}/>
                           </div>
                       </div>
-                      <div className='flex mx-auto justify-end w-5/6'>
+                      <div className='flex mx-auto justify-between w-5/6'>
+                      <Button color='light' onClick={handleExit}>
+                            <p>Cancel</p>
+                          </Button>
                         <Button color='light' onClick={handleFinance}>
                           <p className='my-auto'>Financial Info</p>
                           <CaretRight size={18} className='my-auto' />
@@ -271,7 +293,10 @@ const addProp = async() => {
                             )
                           }
                       </div>
-                      <div className="flex mx-auto justify-end w-5/6">
+                      <div className="flex mx-auto justify-between w-5/6">
+                      <Button color='light' onClick={handleExit}>
+                            <p>Cancel</p>
+                          </Button>
                       <Button color='light' onClick={addProp}>
                           <p className='my-auto'>Add Property</p>
                           <CaretRight size={18} className='my-auto' />
@@ -284,16 +309,19 @@ const addProp = async() => {
       <div className="hidden lg:block">
         <SideNav />
       </div>
+      <div className="block lg:hidden">
+        <TopNav/>
+      </div>
       <div className="bg-[#FEFFF6] w-full h-full">
         <div className="max-md:mx-2 max-lg::mx-10 lg:ml-52">
-          <div className="flex justify-between pt-5 lg:pr-10 max-lg:mx-7">
+          <div className="flex justify-between pt-5 lg:pr-10 max-md:mx-5 max-lg:mx-7">
             <div>
-              <button className="flex" onClick={() => setIsOpen(true)}>
+              <button className="flex max-md:mt-2" onClick={() => setIsOpen(true)}>
                 <PlusSquare size={32} />
-                <p className="my-auto">Add Property</p>
+                <p className="my-auto max-lg:text-sm">Add Property</p>
               </button>
             </div>
-            <div className="max-lg:flex max-lg:justify-end relative w-72">
+            <div className="max-lg:flex max-lg:justify-end relative w-20 md:w-72">
               <input
                 type="search"
                 className="w-56 lg:w-72 h-10 border-0 rounded-xl bg-gray-200 text-sm"
@@ -313,8 +341,8 @@ const addProp = async() => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="lg:w-[250px]">Property</TableHead>
-                  <TableHead className="lg:w-[150px]">Property ID</TableHead>
+                  <TableHead className="lg:w-[200px] xl:w-[250px]">Property</TableHead>
+                  <TableHead className="lg:w-[100px] xl:w-[150px]">Property ID</TableHead>
                   <TableHead>Price</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Rooms</TableHead>
@@ -323,7 +351,7 @@ const addProp = async() => {
                 </TableRow>
               </TableHeader>
               
-              <TableBody>
+              <TableBody className="overflow-y-auto">
                 {properties &&
                   properties
                     .filter((item) => {
@@ -363,7 +391,7 @@ const addProp = async() => {
                           </p>
                         </TableCell>
                         <TableCell>
-                          <a className="underline text-[#4E8AFF] hover:cursor-pointer" onClick={() => {setPropInfo(properties && properties.filter((proper) => proper.id === prop.id));}}>
+                          <a className="underline text-[#4E8AFF] hover:cursor-pointer" onClick={() => {router.push('/PropertyInfo' + '?' + createQueryString('propInfo', properties && properties.filter((proper) => proper.id === prop.id)))}}>
                             Details
                           </a>
                         </TableCell>
@@ -374,7 +402,7 @@ const addProp = async() => {
           </div>
         </div>
       </div>
-      </PropContext.Provider>
+      </>
   );
 };
 

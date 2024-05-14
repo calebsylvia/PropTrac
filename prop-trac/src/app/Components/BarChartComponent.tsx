@@ -11,6 +11,7 @@ const BarChartComponent = () => {
    const [previous, setPrevious] = useState<IPrev[]>()
    const [next, setNext] = useState<IPrev[]>()
    const [current, setCurrent] = useState<boolean>(true)
+   const [font, setFont] = useState<number>(16)
 
    let monthArr: string[] = []
 
@@ -45,7 +46,13 @@ const BarChartComponent = () => {
         }
     },[])
 
-    
+    useEffect(() => {
+        if(window.innerWidth >= 500){
+            setFont(12)
+        }else{
+            setFont(16)
+        }
+    }, [font])
 
     useEffect(() => {
 
@@ -110,11 +117,11 @@ const BarChartComponent = () => {
             legend: {
                 position: 'right' as const,
                 labels: {
-                    boxHeight: 30,
-                    boxWidth: 30,
+                    boxHeight: 20,
+                    boxWidth: 20,
                     padding: 30,
                     font: {
-                        size: 16
+                        size: font
                     }
                 }
             }
@@ -131,10 +138,10 @@ const BarChartComponent = () => {
             <div className='flex justify-between mt-5 mb-2'>
                 <button className={`flex ${current ? 'text-transparent' : ''}`} onClick={handlePrev} disabled={current ? true : false}>
                     <CaretLeft size={24} weight="bold" />
-                    <p className='my-auto text-sm'>Past 6 Months</p>
+                    <p className='my-auto text-xs md:text-sm'>Past 6 Months</p>
                 </button>
                 <button className={`flex ${current ? '' : 'text-transparent'}`} onClick={handleNext} disabled={current ? false : true}>
-                    <p className='my-auto text-sm'>Projected 6 Months</p>
+                    <p className='my-auto text-xs md:text-sm'>Projected 6 Months</p>
                     <CaretRight size={24} weight="bold" />
                 </button>
             </div>

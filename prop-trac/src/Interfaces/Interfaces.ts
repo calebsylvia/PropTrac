@@ -170,5 +170,15 @@ export interface PropInfo {
     roomList: RoomsList[]
 }
 
+export interface IAccount {
+    id:        number;
+    email:     string;
+    firstName: string;
+    lastName:  string;
+    phone:     string;
+    role:      string;
+    location:  string;
+    language:  string;
+}
 
 

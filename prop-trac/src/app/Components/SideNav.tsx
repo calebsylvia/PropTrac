@@ -19,8 +19,11 @@ const SideNav = () => {
 
 
   const handleLog = () => {
-    localStorage.clear()
     router.push('/')
+
+    if(typeof window !== undefined){
+      localStorage.removeItem("ID")
+    }
   }
 
   return (
