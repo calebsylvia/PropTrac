@@ -12,7 +12,6 @@ import MapComponent from '../Components/MapComponent'
 import test from '@/app/Assets/bg.png'
 import { useSearchParams } from 'next/navigation'
 import { IProperties, RoomsList } from '@/Interfaces/Interfaces'
-import { Suspense } from 'react'
 
 
 const PropertyInfo = () => {
@@ -64,7 +63,6 @@ const PropertyInfo = () => {
 
   return (
     <>
-    <Suspense>
       <SideNav/>
       <div className='bg-[#FEFFF6] w-screen h-screen'>
         <div className='ml-52 pt-6'>
@@ -177,7 +175,6 @@ const PropertyInfo = () => {
           </div>
         </div>
       </div>
-      </Suspense>
     </>
   )
 }
