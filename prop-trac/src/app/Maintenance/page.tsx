@@ -13,7 +13,7 @@ const Maintenance = () => {
       <TopNav/>
     </div>
          <div  className='bg-[#FEFFF6] w-full h-full'>
-
+            
         </div>
     </>
   )

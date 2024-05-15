@@ -90,3 +90,7 @@
     background-repeat: no-repeat;
   }
 
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
+

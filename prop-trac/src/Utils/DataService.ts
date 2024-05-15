@@ -45,10 +45,9 @@ export const checkToken = () => {
     let result = false;
     let localData;
 
-    if(typeof window !== undefined){
+    
      localData = localStorage.getItem("Token");
-    }
-
+     
     if(localData !=null){
         result = true
     }

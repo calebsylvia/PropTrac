@@ -18,18 +18,18 @@ const Tenants = () => {
       <div className='w-5/6 mx-auto lg:ml-60 pb-5'>
       <div className='flex justify-between pt-5 lg:pr-10'>
         <div>
-        <button className='flex'>
+        <button className='flex max-lg:mt-2'>
               <PlusSquare size={32} />
-              <p className='my-auto'>Add Tenant</p>
+              <p className='my-auto max-md:text-sm'>Add Tenant</p>
             </button>
         </div>
-              <div className='relative w-72 '>
-              <input type="search" className='w-72 h-10 border-0 rounded-xl bg-gray-200' placeholder='Search Properties'/>
-              <MagnifyingGlass className='absolute top-[5px] right-2 opacity-65' size={30} />
+              <div className='relative w-40 md:w-72 max-lg:mt-2'>
+              <input type="search" className='w-40 md:w-72 h-8 border-0 rounded-xl bg-gray-200 text-sm' placeholder='Search Tenants'/>
+              <MagnifyingGlass className='absolute top-[6px] right-2 opacity-65' size={20} />
             </div>
             </div>
 
-            <div className='mt-10 min-h-[650px] w-full lg:w-[95%] bg-white border-black border-2 rounded-xl p-6'>
+            <div className='mt-10 min-h-[650px] w-full lg:w-[95%] bg-white border-black border-2 rounded-xl py-6 px-1'>
                 <Table>   
                   <TableHeader>
                     <TableRow>

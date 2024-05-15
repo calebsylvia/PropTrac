@@ -113,10 +113,25 @@ const handleFinance = () => {
   }
 }
 
-const handleExit = () => {
+const handleExit = (e: any) => {
+  e.preventDefault()
   setFirst(false)
   setSecond(false)
   setIsOpen(false)
+
+  setHouseNumber('')
+  setAmenFeatList('')
+  setBaths(0)
+  setCity('')
+  setDescription('')
+  setHouseOrRoomType('')
+  setHouseRent(0)
+  setRoomRent([])
+  setRooms(0)
+  setSqft(0)
+  setState('')
+  setStreet('')
+  setZip('')
 }
 
 const addProp = async() => {
@@ -166,8 +181,8 @@ const createQueryString = (name: string, value: IProperties[]) => {
   return (
     <>
               <div className={`${isOpen ? 'block' : 'hidden'}`}>
-              <div className='bg-black bg-opacity-25 z-50 w-screen h-screen absolute'>
-            <div className=' bg-white rounded-xl w-3/5 lg:w-1/3 min-h-[400px] mx-auto mt-40'>
+              <div className='bg-black bg-opacity-25 z-50 w-full h-full md:h-[127vh] fixed'>
+            <div className=' bg-white rounded-xl w-11/12 md:w-3/5 lg:w-1/2 xl:w-1/3 min-h-[400px] mx-auto left-5 md:left-[20%] lg:left-[25%] xl:left-[35%] top-[10%] md:top-[20%] fixed'>
                 <p className={`${first || second ? 'hidden' : 'block'} text-center text-xl py-4`}>Add Property</p>
                 <p className={`${first && !second ? 'block' : 'hidden'} text-center text-xl py-4`}>Property Details</p>
                 <p className={`${second ? 'block' : 'hidden'} text-center text-xl py-4`}>Financial Information</p>
@@ -197,7 +212,7 @@ const createQueryString = (name: string, value: IProperties[]) => {
                         </div>
                         <div className='block mb-2'>
                           <Label value="State" htmlFor='state'/>
-                          <Select id="state" onChange={(e) => setState(e.target.value)} required>
+                          <Select id="state" value={state} onChange={(e) => setState(e.target.value)} required>
                             {
                               states.map((state, idx) => 
                                 <option key={idx} value={state}>{state}</option>
@@ -236,7 +251,7 @@ const createQueryString = (name: string, value: IProperties[]) => {
                       <div className='flex mx-auto w-5/6 space-x-4'>
                           <div className='block mb-2'>
                               <Label value='Room(s)' htmlFor='rooms'/>
-                              <TextInput max={8} placeholder='Rooms' id='rooms' type='number' onChange={(e) => {parseInt(e.target.value) < 8 ? setRooms(parseInt(e.target.value)) : toast({description: 'Max Rooms is 8', variant:'destructive'})}} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
+                              <TextInput max={8} placeholder='Rooms' id='rooms' type='number'  onChange={(e) => {parseInt(e.target.value) <= 8 ? setRooms(parseInt(e.target.value)) : toast({description: 'Max Rooms is 8', variant:'destructive'})}} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
                           </div>
                           <div className='block mb-2'>
                               <Label value='Bath(s)' htmlFor='baths'/>
@@ -255,7 +270,7 @@ const createQueryString = (name: string, value: IProperties[]) => {
                       <div className='flex w-5/6 mx-auto min-h-36'>
                           <div className='block mb-2 w-full'>
                               <Label value='Description (optional)' htmlFor='desc'/>
-                              <Textarea className='min-h-28' id='desc' value={description} placeholder='Description' onChange={(e) => setDescription(e.target.value)}/>
+                              <Textarea className='min-h-28' id='desc' placeholder='Description' onChange={(e) => setDescription(e.target.value)}/>
                           </div>
                       </div>
                       <div className='flex mx-auto justify-between w-5/6'>
@@ -270,12 +285,12 @@ const createQueryString = (name: string, value: IProperties[]) => {
                 </div>
 
                 <div className={`${second ? 'block' : 'hidden'}`}>
-                      <div className='flex mx-auto w-5/6 space-x-3'>
-                          <div className='block mb-2 w-1/2'>
+                      <div className='flex max-md:flex-col mx-auto w-5/6 md:space-x-3'>
+                          <div className='block mb-2 w-2/3 md:w-1/2'>
                               <Label value='Average Water Bill' htmlFor='water'/>
                               <TextInput placeholder='Enter Amount' id='water' type='number' onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
                           </div>
-                          <div className='block mb-2 w-1/2'>
+                          <div className='block mb-2 w-2/3 md:w-1/2'>
                               <Label value='Average Electricity/Gas Bill' htmlFor='elec'/>
                               <TextInput placeholder='Enter Amount' id='elec' type='number' onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
                           </div>
@@ -293,7 +308,7 @@ const createQueryString = (name: string, value: IProperties[]) => {
                             )
                           }
                       </div>
-                      <div className="flex mx-auto justify-between w-5/6">
+                      <div className="flex mx-auto justify-between w-5/6 pb-5">
                       <Button color='light' onClick={handleExit}>
                             <p>Cancel</p>
                           </Button>
@@ -316,12 +331,12 @@ const createQueryString = (name: string, value: IProperties[]) => {
         <div className="max-md:mx-2 max-lg::mx-10 lg:ml-52">
           <div className="flex justify-between pt-5 lg:pr-10 max-md:mx-5 max-lg:mx-7">
             <div>
-              <button className="flex max-md:mt-2" onClick={() => setIsOpen(true)}>
+              <button className="flex max-lg:mt-2 mt-3" onClick={() => setIsOpen(true)}>
                 <PlusSquare size={32} />
                 <p className="my-auto max-lg:text-sm">Add Property</p>
               </button>
             </div>
-            <div className="max-lg:flex max-lg:justify-end relative w-20 md:w-72">
+            <div className="max-lg:flex max-lg:justify-end mt-2 relative w-20 md:w-72">
               <input
                 type="search"
                 className="w-56 lg:w-72 h-10 border-0 rounded-xl bg-gray-200 text-sm"
