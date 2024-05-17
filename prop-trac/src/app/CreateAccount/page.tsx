@@ -25,7 +25,7 @@ const CreateAccount = () => {
   const [disable, setDisable] = useState<boolean>(true)
 
   const router = useRouter()
-  const { toast } = useToast()
+  const { toast} = useToast()
 
 
 

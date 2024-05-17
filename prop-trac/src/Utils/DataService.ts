@@ -1,4 +1,4 @@
-import { IAccount, IAddProp, IForgot, IRequest, IReset, IResponse, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
+import { IAccount, IAddProp, IDelete, IForgot, IManager, IRequest, IReset, IResponse, IRoom, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
 
 const url = 'https://proptracapi.azurewebsites.net';
 
@@ -47,7 +47,7 @@ export const checkToken = () => {
 
     
      localData = localStorage.getItem("Token");
-     
+
     if(localData !=null){
         result = true
     }
@@ -211,6 +211,57 @@ export const editAccount = async(accountInfo: IAccount) => {
             'Content-Type': 'application/json'
         },
         body:JSON.stringify(accountInfo)
+    })
+
+    if(!res.ok){
+        return false
+    }
+
+    const data = await res.json()
+    return data;
+}
+
+export const deleteProp = async(propertyId: IDelete) => {
+    const res = await fetch(url + '/Manager/DeleteProperty', {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(propertyId)
+    })
+
+    if(!res.ok){
+        return false
+    }
+
+    const data = await res.json()
+    return data;
+}
+
+export const deleteRoom = async(room: IRoom) => {
+    const res = await fetch(url + '/Manager/DeleteRoom', {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(room)
+    })
+
+    if(!res.ok){
+        return false
+    }
+
+    const data = await res.json()
+    return data;
+}
+
+export const editProperty = async(property: IAddProp) => {
+    const res = await fetch( url + '/Manager/EditProperty', {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(property)
     })
 
     if(!res.ok){

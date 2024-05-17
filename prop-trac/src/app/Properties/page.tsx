@@ -87,16 +87,6 @@ const Properties = () => {
     getPropertyList();
   }, [re]);
 
-  useEffect(() => {
-    console.log(propInfo)
-    
-    if(propInfo === undefined){
-      return
-    }else{
-      
-    }
-  },[propInfo])
-
   const handleDetails = () => {
     if(street.length < 1 || state.length < 1 || zip.length < 1 || houseRent <= 0){
       return toast({description: 'Please make sure all fields are filled out accordingly', variant: 'destructive'})

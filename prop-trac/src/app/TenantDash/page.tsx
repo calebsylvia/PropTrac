@@ -12,6 +12,7 @@ import { addRequest, checkToken, getTenantInfo } from '@/Utils/DataService'
 import {Table, TableHeader, TableBody, TableHead, TableRow} from '@/components/ui/table'
 import { useToast } from '@/components/ui/use-toast'
 import { Blob } from 'buffer'
+import { FileArrowDown } from '@phosphor-icons/react'
 
 const TenantDash = () => {
 
@@ -141,7 +142,7 @@ const TenantDash = () => {
   return (
     <>
     <div className='bg-[#FEFFF6]'>
-      <div className='flex justify-between mx-10 lg:px-44 pt-12 pb-10'>
+      <div className='flex justify-between mx-10 lg:px-10 xl:px-44 pt-12 pb-10'>
         <p className='text-3xl'>{`Welcome, ${name}!`}</p>
         <button className='my-auto pr-3' onClick={handleLogout}>
             <Image className='w-8' src={logout} alt='Logout Button'/>
@@ -149,10 +150,10 @@ const TenantDash = () => {
       </div>
 
 
-      <div className='flex mx-10 lg:px-44 lg:space-x-14'>
-        <div className='w-full lg:w-2/3 space-y-4'>
-          <div className='flex bg-white rounded-2xl border-black border-2 p-8 w-full space-x-4'>
-              <div className='w-1/2'>
+      <div className='flex px-10 lg:px-16 xl:px-44 xl:space-x-14'>
+        <div className='w-full xl:w-2/3 space-y-4'>
+          <div className='flex max-md:flex-col bg-white rounded-2xl border-black border-2 p-8 w-full max-md:space-y-3 md:space-x-4'>
+              <div className='w-full md:w-1/2'>
                 <p className='text-xl pb-4'>Address:</p>
                 <p className='text-wrap pb-4 w-5/6'>{address === null ? 'N/A' : address}</p>
                 <p className='pb-4'>{`Unit ID: ${id}`}</p>
@@ -163,28 +164,28 @@ const TenantDash = () => {
                     <p>{`Start: ${leaseStart}`}</p>
                     <p>{`End: ${leaseEnd}`}</p>
                   </div>
-                  <div>
-                      <a>
-                        <Image src={download} alt='Download File Icon'/>
+                  <div className='my-auto'>
+                      <a >
+                         <FileArrowDown size={36} />
                       </a>
                   </div>
                 </div>
               </div>
               <div className=''>
                   <p className='text-xl pb-4'>Property Manager:</p>
-                  <p className='pb-4'>{manager === null ? 'Not Assigned' : manager} <a className='underline text-[#0744A0]'>Contact</a></p>
+                  <p className='pb-4'>{manager === null ? 'Not Assigned' : manager} <a href={`tel:${managerNumber}`} className='underline text-[#0744A0]'>Contact</a></p>
                   <p className='pb-4'><a href={`tel:${managerNumber}`}>{`Phone: ${managerNumber === null ? 'N/A' : managerNumber}`}</a></p>
                   <p className='pb-4'>{`Email: ${managerEmail === null ? 'N/A' : managerEmail}`}</p>
               </div>
           </div>
-          <div className='flex'>
+          <div className='flex max-md:flex-col max-md:space-y-5'>
             <div className='bg-white rounded-2xl border-black border-2 p-4 w-full mr-4'>
                 <p>Outstanding Balance:</p>
                 <p className='text-5xl text-center py-3'>{`$${balance}`}</p>
-                <div className='flex justify-between mx-5'>
+                <div className='flex justify-between mx-2 md:mx-5'>
                   <p className='my-auto'>{`Due by: ${dueDate}`}</p>
-                  <button className='bg-[#92DEDA] rounded-xl bg-opacity-50 px-5 py-2'>
-                    <a className='flex'>Pay Now <Image className='h-4 w-5 my-auto ml-2' src={wallet} alt='Wallet Icon'/></a>
+                  <button className='bg-[#92DEDA] rounded-xl bg-opacity-50 px-3 md:px-5 py-2 text-sm md:text-base'>
+                    <a className='flex'>Pay Now <Image className='h-4 w-5 my-auto ml-1  md:ml-2' src={wallet} alt='Wallet Icon'/></a>
                   </button>
                 </div>
             </div>
@@ -197,11 +198,11 @@ const TenantDash = () => {
         </div>
 
         <div>
-          <Image className='w-72 hidden lg:block' src={house} alt='House Image'/>
+          <Image className='w-72 hidden xl:block' src={house} alt='House Image'/>
         </div>
       </div>
 
-      <div className='lg:flex px-10 lg:px-44 lg:space-x-4 mt-4 pb-8 w-full'>
+      <div className='lg:flex px-10 lg:px-16 xl:px-44 lg:space-x-4 mt-4 pb-8 w-full'>
         <div className='bg-white rounded-2xl border-black border-2 max-lg:min-h-56 w-full lg:w-[67%] p-4'>
           <p>Payment History</p>
           <Table>   
@@ -220,7 +221,7 @@ const TenantDash = () => {
                   </TableBody>
                 </Table>
         </div>
-        <div className='bg-white rounded-2xl border-black border-2 lg:w-[30%] mt-4 lg:mt-0 px-6 py-4'>
+        <div className='bg-white rounded-2xl border-black border-2 xl:w-[30%] mt-4 lg:mt-0 px-6 py-4'>
             <p>Submit Maintenance Request</p>
             <div>
               <Textarea placeholder='Description' value={desc} onChange={(e) => setDesc(e.target.value)} required/>

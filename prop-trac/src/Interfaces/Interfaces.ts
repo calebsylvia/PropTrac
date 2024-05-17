@@ -181,4 +181,23 @@ export interface IAccount {
     language:  string;
 }
 
+export interface IDelete{
+    propertyId: number
+}
 
+export interface IRoom{
+    propertyID: number,
+    roomID: number
+}
+
+
+export interface IManager{
+    id: number,
+    email: string,
+    firstName: string,
+    lastName: string,
+    phone: string,
+    role: string,
+    location: string,
+    language: string
+}
