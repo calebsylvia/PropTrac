@@ -1,25 +1,34 @@
-'use client'
-import React from 'react'
-import { APIProvider, Map } from '@vis.gl/react-google-maps'
-import { IPosition } from '@/Interfaces/Interfaces'
+"use client";
+import React from "react";
+import { IPosition } from "@/Interfaces/Interfaces";
+import ReactMapboxGl, { Marker } from "react-mapbox-gl";
+import downRed from "@/app/Assets/downRed.png";
+import "mapbox-gl/dist/mapbox-gl.css";
+import Image from "next/image";
 
-const MapComponent = ({lat, lng}: IPosition) => {
+const MapComponent = ({ lat, lng }: IPosition) => {
+  const Map = ReactMapboxGl({
+    accessToken: process.env.NEXT_PUBLIC_MAP_KEY!,
+    scrollZoom: true,
+    logoPosition: "bottom-right",
+    minZoom: 15,
+  });
 
-  
-  
-  
   return (
+    <>
+      <Map
+        style="mapbox://styles/mapbox/streets-v12"
+        center={[lat, lng]}
+        containerStyle={{
+          height: "100%",
+        }}
+      >
+        <Marker coordinates={[lat, lng]} anchor="bottom">
+          <Image src={downRed} alt="Marker Icon"/>
+        </Marker>
+      </Map>
+    </>
+  );
+};
 
-    <div style={{
-      borderRadius: '20% !important',
-      width: '100%',
-      height: '100%'
-    }}>
-    <APIProvider apiKey={process.env.NEXT_PUBLIC_MAP_KEY!}>
-        <Map defaultCenter={{lat, lng}} defaultZoom={14} key={new Date().getTime()}/>
-    </APIProvider>
-    </div>
-  )
-}
-
-export default MapComponent
+export default MapComponent;

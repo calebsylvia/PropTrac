@@ -1,7 +1,16 @@
 'use client'
+import { useEffect } from "react";
 import LoginComponent from "./Components/LoginComponent";
 
 export default function Home() {
+
+  useEffect(() => {
+      if(typeof window !== undefined){
+        localStorage.removeItem("Token")
+        localStorage.removeItem("ID")
+      }
+  },[])
+
   return (
     <>
       <div className="background w-screen h-screen lg:flex">

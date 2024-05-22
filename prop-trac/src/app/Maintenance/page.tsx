@@ -119,10 +119,12 @@ const Maintenance = () => {
               </div>
             </div>
             <div className="bg-[#EEE2D1] rounded-xl py-5 px-6 border-black border-2 overflow-y-auto md:overflow-x-auto">
-              {
-                // <div className="bg-white rounded-xl w-72 h-32">
-                // </div>
-              }
+              <p className="font-semibold text-lg">Contractors</p>
+              <div>
+                {
+
+                }
+              </div>
             </div>
           </div>
         </div>

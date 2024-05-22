@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { IToken } from "../../Interfaces/Interfaces";
 import { getUserInfo, login } from "../../Utils/DataService";
 import { toast, useToast } from "@/components/ui/use-toast";
+import { Eye, EyeClosed } from "@phosphor-icons/react";
 
 const LoginContext = createContext(null)
 
@@ -13,6 +14,8 @@ const LoginComponent = () => {
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [logged, setLogged] = useState<boolean>(false)
+
+  const [showPass, setShowPass] = useState<boolean>(true)
 
   const router = useRouter();
   const { toast } = useToast()
@@ -80,12 +83,14 @@ const LoginComponent = () => {
               />
             </div>
             <div className="mb-3 md:mb-8 mx-auto">
-              <div className="mb-2 block">
+              <div className="mb-2 mr-3 flex justify-between">
                 <Label htmlFor="password1" value="Password" />
+                <Eye size={24} className={`${showPass ? '' : 'hidden'} hover:cursor-pointer`} onClick={() => setShowPass(false)}/>
+                <EyeClosed size={24} className={`${!showPass ? '' : 'hidden'} hover:cursor-pointer`} onClick={() => setShowPass(true)}/>
               </div>
               <TextInput
                 id="password1"
-                type="password"
+                type={`${!showPass ? 'text' : 'password'}`}
                 className="w-48 md:w-72 border-black"
                 onChange={(e) => {setPassword(e.target.value)}}
                 required

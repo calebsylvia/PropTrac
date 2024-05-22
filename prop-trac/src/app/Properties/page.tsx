@@ -19,10 +19,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { PropContext } from "../Context/PropContext";
 import Link from "next/link";
 import TopNav from "../Components/TopNav";
+import { AddressAutofill } from "@mapbox/search-js-react";
 
 const Properties = () => {
 
-  const [properties, setProperties] = useState<IProperties[]>([]);
+  const [properties, setProperties] = useState<IProperties[]>();
   const [value, setValue] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
@@ -73,12 +74,12 @@ const Properties = () => {
     if (typeof window !== 'undefined') {
       id = localStorage.getItem("ID")
     }
-  },[])
+  },[re])
 
   useEffect(() => {
     const getPropertyList = async () => {
       setUserID(parseInt(id!))
-      let props = await getProperties(id);
+      let props: IProperties[] = await getProperties(id);
       console.log(props);
       setProperties(props);
       setIsOpen(false)
@@ -157,7 +158,7 @@ const addProp = async() => {
     setFirst(false)
     setSecond(false)
     setRe(" ")
-    return toast({description:'Property Added Successfully'})
+    return toast({description:'Property Added Successfully', variant:'default'})
   }
 }
 
@@ -172,16 +173,19 @@ const createQueryString = (name: string, value: IProperties[]) => {
     <>
               <div className={`${isOpen ? 'block' : 'hidden'}`}>
               <div className='bg-black bg-opacity-25 z-50 w-full h-full md:h-[127vh] fixed'>
+                
             <div className=' bg-white rounded-xl w-11/12 md:w-3/5 lg:w-1/2 xl:w-1/3 min-h-[400px] mx-auto left-5 md:left-[20%] lg:left-[25%] xl:left-[35%] top-[10%] md:top-[20%] fixed'>
                 <p className={`${first || second ? 'hidden' : 'block'} text-center text-xl py-4`}>Add Property</p>
                 <p className={`${first && !second ? 'block' : 'hidden'} text-center text-xl py-4`}>Property Details</p>
                 <p className={`${second ? 'block' : 'hidden'} text-center text-xl py-4`}>Financial Information</p>
 
                 <div className={`${first ? 'hidden' : 'block'} flex flex-col space-y-3`}>
+                <form>
                   <div className='mx-auto w-5/6'>
                     <div className='block mb-2'>
                         <Label value="Street Address" htmlFor='address'/>
-                        <TextInput id='address' placeholder='Address' type='text' onChange={(e) => {
+                        <AddressAutofill accessToken={process.env.NEXT_PUBLIC_MAP_KEY!}>
+                        <TextInput id='address' placeholder='Address' type='text' autoComplete="address-line1" onChange={(e) => {
                           let splitAdd = e.target.value.split(" "); setHouseNumber(splitAdd[0]);
                           let addr = "";
                           for(let i = 1; i < splitAdd.length; i++){
@@ -189,20 +193,21 @@ const createQueryString = (name: string, value: IProperties[]) => {
                           }
                           setStreet(addr);
                         }} required/>
+                        </AddressAutofill>
                     </div>
                     </div>
                     <div className='flex mx-auto space-x-4 w-5/6'>
                         <div className='block mb-2 w-2/5'>
                           <Label value="City" htmlFor='city'/>
-                          <TextInput className='' placeholder='City' id='city' type='text' onChange={((e) => setCity(e.target.value))} required/>
+                          <TextInput className='' placeholder='City' id='city' type='text' autoComplete="address-level2" value={city} onChange={((e) => setCity(e.target.value))} required/>
                         </div>
                         <div className='block mb-2 w-2/5'>
                           <Label value="ZIP" htmlFor='zip'/>
-                          <TextInput id='zip' type='number' placeholder='ZIP' onChange={((e) => setZip(e.target.value))} required/>
+                          <TextInput id='zip' type='number' placeholder='ZIP' autoComplete="postal-code" value={zip} onChange={((e) => setZip(e.target.value))} required/>
                         </div>
                         <div className='block mb-2'>
                           <Label value="State" htmlFor='state'/>
-                          <Select id="state" value={state} onChange={(e) => setState(e.target.value)} required>
+                          <Select id="state" value={state} autoComplete="address-level1" onChange={(e) => setState(e.target.value)} required>
                             {
                               states.map((state, idx) => 
                                 <option key={idx} value={state}>{state}</option>
@@ -235,6 +240,7 @@ const createQueryString = (name: string, value: IProperties[]) => {
                           <CaretRight size={18} className='my-auto' />
                         </Button>
                     </div>
+                    </form>
                 </div>
 
                 <div className={`${first && !second ? 'block' : 'hidden'} flex flex-col space-y-3`}>
@@ -245,11 +251,11 @@ const createQueryString = (name: string, value: IProperties[]) => {
                           </div>
                           <div className='block mb-2'>
                               <Label value='Bath(s)' htmlFor='baths'/>
-                              <TextInput placeholder='Baths' id='baths' type='number' onChange={(e) => setBaths(parseInt(e.target.value))} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
+                              <TextInput max={8} placeholder='Baths' id='baths' type='number' onChange={(e) => {parseInt(e.target.value) <= 8 ? setBaths(parseInt(e.target.value)) : toast({description: 'Max Baths is 8', variant:'destructive'})}} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
                           </div>
                           <div className='block mb-2'>
                               <Label value='Square Ft.' htmlFor='sqft'/>
-                              <TextInput placeholder='Square Ft.' id='sqft' type='number' onChange={(e) => setSqft(parseInt(e.target.value))} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
+                              <TextInput placeholder='Square Ft.' id='sqft' type='number'  onChange={(e) => setSqft(parseInt(e.target.value))} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
                           </div>
                       </div>
                       <div>
@@ -260,7 +266,7 @@ const createQueryString = (name: string, value: IProperties[]) => {
                       <div className='flex w-5/6 mx-auto min-h-36'>
                           <div className='block mb-2 w-full'>
                               <Label value='Description (optional)' htmlFor='desc'/>
-                              <Textarea className='min-h-28' id='desc' placeholder='Description' onChange={(e) => setDescription(e.target.value)}/>
+                              <Textarea className='min-h-28' id='desc' placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)}/>
                           </div>
                       </div>
                       <div className='flex mx-auto justify-between w-5/6'>
@@ -357,20 +363,8 @@ const createQueryString = (name: string, value: IProperties[]) => {
               </TableHeader>
               
               <TableBody className="overflow-y-auto">
-                {properties &&
-                  properties
-                    .filter((item) => {
-                      if (!value) return true;
-                      if (
-                        item.street
-                          .toLowerCase()
-                          .includes(value.toLowerCase()) ||
-                        item.houseNumber.includes(value)
-                      ) {
-                        return true;
-                      }
-                    })
-                    .map((prop, idx) => (
+                {Array.isArray(properties) &&
+                  properties?.map((prop, idx) => (
                       <TableRow key={idx} className="max-lg:text-xs">
                         <TableCell>
                           <p>{`${prop.houseNumber} ${prop.street}`}</p>

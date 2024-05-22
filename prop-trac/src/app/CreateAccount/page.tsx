@@ -24,6 +24,8 @@ const CreateAccount = () => {
   const [match, setMatch] = useState<boolean>(true)
   const [disable, setDisable] = useState<boolean>(true)
 
+  const [spec, setSpec] = useState<boolean>(false)
+
   const router = useRouter()
   const { toast} = useToast()
 
@@ -95,7 +97,10 @@ const CreateAccount = () => {
                   </div>
                   <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='username' value='Username'/>
-                    <TextInput max={20} className='w-full md:w-48 lg:w-56' id='username' placeholder='Username' type='text' onChange={(e) => {setUsername(e.target.value)}} required/>
+                    <TextInput max={20} className='w-full md:w-48 lg:w-56' id='username' placeholder='Username' type='text' value={username} onChange={(e) => {(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/).test(e.target.value) ? setSpec(true) : setSpec(false)
+                    setUsername(e.target.value)
+                  }} required/>
+                  <p className={`${spec ? '' : 'hidden'} text-red-500 text-sm`}>No special characters or spaces</p>
                   </div>
                 </div>
 
@@ -152,7 +157,7 @@ const CreateAccount = () => {
                 </div>
 
                 <div className='flex justify-center md:justify-end pt-2 pb-7'>
-                  <Button className='mt-3 w-36' color="light"  type='submit'>
+                  <Button className='mt-3 w-36' color="light"  type='submit' disabled={isEight && spec ? false : true}>
                     Create Account
                   </Button>
                 </div>

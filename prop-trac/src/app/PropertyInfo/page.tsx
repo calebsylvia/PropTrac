@@ -11,18 +11,19 @@ import upRed from '@/app/Assets/upRed.png'
 import MapComponent from '../Components/MapComponent'
 import test from '@/app/Assets/bg.png'
 import { useSearchParams } from 'next/navigation'
-import { IAddProp, IProperties, RoomsList } from '@/Interfaces/Interfaces'
+import { IAddProp, IGeo, IProperties, RoomsList } from '@/Interfaces/Interfaces'
 import TopNav from '../Components/TopNav'
 import { deleteProp, editProperty } from '@/Utils/DataService'
 import { useToast } from '@/components/ui/use-toast'
 import { Button, Label, Select, TextInput, Textarea } from 'flowbite-react'
+import { AddressAutofill } from '@mapbox/search-js-react'
 
 
 const PropertyInfo = () => {
 
   const [houseNumber, setHouseNumber] = useState<string>('')
   const [street, setStreet] = useState<string>('')
-  const [city, setCity] = useState<string>('AL')
+  const [city, setCity] = useState<string>('')
   const [zip, setZip] = useState<string>('')
   const [state, setState] = useState<string>('')
   const [houseOrRoomType, setHouseOrRoomType] = useState<string>('House')
@@ -71,6 +72,16 @@ const PropertyInfo = () => {
     console.log(JSON.parse(searchParams.get('propInfo')!))
     const propData: IProperties[] = JSON.parse(searchParams.get("propInfo")!)
 
+    const getCoords = async() => {
+        const res = await fetch(`https://api.mapbox.com/search/geocode/v6/forward?limit=1&address_number=${propData[0].houseNumber}&street=${propData[0].street}&place=${propData[0].state}&access_token=${process.env.NEXT_PUBLIC_MAP_KEY!}`)
+        const data: IGeo = await res.json()
+        console.log(data.features[0].geometry.coordinates)
+
+        setLat(data.features[0].geometry.coordinates[0])
+        setLng(data.features[0].geometry.coordinates[1])
+    }
+
+    getCoords()
     const feats = propData[0].amenFeatList.split(', ')
     const roomArr = propData.map((room) => room.roomRent)
     console.log(roomArr)
@@ -86,6 +97,9 @@ const PropertyInfo = () => {
 
     setId(propData[0].id)
     setAddress(`${propData[0].houseNumber} ${propData[0].street}`)
+    setCity(propData[0].city)
+    setZip(propData[0].zip)
+    setState(propData[0].state)
     setCityState(`${propData[0].city}, ${propData[0].state} ${propData[0].zip}`)
     setRooms(propData[0].rooms)
     setBaths(propData[0].baths)
@@ -182,20 +196,6 @@ const handleExit = (e: any) => {
   setFirst(false)
   setSecond(false)
   setIsOpen(false)
-
-  setHouseNumber('')
-  setAmenFeatList('')
-  setBaths(0)
-  setCity('')
-  setDescription('')
-  setHouseOrRoomType('')
-  setHouseRent(0)
-  setRoomRent([])
-  setRooms(0)
-  setSqft(0)
-  setState('')
-  setStreet('')
-  setZip('')
 }
 
 
@@ -213,7 +213,8 @@ const handleExit = (e: any) => {
                   <div className='mx-auto w-5/6'>
                     <div className='block mb-2'>
                         <Label value="Street Address" htmlFor='address'/>
-                        <TextInput id='address' placeholder='Address' type='text' onChange={(e) => {
+                        <AddressAutofill accessToken={process.env.NEXT_PUBLIC_MAP_KEY!}>
+                        <TextInput id='address' placeholder='Address' value={address} type='text' onChange={(e) => {
                           let splitAdd = e.target.value.split(" "); setHouseNumber(splitAdd[0]);
                           let addr = "";
                           for(let i = 1; i < splitAdd.length; i++){
@@ -221,16 +222,17 @@ const handleExit = (e: any) => {
                           }
                           setStreet(addr);
                         }} required/>
+                        </AddressAutofill>
                     </div>
                     </div>
                     <div className='flex mx-auto space-x-4 w-5/6'>
                         <div className='block mb-2 w-2/5'>
                           <Label value="City" htmlFor='city'/>
-                          <TextInput className='' placeholder='City' id='city' type='text' onChange={((e) => setCity(e.target.value))} required/>
+                          <TextInput className='' placeholder='City' id='city' type='text' value={city} onChange={((e) => setCity(e.target.value))} required/>
                         </div>
                         <div className='block mb-2 w-2/5'>
                           <Label value="ZIP" htmlFor='zip'/>
-                          <TextInput id='zip' type='number' placeholder='ZIP' onChange={((e) => setZip(e.target.value))} required/>
+                          <TextInput id='zip' type='number' placeholder='ZIP' value={zip} onChange={((e) => setZip(e.target.value))} required/>
                         </div>
                         <div className='block mb-2'>
                           <Label value="State" htmlFor='state'/>
@@ -273,15 +275,15 @@ const handleExit = (e: any) => {
                       <div className='flex mx-auto w-5/6 space-x-4'>
                           <div className='block mb-2'>
                               <Label value='Room(s)' htmlFor='rooms'/>
-                              <TextInput max={8} placeholder='Rooms' id='rooms' type='number'  onChange={(e) => {parseInt(e.target.value) <= 8 ? setRooms(parseInt(e.target.value)) : toast({description: 'Max Rooms is 8', variant:'destructive'})}} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
+                              <TextInput max={8} placeholder='Rooms' id='rooms' type='number' value={rooms}  onChange={(e) => {parseInt(e.target.value) <= 8 ? setRooms(parseInt(e.target.value)) : toast({description: 'Max Rooms is 8', variant:'destructive'})}} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
                           </div>
                           <div className='block mb-2'>
                               <Label value='Bath(s)' htmlFor='baths'/>
-                              <TextInput placeholder='Baths' id='baths' type='number' onChange={(e) => setBaths(parseInt(e.target.value))} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
+                              <TextInput placeholder='Baths' id='baths' type='number' value={baths} onChange={(e) => setBaths(parseInt(e.target.value))} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
                           </div>
                           <div className='block mb-2'>
                               <Label value='Square Ft.' htmlFor='sqft'/>
-                              <TextInput placeholder='Square Ft.' id='sqft' type='number' onChange={(e) => setSqft(parseInt(e.target.value))} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
+                              <TextInput placeholder='Square Ft.' id='sqft' type='number' value={sqft} onChange={(e) => setSqft(parseInt(e.target.value))} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
                           </div>
                       </div>
                       <div>
@@ -292,7 +294,7 @@ const handleExit = (e: any) => {
                       <div className='flex w-5/6 mx-auto min-h-36'>
                           <div className='block mb-2 w-full'>
                               <Label value='Description (optional)' htmlFor='desc'/>
-                              <Textarea className='min-h-28' id='desc' placeholder='Description' onChange={(e) => setDescription(e.target.value)}/>
+                              <Textarea className='min-h-28' id='desc' placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)}/>
                           </div>
                       </div>
                       <div className='flex mx-auto justify-between w-5/6'>
