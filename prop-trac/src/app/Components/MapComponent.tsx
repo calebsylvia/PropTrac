@@ -4,7 +4,6 @@ import { IPosition } from "@/Interfaces/Interfaces";
 import downRed from "@/app/Assets/downRed.png";
 import { Map, Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import Image from "next/image";
 
 const MapComponent = ({ lat, lng }: IPosition) => {
 
