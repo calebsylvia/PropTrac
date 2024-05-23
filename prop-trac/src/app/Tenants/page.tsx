@@ -1,13 +1,18 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import SideNav from '../Components/SideNav'
 import { MagnifyingGlass, PlusSquare } from '@phosphor-icons/react'
 import {Table, TableHeader, TableBody, TableHead, TableRow} from '@/components/ui/table'
 import TopNav from '../Components/TopNav'
+import AddTenant from '../Components/AddTenant'
 
 const Tenants = () => {
+
+  const [open, setOpen] = useState<boolean>(true)
+
   return (
     <>
+    <AddTenant open={open} setOpen={setOpen}/>
     <div className='hidden lg:block'>
       <SideNav/>
     </div>
