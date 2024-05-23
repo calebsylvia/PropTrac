@@ -5,11 +5,15 @@ import TopNav from "../Components/TopNav";
 import { IMaintenance } from "@/Interfaces/Interfaces";
 import { checkToken, getMaintenance } from "@/Utils/DataService";
 import { useRouter } from "next/navigation";
+import AddContractor from "../Components/AddContractor";
+import { Plus } from "@phosphor-icons/react";
 
 const Maintenance = () => {
 
   const [mainArr, setMainArr] = useState<IMaintenance[]>([]);
   const [id, setId] = useState<number>(1);
+
+  const [open, setOpen] = useState<boolean>(false)
 
   const router = useRouter();
 
@@ -46,6 +50,7 @@ const Maintenance = () => {
 
   return (
     <>
+    <AddContractor open={open} setOpen={setOpen}/>
       <div className="hidden lg:block">
         <SideNav />
       </div>
@@ -119,7 +124,13 @@ const Maintenance = () => {
               </div>
             </div>
             <div className="bg-[#EEE2D1] rounded-xl py-5 px-6 border-black border-2 overflow-y-auto md:overflow-x-auto">
+              <div className="flex justify-between">
               <p className="font-semibold text-lg">Contractors</p>
+              <div className="flex my-auto hover:cursor-pointer" onClick={() => setOpen(true)}>
+                <p>Add New</p>
+                <Plus size={20} />
+              </div>
+              </div>
               <div>
                 {
 

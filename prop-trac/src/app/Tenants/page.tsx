@@ -8,7 +8,7 @@ import AddTenant from '../Components/AddTenant'
 
 const Tenants = () => {
 
-  const [open, setOpen] = useState<boolean>(true)
+  const [open, setOpen] = useState<boolean>(false)
 
   return (
     <>

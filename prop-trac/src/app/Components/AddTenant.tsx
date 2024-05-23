@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 const AddTenant = (props:{ open: boolean, setOpen: (value: boolean) => void}) => {
 
-    const [open, setOpen] = useState<boolean>(true)
+    const [open, setOpen] = useState<boolean>()
 
   return (
     <>
