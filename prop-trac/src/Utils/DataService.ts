@@ -1,4 +1,4 @@
-import { IAccount, IAddProp, IDelete, IForgot, IManager, IRequest, IReset, IResponse, IRoom, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
+import { IAccount, IAddProp, IDelete, IForgot, IManager, IRequest, IReset, IResponse, IRoom, ITenants, IToken, IUser, IUserInfo } from "../Interfaces/Interfaces";
 
 const url = 'https://proptracapi.azurewebsites.net';
 
@@ -276,4 +276,21 @@ export const getTenants = async(userID: number) => {
     const res = await fetch(url + `/Manager/GetAllTenants/${userID}`)
     const data = res.json()
     return data;
+}
+
+export const addTenant = async(tenant: ITenants) => {
+    const res = await fetch(url + '/Manager/AddTenant', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(tenant)
+    })
+
+    if(!res.ok){
+        return false
+    }
+
+    const data = res.json()
+    return data
 }
