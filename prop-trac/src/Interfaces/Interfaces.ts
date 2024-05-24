@@ -299,3 +299,18 @@ export interface MatchCode {
     country:        string;
     confidence:     string;
 }
+
+export interface ITenants {
+    id:              number;
+    firstName:       string;
+    lastName:        string;
+    phone:           string;
+    leaseType:       string;
+    leaseStart:      string;
+    leaseEnd:        string;
+    email:           string;
+    documentName:    string;
+    documentType:    string;
+    documentContent: string;
+}
+

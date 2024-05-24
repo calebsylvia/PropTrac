@@ -2,19 +2,14 @@
 import React, { useState } from 'react'
 import { TextInput, Label, Select, Button } from 'flowbite-react'
 
-const AddContractor = (props:{ open: boolean, setOpen: (value: boolean) => void}) => {
+const AddContractor = (props:{ open: boolean, onClose: () => void}) => {
 
-
-    const [open, setOpen] = useState<boolean>(false)
     const categories: string[] = ["Appliances", "Electricity", "Flooring", "HVAC", "Pests", "Plumbing", "Roofing", "Safety", "Utilities", "Windows/Doors", "Other"];
 
-    const handleExit = () => {
-        setOpen(false)
-    }
 
   return (
     <>
-        <div className={`${open ? '' : 'hidden'}`}>
+        <div className={`${props.open ? '' : 'hidden'}`}>
         <div className='bg-black bg-opacity-25 z-50 w-full h-full fixed'>
             <div className='bg-white rounded-xl w-11/12 md:w-3/5 lg:w-1/2 xl:w-1/3 min-h-[300px] mx-auto left-5 md:left-[20%] lg:left-[25%] xl:left-[35%] top-[25%] md:top-[20%] fixed'>
                 <p className='text-center text-xl font-medium my-3'>Add Contractor</p>
@@ -47,7 +42,7 @@ const AddContractor = (props:{ open: boolean, setOpen: (value: boolean) => void}
                 </div>
                 </div>
                 <div className='flex justify-evenly mt-7'>
-                    <Button color='light' onClick={handleExit}>
+                    <Button color='light' onClick={props.onClose}>
                         Cancel
                     </Button>
                     <Button color='light'>

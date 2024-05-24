@@ -365,7 +365,18 @@ const createQueryString = (name: string, value: IProperties[]) => {
               
               <TableBody className="overflow-y-auto">
                 {Array.isArray(properties) &&
-                  properties?.map((prop, idx) => (
+                  properties
+                  .filter((item) => {
+                    if (!value) return true;
+                    if (
+                      item.street
+                        .toLowerCase()
+                        .includes(value.toLowerCase()) ||
+                      item.houseNumber.includes(value)
+                    ) {
+                      return true;
+                    }
+                  }).map((prop, idx) => (
                       <TableRow key={idx} className="max-lg:text-xs">
                         <TableCell>
                           <p>{`${prop.houseNumber} ${prop.street}`}</p>

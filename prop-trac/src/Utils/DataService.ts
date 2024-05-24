@@ -271,3 +271,9 @@ export const editProperty = async(property: IAddProp) => {
     const data = await res.json()
     return data;
 }
+
+export const getTenants = async(userID: number) => {
+    const res = await fetch(url + `/Manager/GetAllTenants/${userID}`)
+    const data = res.json()
+    return data;
+}

@@ -48,9 +48,17 @@ const Maintenance = () => {
     console.log(mainArr);
   }, []);
 
+  const closeModal = () => {
+    setOpen(false)
+  }
+
+  const openModal = () => {
+    setOpen(true)
+  }
+
   return (
     <>
-    <AddContractor open={open} setOpen={setOpen}/>
+    <AddContractor open={open} onClose={closeModal}/>
       <div className="hidden lg:block">
         <SideNav />
       </div>
@@ -126,9 +134,9 @@ const Maintenance = () => {
             <div className="bg-[#EEE2D1] rounded-xl py-5 px-6 border-black border-2 overflow-y-auto md:overflow-x-auto">
               <div className="flex justify-between">
               <p className="font-semibold text-lg">Contractors</p>
-              <div className="flex my-auto hover:cursor-pointer" onClick={() => setOpen(true)}>
+              <div className="flex my-auto hover:cursor-pointer" onClick={openModal}>
                 <p>Add New</p>
-                <Plus size={20} />
+                <Plus size={20} className="my-auto"/>
               </div>
               </div>
               <div>
