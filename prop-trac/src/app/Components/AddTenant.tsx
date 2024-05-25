@@ -1,18 +1,28 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { TextInput, Label, Select, Button } from "flowbite-react";
-import { IProperties } from "@/Interfaces/Interfaces";
-import { getProperties } from "@/Utils/DataService";
+import { TextInput, Label, Select, Button, Datepicker } from "flowbite-react";
+import { IAddTenant, IProperties } from "@/Interfaces/Interfaces";
+import { addTenant, getProperties } from "@/Utils/DataService";
+import { PhoneIncoming } from "@phosphor-icons/react";
+import { useToast } from "@/components/ui/use-toast";
 
-const AddTenant = (props: { open: boolean; onClose: () => void }) => {
+const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => void}) => {
   const [prop, setProps] = useState<IProperties[]>([]);
   const [fullProp, setFullProp] = useState<IProperties[]>([])
   const [id, setId] = useState<number>()
 
-  const [selectedProp, setSelect] = useState<number>()
+  const [selectedProp, setSelect] = useState<number | null>()
   const [type, setType] = useState<string>('')
+  const [start, setStart] = useState<any>()
+  const [end, setEnd] = useState<any>()
+
+  const [firstName, setFirstName] = useState<string>('')
+  const [lastName, setLastName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [phone, setPhone] = useState<string>('')
 
   let iD: any;
+  const {toast} = useToast()
 
   useEffect(() => {
     if(typeof window !== undefined){
@@ -35,13 +45,43 @@ const AddTenant = (props: { open: boolean; onClose: () => void }) => {
     getProps()
   }, []);
 
+  useEffect(() => {
+    console.log(start)
+    console.log(end)
+  }, [start, end])
+
+  const handleAdd = async() => {
+
+    let tenant:IAddTenant = {
+      firstName: firstName,
+      lastName: lastName,
+      phone: phone,
+      email: email,
+      leaseType: type,
+      leaseStart: start,
+      leaseEnd: end,
+      propertyInfoID: selectedProp!,
+      roomInfoID: null,
+      documentsType: null,
+      documentsContent: null,
+      documentsName: null
+    }
+
+    const result = await addTenant(tenant)
+
+     if(result === false){
+        return toast({description: 'Something went wrong. Try again!', variant:"destructive"})
+     }else{
+        return toast({description: 'Tenant Added Successfully', variant:'default'})
+     }
+  }
 
   return (
     <>
       <div className={`${props.open ? "" : "hidden"}`}>
         <div className="bg-black bg-opacity-25 z-50 w-full h-full fixed">
-          <div className="bg-white rounded-xl w-11/12 md:w-3/5 lg:w-1/2 xl:w-1/3 min-h-[300px] mx-auto left-5 md:left-[20%] lg:left-[25%] xl:left-[35%] top-[25%] md:top-[20%] fixed">
-            <p className="text-center text-xl font-medium my-3">Add Tenant</p>
+          <div className="bg-white rounded-xl w-11/12 md:w-3/5 lg:w-1/2 xl:w-1/3 min-h-[300px] mx-auto max-md:pb-3 left-5 md:left-[20%] lg:left-[25%] xl:left-[35%] top-[4%] md:top-[8%] md:fixed">
+            <p className="text-center text-xl font-medium max-md:pt-2 my-3">Add Tenant</p>
             <div className="flex justify-between mx-6">
               <div className="block mb-2">
                 <Label value="First Name" htmlFor="tenantFirst" />
@@ -50,6 +90,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void }) => {
                   type="text"
                   placeholder="First Name"
                   className="w-36 md:w-48 border-black"
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               </div>
               <div className="block mb-2">
@@ -59,6 +100,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void }) => {
                   type="text"
                   placeholder="Last Name"
                   className="w-36 md:w-48 border-black"
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
             </div>
@@ -70,6 +112,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void }) => {
                   type="tel"
                   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                   placeholder="Tenant Number"
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
               <div className="block mb-2">
@@ -78,10 +121,11 @@ const AddTenant = (props: { open: boolean; onClose: () => void }) => {
                   className="w-36 md:w-48 border-black"
                   type="email"
                   placeholder="Tenant Email"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
-            <div className="flex justify-between mx-6">
+            <div className="flex max-md:flex-col md:justify-between mx-6">
                 <div className="block mb-2">
                     <Label value="Lease Type" htmlFor="type"/>
                     <Select id="type" className="w-36 md:w-48" onChange={(e) => setType(e.target.value)}>
@@ -89,8 +133,15 @@ const AddTenant = (props: { open: boolean; onClose: () => void }) => {
                         <option value="Monthly">Monthly</option>
                     </Select>
                 </div>
-                <div>
-                    <Label value="Lease Dates" htmlFor="dates"/>
+            </div>
+            <div className="flex max-md:flex-col md:justify-between mx-6">
+                <div className="block mb-2">
+                    <Label value="Lease Start" htmlFor="dates"/>
+                    <Datepicker className="w-36 md:w-48" id="dates" onSelectedDateChanged={(date) => setStart(date)}/>
+                </div>
+                <div className="block mb-2">
+                    <Label value="Lease End" htmlFor="date"/>
+                    <Datepicker className="w-36 md:w-48" id="date" onSelectedDateChanged={(date) => setEnd(date)}/>
                 </div>
             </div>
             <div className="flex justify-between mx-6">
@@ -107,7 +158,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void }) => {
                 <Select id="room" className="w-36 md:w-48">
                     {
                         fullProp && fullProp.filter((x) => {
-                            selectedProp === x.id
+                            x.id === selectedProp
                         }).map((p, idx) => 
                             <option key={idx} value={p.roomID!}>{`Room ${p.roomID} - ${p.roomRent}`}</option>
                         )
@@ -119,7 +170,10 @@ const AddTenant = (props: { open: boolean; onClose: () => void }) => {
               <Button color="light" onClick={props.onClose}>
                 Cancel
               </Button>
-              <Button color="light">Add Tenant</Button>
+              <Button color="light" onClick={() => {
+                props.addProp;
+                handleAdd()
+              }}>Add Tenant</Button>
             </div>
           </div>
         </div>

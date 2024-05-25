@@ -14,6 +14,7 @@ const Tenants = () => {
   const [id, setId] = useState<number>(1)
   const [tenArr, setTenArr] = useState<ITenants[]>([])
   const [value, setValue] = useState<string>('')
+  const [re, setRe] = useState<string>('')
 
   let iD: any;
 
@@ -33,7 +34,7 @@ const Tenants = () => {
     }
 
     getAllTenants()
-  }, [])
+  }, [re])
 
   const handleOpen = () => {
     setOpen(true)
@@ -43,9 +44,15 @@ const Tenants = () => {
     setOpen(false)
   }
 
+  const handleAdd = () => {
+    setOpen(false)
+    setRe(" ")
+  }
+
+
   return (
     <>
-    <AddTenant open={open} onClose={handleClose}/>
+    <AddTenant open={open} onClose={handleClose} addProp={handleAdd}/>
     <div className='hidden lg:block'>
       <SideNav/>
     </div>
@@ -96,7 +103,7 @@ const Tenants = () => {
                         }).map((tenant, idx) => 
                         <TableRow key={idx}>
                           <TableCell>{`${tenant.firstName} ${tenant.lastName}`}</TableCell>
-                          <TableCell>{}</TableCell>
+                          <TableCell>{`${tenant.houseNumber} ${tenant.street}, ${tenant.city} ${tenant.zip}`}</TableCell>
                           <TableCell>{tenant.leaseType}</TableCell>
                           <TableCell>{tenant.leaseStart.substring(0, 10)}</TableCell>
                           <TableCell>{tenant.leaseEnd.substring(0, 10)}</TableCell>

@@ -154,7 +154,7 @@ const AccountInfo = () => {
               <p>{`Language: ${language}`}</p>
             </div>
             <div className="pt-10">
-              <button className="flex">
+              <button className="flex" onClick={() => setIsOpen(true)}>
                 <NotePencil size={32} className="hidden xl:block" />
                 <NotePencil size={20} className="block xl:hidden" />
                 <p className="my-auto pl-2">Edit Profile</p>

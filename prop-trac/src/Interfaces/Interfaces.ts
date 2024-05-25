@@ -309,8 +309,27 @@ export interface ITenants {
     leaseStart:      string;
     leaseEnd:        string;
     email:           string;
+    houseNumber: string,
+    street: string,
+    zip: string,
+    city: string,
     documentName:    string;
     documentType:    string;
     documentContent: string;
+}
+
+export interface IAddTenant {
+    firstName: string,
+    lastName: string,
+    phone: string,
+    leaseType: string,
+    leaseStart: string,
+    leaseEnd: string,
+    email: string,
+    roomInfoID: number | null,
+    propertyInfoID: number | null,
+    documentsName: string | null,
+    documentsType: string | null,
+    documentsContent: string | null
 }
 
