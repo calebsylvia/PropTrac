@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import SideNav from "../Components/SideNav";
 import TopNav from "../Components/TopNav";
-import { IMaintenance } from "@/Interfaces/Interfaces";
-import { checkToken, getMaintenance } from "@/Utils/DataService";
+import { IContractor, IMaintenance } from "@/Interfaces/Interfaces";
+import { checkToken, getContractors, getMaintenance } from "@/Utils/DataService";
 import { useRouter } from "next/navigation";
 import AddContractor from "../Components/AddContractor";
 import { Plus } from "@phosphor-icons/react";
@@ -11,9 +11,11 @@ import { Plus } from "@phosphor-icons/react";
 const Maintenance = () => {
 
   const [mainArr, setMainArr] = useState<IMaintenance[]>([]);
+  const [contArr, setContArr] = useState<IContractor[]>([])
   const [id, setId] = useState<number>(1);
 
   const [open, setOpen] = useState<boolean>(false)
+  const [re, setRe] = useState<string>('')
 
   const router = useRouter();
 
@@ -41,12 +43,15 @@ const Maintenance = () => {
       setMainArr(mainReq)
       console.log(mainArr)
     }
+
+    const getContract = async(userId: number) => {
+      const contReq = await getContractors(userId)
+      setContArr(contReq)
+    }
     getMainReq(id)
+    getContract(id)
   },[])
 
-  useEffect(() => {
-    console.log(mainArr);
-  }, []);
 
   const closeModal = () => {
     setOpen(false)
@@ -56,9 +61,14 @@ const Maintenance = () => {
     setOpen(true)
   }
 
+  const handleAdd = () => {
+    setOpen(false)
+    setRe(' ')
+  }
+
   return (
     <>
-    <AddContractor open={open} onClose={closeModal}/>
+    <AddContractor open={open} onClose={closeModal} addCont={handleAdd}/>
       <div className="hidden lg:block">
         <SideNav />
       </div>
@@ -131,7 +141,7 @@ const Maintenance = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-[#EEE2D1] rounded-xl py-5 px-6 border-black border-2 overflow-y-auto md:overflow-x-auto">
+            <div className="bg-[#EEE2D1] rounded-xl py-5 px-6 border-black border-2 mb-5 ">
               <div className="flex justify-between">
               <p className="font-semibold text-lg">Contractors</p>
               <div className="flex my-auto hover:cursor-pointer" onClick={openModal}>
@@ -139,9 +149,20 @@ const Maintenance = () => {
                 <Plus size={20} className="my-auto"/>
               </div>
               </div>
-              <div>
+              <div className="overflow-x-auto flex flex-row flex-grow-0 mt-3">
                 {
-
+                  contArr && contArr.map((cont, idx) => 
+                    <div key={idx} className="bg-white min-w-72 md:w-80 min-h-32 md:h-32 rounded-xl border-2 border-black mx-2">
+                      <div className="flex justify-between px-2 pt-3 md:pt-2">
+                        <p className="text-sm md:text-base font-semibold">{cont.name}</p>
+                        <p className="max-md:text-sm my-auto">{cont.category}</p>
+                      </div>
+                      <div className="ml-5 md:ml-4 mt-3 space-y-3 max-md:text-sm">
+                        <p>Email: <a className="text-blue-500 underline" href={cont.email}>{cont.email}</a></p>
+                        <p>Phone: <a className="text-blue-500 underline" href={cont.phone}>{cont.phone}</a></p>
+                      </div>
+                    </div>
+                  ) 
                 }
               </div>
             </div>

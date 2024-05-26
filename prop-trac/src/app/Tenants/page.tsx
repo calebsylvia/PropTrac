@@ -45,8 +45,8 @@ const Tenants = () => {
   }
 
   const handleAdd = () => {
-    setOpen(false)
     setRe(" ")
+    setOpen(false)
   }
 
 

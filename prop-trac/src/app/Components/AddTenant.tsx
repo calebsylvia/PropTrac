@@ -12,7 +12,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
   const [id, setId] = useState<number>()
 
   const [selectedProp, setSelect] = useState<number | null>()
-  const [type, setType] = useState<string>('')
+  const [type, setType] = useState<string>('Annually')
   const [start, setStart] = useState<any>()
   const [end, setEnd] = useState<any>()
 
@@ -91,6 +91,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
                   placeholder="First Name"
                   className="w-36 md:w-48 border-black"
                   onChange={(e) => setFirstName(e.target.value)}
+                  required
                 />
               </div>
               <div className="block mb-2">
@@ -101,6 +102,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
                   placeholder="Last Name"
                   className="w-36 md:w-48 border-black"
                   onChange={(e) => setLastName(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -113,6 +115,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
                   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                   placeholder="Tenant Number"
                   onChange={(e) => setPhone(e.target.value)}
+                  required
                 />
               </div>
               <div className="block mb-2">
@@ -122,13 +125,14 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
                   type="email"
                   placeholder="Tenant Email"
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
             </div>
             <div className="flex max-md:flex-col md:justify-between mx-6">
                 <div className="block mb-2">
                     <Label value="Lease Type" htmlFor="type"/>
-                    <Select id="type" className="w-36 md:w-48" onChange={(e) => setType(e.target.value)}>
+                    <Select id="type" className="w-36 md:w-48" onChange={(e) => setType(e.target.value)} required>
                         <option value="Annually">Annually</option>
                         <option value="Monthly">Monthly</option>
                     </Select>
@@ -137,11 +141,11 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
             <div className="flex max-md:flex-col md:justify-between mx-6">
                 <div className="block mb-2">
                     <Label value="Lease Start" htmlFor="dates"/>
-                    <Datepicker className="w-36 md:w-48" id="dates" onSelectedDateChanged={(date) => setStart(date)}/>
+                    <Datepicker className="w-36 md:w-48" id="dates" onSelectedDateChanged={(date) => setStart(date)} required/>
                 </div>
                 <div className="block mb-2">
                     <Label value="Lease End" htmlFor="date"/>
-                    <Datepicker className="w-36 md:w-48" id="date" onSelectedDateChanged={(date) => setEnd(date)}/>
+                    <Datepicker className="w-36 md:w-48" id="date" onSelectedDateChanged={(date) => setEnd(date)} required/>
                 </div>
             </div>
             <div className="flex justify-between mx-6">
@@ -171,7 +175,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
                 Cancel
               </Button>
               <Button color="light" onClick={() => {
-                props.addProp;
+                props.addProp()!
                 handleAdd()
               }}>Add Tenant</Button>
             </div>

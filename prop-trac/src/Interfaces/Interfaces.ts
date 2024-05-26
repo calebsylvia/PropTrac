@@ -333,3 +333,11 @@ export interface IAddTenant {
     documentsContent: string | null
 }
 
+export interface IContractor {
+    id:       number;
+    name:     string;
+    email:    string;
+    phone:    string;
+    category: string;
+    userID:   number;
+}
