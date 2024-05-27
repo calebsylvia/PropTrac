@@ -318,3 +318,11 @@ export const addContractor = async(cont: IContractor) => {
     const data = res.json()
     return data
 }
+
+
+export const getCoords = async(location: string) => {
+    let req = location.replace(" ", "%20")
+    const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${req}.json?access_token=${process.env.NEXT_PUBLIC_MAP_KEY!}`)
+    const data = await res.json()
+    return data
+}

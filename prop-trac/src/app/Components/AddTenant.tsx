@@ -10,11 +10,12 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
   const [prop, setProps] = useState<IProperties[]>([]);
   const [fullProp, setFullProp] = useState<IProperties[]>([])
   const [id, setId] = useState<number>()
+  let current = new Date()
 
   const [selectedProp, setSelect] = useState<number | null>()
   const [type, setType] = useState<string>('Annually')
-  const [start, setStart] = useState<any>()
-  const [end, setEnd] = useState<any>()
+  const [start, setStart] = useState<any>(current.toString())
+  const [end, setEnd] = useState<any>(current.toString())
 
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
@@ -28,7 +29,9 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
     if(typeof window !== undefined){
         iD = localStorage.getItem("ID")
     }
-  })
+
+    console.log(start)
+  },[])
 
   useEffect(() => {
 

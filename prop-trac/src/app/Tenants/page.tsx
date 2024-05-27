@@ -23,7 +23,7 @@ const Tenants = () => {
       iD = localStorage.getItem("ID")
       
     }
-  },[])
+  },[open])
 
   useEffect(() => {
     setId(parseInt(iD!))
@@ -34,7 +34,7 @@ const Tenants = () => {
     }
 
     getAllTenants()
-  }, [re])
+  }, [open])
 
   const handleOpen = () => {
     setOpen(true)
@@ -45,7 +45,6 @@ const Tenants = () => {
   }
 
   const handleAdd = () => {
-    setRe(" ")
     setOpen(false)
   }
 
@@ -90,7 +89,7 @@ const Tenants = () => {
                   </TableHeader>
                   <TableBody>
                       {
-                        tenArr && tenArr.filter((item) => {
+                        Array.isArray(tenArr) && tenArr.filter((item) => {
                           if (!value) return true;
                           if (
                             item.firstName
