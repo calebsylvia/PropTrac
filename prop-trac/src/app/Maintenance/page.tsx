@@ -36,19 +36,24 @@ const Maintenance = () => {
   },[])
 
   useEffect(() => {
+
+    if (typeof window !== 'undefined') {
+      iD = localStorage.getItem("ID")
+    }
+
     const getMainReq = async(userId: number) => {
-      const mainReq = await getMaintenance(parseInt(iD!))
+      const mainReq = await getMaintenance(userId)
 
       setMainArr(mainReq)
 
     }
 
     const getContract = async(userId: number) => {
-      const contReq = await getContractors(parseInt(iD!))
+      const contReq = await getContractors(userId)
       setContArr(contReq)
     }
-    getMainReq(id)
-    getContract(id)
+    getMainReq(parseInt(iD!))
+    getContract(parseInt(iD!))
   },[open])
 
 
