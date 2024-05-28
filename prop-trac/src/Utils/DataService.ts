@@ -303,7 +303,7 @@ export const getContractors = async(userID: number) => {
 }
 
 export const addContractor = async(cont: IContractor) => {
-    const res = await fetch(url + '/Manager/AddContracot', {
+    const res = await fetch(url + '/Manager/AddContractor', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

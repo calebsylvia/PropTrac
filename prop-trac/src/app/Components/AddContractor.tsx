@@ -11,7 +11,7 @@ const AddContractor = (props:{ open: boolean, onClose: () => void, addCont: () =
     const [email, setEmail] = useState<string>('')
     const [phone, setPhone] = useState<string>('')
     const [category, setCategory] = useState<string>('')
-    const [userId, setUserId] = useState<number>()
+    const [userId, setUserId] = useState<number>(1)
 
     let iD: any;
     const { toast } = useToast()
@@ -26,13 +26,15 @@ const AddContractor = (props:{ open: boolean, onClose: () => void, addCont: () =
 
     const handleAdd = async() => {
 
-        let contractor: IContractor = {
+        setUserId(parseInt(iD!))
+
+        let contractor:IContractor = {
             id: 0,
             name: name,
             email: email,
             phone: phone,
             category: category,
-            userID: parseInt(iD!)
+            userID: userId
         }
 
         const result = await addContractor(contractor)
@@ -84,9 +86,9 @@ const AddContractor = (props:{ open: boolean, onClose: () => void, addCont: () =
                     <Button color='light' onClick={props.onClose}>
                         Cancel
                     </Button>
-                    <Button color='light' onClick={() => {props.addCont;
-                        handleAdd()}
-                    }>
+                    <Button color='light' onClick={() => {
+                        handleAdd().then(props.addCont)
+                    }}>
                         Add Contractor
                     </Button>
                 </div>

@@ -70,6 +70,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
       documentsName: null
     }
 
+    console.log(tenant)
     const result = await addTenant(tenant)
 
      if(result === false){
@@ -177,9 +178,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
               <Button color="light" onClick={props.onClose}>
                 Cancel
               </Button>
-              <Button color="light" onClick={() => {
-                props.addProp()!
-                handleAdd()
+              <Button color="light" onClick={() => {handleAdd().then(props.addProp!)
               }}>Add Tenant</Button>
             </div>
           </div>

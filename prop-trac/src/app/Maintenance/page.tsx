@@ -50,7 +50,7 @@ const Maintenance = () => {
     }
     getMainReq(id)
     getContract(id)
-  },[])
+  },[open])
 
 
   const closeModal = () => {
@@ -61,14 +61,14 @@ const Maintenance = () => {
     setOpen(true)
   }
 
-  const handleAdd = () => {
+  const handleNew = () => {
     setOpen(false)
     setRe(' ')
   }
 
   return (
     <>
-    <AddContractor open={open} onClose={closeModal} addCont={handleAdd}/>
+    <AddContractor open={open} onClose={closeModal} addCont={handleNew}/>
       <div className="hidden lg:block">
         <SideNav />
       </div>
@@ -85,7 +85,7 @@ const Maintenance = () => {
                 <p className="text-lg md:text-2xl pl-4 pt-2">To-Do</p>
                 <div className="flex overflow-x-auto mx-5 my-3 space-x-5">
                   {
-                    mainArr && mainArr.filter((main) => 
+                    Array.isArray(mainArr) && mainArr.filter((main) => 
                       main.status === 'To Do'
                     ).map((maint, idx) => 
                       <div className="border-2 border-black rounded-xl w-48 md:w-56 px-4 py-4" key={idx}>
@@ -105,7 +105,7 @@ const Maintenance = () => {
                 <p className="text-lg md:text-2xl pl-4 pt-2">In Progress</p>
                 <div className="flex overflow-x-auto mx-5 my-3 space-x-5">
                   {
-                    mainArr && mainArr.filter((main) => 
+                    Array.isArray(mainArr) && mainArr.filter((main) => 
                       main.status === 'In Progress'
                     ).map((maint, idx) => 
                       <div className="border-2 border-black rounded-xl w-48 md:w-56 px-4 py-4" key={idx}>
@@ -125,7 +125,7 @@ const Maintenance = () => {
                 <p className="text-lg lg:text-2xl pl-4 pt-2">Completed</p>
                 <div className="flex overflow-x-auto mx-5 my-3 space-x-5">
                   {
-                    mainArr && mainArr.filter((main) => 
+                  Array.isArray(mainArr) && mainArr.filter((main) => 
                       main.status === 'Completed'
                     ).map((maint, idx) => 
                       <div className="border-2 border-black rounded-xl w-48 md:w-56 px-4 py-4" key={idx}>
@@ -149,10 +149,10 @@ const Maintenance = () => {
                 <Plus size={20} className="my-auto"/>
               </div>
               </div>
-              <div className="overflow-x-auto flex flex-row flex-grow-0 mt-3">
+              <div className="overflow-x-auto flex flex-row flex-grow-0 mt-3 pb-3">
                 {
-                  contArr && contArr.map((cont, idx) => 
-                    <div key={idx} className="bg-white min-w-72 md:w-80 min-h-32 md:h-32 rounded-xl border-2 border-black mx-2">
+                  Array.isArray(contArr) && contArr.map((cont, idx) => 
+                    <div key={idx} className="bg-white min-w-72 md:w-80 min-h-32 md:h-36 rounded-xl border-2 border-black mx-2">
                       <div className="flex justify-between px-2 pt-3 md:pt-2">
                         <p className="text-sm md:text-base font-semibold">{cont.name}</p>
                         <p className="max-md:text-sm my-auto">{cont.category}</p>
