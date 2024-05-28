@@ -29,8 +29,6 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
     if(typeof window !== undefined){
         iD = localStorage.getItem("ID")
     }
-
-    console.log(start)
   },[])
 
   useEffect(() => {
@@ -48,10 +46,6 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
     getProps()
   }, []);
 
-  useEffect(() => {
-    console.log(start)
-    console.log(end)
-  }, [start, end])
 
   const handleAdd = async() => {
 
@@ -70,7 +64,6 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
       documentsName: null
     }
 
-    console.log(tenant)
     const result = await addTenant(tenant)
 
      if(result === false){

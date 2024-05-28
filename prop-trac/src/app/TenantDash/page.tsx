@@ -61,7 +61,6 @@ const TenantDash = () => {
     const getTenant = async() => {
       setUserId(parseInt(iD!))
       let tenantInfo: ITenant = await getTenantInfo(iD)
-      console.log(tenantInfo)
       
       setName(tenantInfo.firstName)
       if(tenantInfo.houseNumber === null){
@@ -103,7 +102,6 @@ const TenantDash = () => {
       userID: userId
     }
 
-  console.log(request)
    addRequest(request)
    toast({description: "Maintenance Request Sent"})
 
@@ -116,7 +114,6 @@ const TenantDash = () => {
   const handleImage = async(e:any) => {
     const file = e.target.files[0]
     const base = await convert64(file)
-    console.log(base)
     setImage(`${base}`)
   }
 
@@ -142,7 +139,7 @@ const TenantDash = () => {
   return (
     <>
     <div className='bg-[#FEFFF6]'>
-      <div className='flex justify-between mx-10 lg:px-10 xl:px-44 pt-12 pb-10'>
+      <div className='flex justify-between mx-10 lg:px-10 xl:px-36 pt-12 pb-10'>
         <p className='text-3xl'>{`Welcome, ${name}!`}</p>
         <button className='my-auto pr-3' onClick={handleLogout}>
             <Image className='w-8' src={logout} alt='Logout Button'/>

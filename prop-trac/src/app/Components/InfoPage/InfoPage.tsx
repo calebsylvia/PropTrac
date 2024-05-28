@@ -132,7 +132,6 @@ const PropertyInfo = () => {
   };
 
   useEffect(() => {
-    console.log(JSON.parse(searchParams.get("propInfo")!));
     const propData: IProperties[] = JSON.parse(searchParams.get("propInfo")!);
 
     const getCoords = async () => {
@@ -145,7 +144,6 @@ const PropertyInfo = () => {
         )}%20${propData[0].city}%20${propData[0].state}%20${propData[0].zip}.json?access_token=${process.env.NEXT_PUBLIC_MAP_KEY!}`
       );
       const data: IGeo = await res.json();
-      console.log(data.features[0].geometry.coordinates);
 
       setLat(data.features[0].geometry.coordinates[1]);
       setLng(data.features[0].geometry.coordinates[0]);
@@ -154,7 +152,7 @@ const PropertyInfo = () => {
     getCoords();
     const feats = propData[0].amenFeatList.split(", ");
     const roomArr = propData.map((room) => room.roomRent);
-    console.log(roomArr);
+ 
 
     if (roomArr && roomArr.length > 0) {
       for (let i = 0; i < roomArr.length; i++) {
@@ -183,9 +181,6 @@ const PropertyInfo = () => {
     setProfit(income - expenses);
   }, [re]);
 
-  useEffect(() => {
-    console.log(income);
-  }, []);
 
   const editProp = async () => {
     if (typeof window !== undefined) {
@@ -214,7 +209,6 @@ const PropertyInfo = () => {
 
     let result = await editProperty(prop);
 
-    console.log(result);
 
     if (result === false) {
       return toast({

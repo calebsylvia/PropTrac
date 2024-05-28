@@ -30,7 +30,6 @@ const Tenants = () => {
     const getAllTenants = async() => {
       const tenants: ITenants[] = await getTenants(id)
       setTenArr(tenants)
-      console.log(tenants)
     }
 
     getAllTenants()

@@ -290,7 +290,7 @@ const CreateAccount = () => {
               </div>
 
                 <div className='flex justify-center md:justify-end pt-2 pb-7'>
-                  <Button className='mt-3 w-36' color="light"  type='submit' disabled={isEight && spec ? false : true}>
+                  <Button className='mt-3 w-36' color="light"  type='submit' disabled={isEight && !spec ? false : true}>
                     Create Account
                   </Button>
                 </div>

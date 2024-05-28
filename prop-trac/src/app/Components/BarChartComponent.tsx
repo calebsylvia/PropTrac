@@ -61,20 +61,17 @@ const BarChartComponent = () => {
         
         const getPrevious = async(userId: number, month: number, year: number) => {
             const data: IPrev[] = await getPrevMonths(userId, month, year)
-            console.log(data)
             setPrevious(data)
         }
 
         const getNext = async(userId: number, month: number, year: number) => {
             const data: IPrev[] = await projectMonths(userId, month, year)
-            console.log(data)
             setNext(data)
         }
 
         getPrevious(parseInt(ID!), date + 1, year)
         getNext(parseInt(ID!), date + 1, year)
 
-        console.log(previous)
     }, [])
 
 

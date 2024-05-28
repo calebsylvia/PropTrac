@@ -148,7 +148,7 @@ const addProp = async() => {
     roomsList: roomsArr
   }
 
-  console.log(prop)
+  
 
   let result = await addProperty(prop)
 

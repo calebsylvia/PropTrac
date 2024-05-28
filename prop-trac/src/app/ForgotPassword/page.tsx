@@ -27,7 +27,7 @@ const ForgotPassword = () => {
     }
 
     let result = await answerCheck(answer);
-    console.log(result)
+
     if(result === true){
       setSuccessTwo(true)
       setShowNewPass(true);
@@ -62,7 +62,7 @@ const ForgotPassword = () => {
 
   const getQuestion = async() => {
     let question = await passwordRequest(UsernameOrEmail)
-    console.log(question)
+
     if(question === false || input === ""){
       setSuccessOne(false)
       return toast({description: "Invalid Username", variant: "destructive"})
@@ -74,7 +74,6 @@ const ForgotPassword = () => {
 
   const handleSecure = () => {
   getQuestion()
-   console.log("pressed")
    setShowQuestion(true);
   };
 

@@ -41,7 +41,7 @@ const Maintenance = () => {
       const mainReq = await getMaintenance(userId)
 
       setMainArr(mainReq)
-      console.log(mainArr)
+
     }
 
     const getContract = async(userId: number) => {
