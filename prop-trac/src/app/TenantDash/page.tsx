@@ -18,16 +18,17 @@ const TenantDash = () => {
 
   const [name, setName] = useState<string>("Bob")
   const [address, setAddress] = useState<string>("1111 Dreary Lane Shrek Land, CA 95202")
-  const [id, setId] = useState<number>(78665)
+  const [id, setId] = useState<number>(0)
   const [leaseType, setLeaseType] = useState<string>("Annual")
   const [leaseStart, setLeaseStart] = useState<string>("11-11-11")
   const [leaseEnd, setLeaseEnd] = useState<string>("11-11-11")
   const [manager, setManager] = useState<string>("Caleb Sylvia")
-  const [managerNumber, setManagerNumber] = useState<number>(1000)
+  const [managerNumber, setManagerNumber] = useState<number>(0)
   const [managerEmail, setManagerEmail] = useState<string>("csprop@codestack.co")
-  const [balance, setBalance] = useState<number>(1000)
+  const [balance, setBalance] = useState<number>(0)
   const [dueDate, setDueDate] = useState<string>("Today")
-  const [daysRemaining, setDaysRemaining] = useState<number>(9)
+  const [daysRemaining, setDaysRemaining] = useState<number>(0)
+  const [propId, setPropId] = useState<number>()
 
   const [userId, setUserId] = useState<number>(0)
   const [desc, setDesc] = useState<string>("")
@@ -79,6 +80,7 @@ const TenantDash = () => {
       }
       setManagerEmail(tenantInfo.managerEmail)
       setManagerNumber(tenantInfo.managerPhone)
+      setPropId(tenantInfo.propertyInfoID)
     }
     getTenant()
   },[])
@@ -153,7 +155,7 @@ const TenantDash = () => {
               <div className='w-full md:w-1/2'>
                 <p className='text-xl pb-4'>Address:</p>
                 <p className='text-wrap pb-4 w-5/6'>{address === null ? 'N/A' : address}</p>
-                <p className='pb-4'>{`Unit ID: ${id}`}</p>
+                <p className='pb-4'>{`Unit ID: ${propId ? propId : 'N/A'}`}</p>
                 <div className='flex justify-between w-5/6'>
                   <p className=''>Lease:</p>
                   <div className='text-sm'>
