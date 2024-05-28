@@ -37,8 +37,6 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
     const getProps = async() => {
         const properties: IProperties[] = await getProperties(parseInt(iD!))
         let filteredProps = properties.filter((elem, index) => index === properties.findIndex((element) => element.id === elem.id))
-        console.log(filteredProps)
-        console.log(properties)
         setProps(filteredProps)
         setFullProp(properties)
     }
@@ -130,6 +128,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
                 <div className="block mb-2">
                     <Label value="Lease Type" htmlFor="type"/>
                     <Select id="type" className="w-36 md:w-48" onChange={(e) => setType(e.target.value)} required>
+                        <option selected disabled>Select Type</option>
                         <option value="Annually">Annually</option>
                         <option value="Monthly">Monthly</option>
                     </Select>
