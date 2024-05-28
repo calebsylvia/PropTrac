@@ -315,26 +315,14 @@ const PropertyInfo = () => {
               <div className="mx-auto w-5/6">
                 <div className="block mb-2">
                   <Label value="Street Address" htmlFor="address" />
-                  <AddressAutofill
-                    accessToken={process.env.NEXT_PUBLIC_MAP_KEY!}
-                  >
-                    <TextInput
-                      id="address"
-                      placeholder="Address"
-                      defaultValue={address.trim()}
-                      type="text"
-                      onChange={(e) => {
-                        let splitAdd = e.target.value.split(" ");
-                        setHouseNumber(splitAdd[0]);
-                        let addr = "";
-                        for (let i = 1; i < splitAdd.length; i++) {
-                          addr += splitAdd[i] + " ";
-                        }
-                        setStreet(addr.trim());
-                      }}
-                      required
-                    />
-                  </AddressAutofill>
+                    <TextInput id='address' placeholder='Address' type='text' autoComplete="address-line1" onChange={(e) => {
+                          let splitAdd = e.target.value.split(" "); setHouseNumber(splitAdd[0]);
+                          let addr = "";
+                          for(let i = 1; i < splitAdd.length; i++){
+                              addr += splitAdd[i] + " "
+                          }
+                          setStreet(addr);
+                        }} required/>
                 </div>
               </div>
               <div className="flex mx-auto space-x-4 w-5/6">
@@ -345,7 +333,8 @@ const PropertyInfo = () => {
                     placeholder="City"
                     id="city"
                     type="text"
-                    defaultValue={city}
+                    value={city}
+                    autoComplete="address-level2"
                     onChange={(e) => setCity(e.target.value)}
                     required
                   />
@@ -356,7 +345,8 @@ const PropertyInfo = () => {
                     id="zip"
                     type="number"
                     placeholder="ZIP"
-                    defaultValue={zip}
+                    value={zip}
+                    autoComplete="postal-code"
                     onChange={(e) => setZip(e.target.value)}
                     required
                   />
@@ -365,10 +355,11 @@ const PropertyInfo = () => {
                   <Label value="State" htmlFor="state" />
                   <Select
                     id="state"
-                    defaultValue={state}
                     onChange={(e) => setState(e.target.value)}
                     required
+                    autoComplete="address-level1"
                   >
+                    <option disabled selected>Select State</option>
                     {states.map((state, idx) => (
                       <option key={idx} value={state}>
                         {state}
