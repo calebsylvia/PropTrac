@@ -17,7 +17,6 @@ export const createAccount = async(createdUser: IUserInfo) => {
     }
 
     const data = await res.json();
-    console.log(data)
     return data
 }
 

@@ -81,7 +81,6 @@ const Properties = () => {
     const getPropertyList = async () => {
       setUserID(parseInt(id!))
       let props: IProperties[] = await getProperties(id);
-      console.log(props);
       setProperties(props);
       setIsOpen(false)
     };

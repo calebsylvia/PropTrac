@@ -32,8 +32,6 @@ const LoginComponent = () => {
     let token = await login(userData);
     let data = await getUserInfo(username);
 
-      console.log(token);
-
       //Check to see if logged in
       if(token.token != null && typeof window !== undefined){
         setLogged(true)

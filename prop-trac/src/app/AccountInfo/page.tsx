@@ -30,7 +30,7 @@ const AccountInfo = () => {
 
   let id: any;
   let userID: any;
-  
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -70,8 +70,7 @@ const AccountInfo = () => {
         location: location,
         language: language
       }
-
-        console.log(info)
+      
         let success = await editAccount(info)
 
         if(!success){
