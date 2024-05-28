@@ -70,7 +70,7 @@ const AccountInfo = () => {
         location: location,
         language: language
       }
-      
+
         let success = await editAccount(info)
 
         if(!success){
@@ -80,6 +80,10 @@ const AccountInfo = () => {
           setRe(' ')
           toast({description:'Changes Saved'})
         }
+  }
+
+  const handleClose = () => {
+    setIsOpen(false)
   }
 
   return (
@@ -134,7 +138,10 @@ const AccountInfo = () => {
                     </Select>
                   </div>
                 </div>
-                <Button color='light' className="mt-5 mx-auto max-md:mb-4" onClick={handleSubmit}>Save Changes</Button>
+                <div className="flex justify-between mt-5 mx-auto max-md:mb-4">
+                <Button color='light' onClick={handleClose}>Cancel</Button>
+                <Button color='light' className="" onClick={handleSubmit}>Save Changes</Button>
+                </div>
               </form>
           </div>
         </div>

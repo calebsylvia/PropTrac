@@ -228,9 +228,8 @@ const TenantDash = () => {
               <div className='mb-2 block w-2/5'>
                 <Label htmlFor='prio' value='Priority'/>
                 <Select id='prio' value={prio} onChange={(e) => setPrio(e.target.value)} required>
-                    <option value='Low'>Low</option>
-                    <option value='Medium'>Medium</option>
-                    <option value='High'>High</option>
+                    <option value='Standard'>Standard</option>
+                    <option value='Urgent'>Urgent</option>
                 </Select>
               </div>
               <div className='mb-2 block w-1/2'>
