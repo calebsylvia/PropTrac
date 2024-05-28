@@ -17,15 +17,15 @@ const AdminDash = () => {
 
   let iD;
 
-  const [id, setId] = useState<number>(1)
+  const [id, setId] = useState<number>()
   const [name, setName] = useState<string>("Manager!")
   const [profit, setProfit] = useState<number>(0)
   const [expenses, setExpenses] = useState<number>(0)
   const [profArrow, setProfArrow] = useState<string | StaticImageData>(upGreen)
   const [expArrow, setExpArrow] = useState<string | StaticImageData>(upRed)
-  const [activeTenants, setActiveTenants] = useState<number>(3)
-  const [openListing, setOpenListing] = useState<number>(5)
-  const [propertyCount, setPropertyCount] = useState<number>(7)
+  const [activeTenants, setActiveTenants] = useState<number>(0)
+  const [openListing, setOpenListing] = useState<number>(0)
+  const [propertyCount, setPropertyCount] = useState<number>(0)
   const [mainReqArr, setMainReqArr] = useState<IMaintenance[]>([])
   const [re, setRe] = useState()
 
@@ -49,28 +49,27 @@ const AdminDash = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       iD = localStorage.getItem("ID")
-      setId(parseInt(iD!))
     }
   },[])
 
   useEffect(() => {
 
+
     const getPropStats = async (userId: number) => {
-      const propStats: IPropStats = await getListingStats(userId);
+      const propStats: IPropStats = await getListingStats(parseInt(iD!));
       setActiveTenants(propStats.activeTenants)
       setOpenListing(propStats.openListings)
       setPropertyCount(propStats.properties)
       setName(propStats.firstName)
     }
-    getPropStats(id)
+    getPropStats(id!)
 
     const getMainReq = async (userId: number) => {
-      const mainReq = await getMaintenance(userId)
+      const mainReq = await getMaintenance(parseInt(iD!))
 
       setMainReqArr(mainReq)
-      console.log(mainReqArr)
     }
-    getMainReq(id)
+    getMainReq(id!)
   }, [])
 
   useEffect(() => {
@@ -111,7 +110,7 @@ const AdminDash = () => {
               <p className='overflow-y-auto text-center text-base xl:text-xl pt-3 pb-5'>Maintenance Request:</p>
               <div>
                 {
-                  mainReqArr && mainReqArr.map((req, idx) =>
+                  Array.isArray(mainReqArr) && mainReqArr.map((req, idx) =>
                     <div className='max-xl:text-sm py-2 lg:py-3 mx-4 lg:mx-5' key={idx}>
                       <div className='flex justify-between'>
                         <p>{`Property ID: ${req.propertyInfoID}`}</p>

@@ -26,9 +26,8 @@ const Tenants = () => {
   },[open])
 
   useEffect(() => {
-    setId(parseInt(iD!))
     const getAllTenants = async() => {
-      const tenants: ITenants[] = await getTenants(id)
+      const tenants: ITenants[] = await getTenants(parseInt(iD!))
       setTenArr(tenants)
     }
 

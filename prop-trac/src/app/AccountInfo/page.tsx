@@ -28,17 +28,17 @@ const AccountInfo = () => {
 
   const { toast } = useToast()
 
+  let id: any;
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== undefined) {
-      let id = localStorage.getItem("ID");
-
-      setUserId(parseInt(id!));
+      id = localStorage.getItem("ID");
     }
+
     const getAccount = async () => {
-      const user: IAccount = await getAccountInfo(userId);
+      const user: IAccount = await getAccountInfo(parseInt(id!));
       setName(`${user.firstName} ${user.lastName}`);
       setEmail(user.email);
       setPhone(user.phone);
@@ -64,15 +64,20 @@ const AccountInfo = () => {
         language: language
       }
 
-      let success = await editAccount(info)
+      if(email !== "" && first !== "" && last !== "" && phone !== ""){
+        let success = await editAccount(info)
 
-      if(!success){
-        return toast({description: 'Something went wrong try again!', variant:"destructive"})
+        if(!success){
+          return toast({description: 'Something went wrong try again!', variant:"destructive"})
+        }else{
+          setIsOpen(false)
+          setRe(' ')
+          toast({description:'Changes Saved'})
+        }
       }else{
-        setIsOpen(false)
-        setRe(' ')
-        toast({description:'Changes Saved'})
+        return toast({description: 'Please fill out the form', variant:"destructive"})
       }
+    
   }
 
   return (
