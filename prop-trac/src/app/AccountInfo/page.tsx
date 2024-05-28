@@ -29,13 +29,17 @@ const AccountInfo = () => {
   const { toast } = useToast()
 
   let id: any;
-
+  let userID: any;
+  
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== undefined) {
       id = localStorage.getItem("ID");
     }
+  },[isOpen])
+
+  useEffect(() => {
 
     const getAccount = async () => {
       const user: IAccount = await getAccountInfo(parseInt(id!));
@@ -47,14 +51,17 @@ const AccountInfo = () => {
       setLanguage(user.language);
     };
     getAccount();
-  }, [re]);
+  }, [isOpen]);
 
 
-  const handleSubmit = async(e: any) => {
-      e.preventDefault()
+  const handleSubmit = async() => {
 
-      let info = {
-        id: userId,
+    if (typeof window !== undefined) {
+      userID = parseInt(localStorage.getItem("ID")!);
+    }
+
+      let info: IAccount = {
+        id: userID,
         email: email,
         firstName: first,
         lastName: last,
@@ -64,7 +71,7 @@ const AccountInfo = () => {
         language: language
       }
 
-      if(email !== "" && first !== "" && last !== "" && phone !== ""){
+        console.log(info)
         let success = await editAccount(info)
 
         if(!success){
@@ -74,10 +81,6 @@ const AccountInfo = () => {
           setRe(' ')
           toast({description:'Changes Saved'})
         }
-      }else{
-        return toast({description: 'Please fill out the form', variant:"destructive"})
-      }
-    
   }
 
   return (
@@ -90,29 +93,30 @@ const AccountInfo = () => {
                 <div className="flex max-md:flex-col md:justify-between">
                 <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='firstName' value='First Name'/>
-                    <TextInput max={20} className='w-full md:w-48 lg:w-52' id='firstName' placeholder='First Name' type='text' onChange={(e) => {setFirst(e.target.value)}} required/>
+                    <TextInput max={20} className='w-full md:w-48 lg:w-52' id='firstName' defaultValue={first} placeholder='First Name' type='text' onChange={(e) => {setFirst(e.target.value)}} required/>
                   </div>
                   <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='lastName' value='Last Name'/>
-                    <TextInput max={20} className='w-full md:w-48 lg:w-52' id='lastName' placeholder='Last Name' type='text' onChange={(e) => {setLast(e.target.value)}} required/>
+                    <TextInput max={20} className='w-full md:w-48 lg:w-52' id='lastName' defaultValue={last} placeholder='Last Name' type='text' onChange={(e) => {setLast(e.target.value)}} required/>
                   </div>
                 </div>
 
                 <div className="flex max-md:flex-col md:justify-between">
                 <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='email' value='Email'/>
-                    <TextInput max={20} className='w-full md:w-48 lg:w-52' id='email' placeholder='Email' type='text' onChange={(e) => {setEmail(e.target.value)}} required/>
+                    <TextInput max={20} className='w-full md:w-48 lg:w-52' id='email' defaultValue={email} placeholder='Email' type='text' onChange={(e) => {setEmail(e.target.value)}} required/>
                   </div>
                   <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='phone' value='Phone Number'/>
-                    <TextInput max={20} className='w-full md:w-48 lg:w-52' id='phone' placeholder='Phone' type='text' onChange={(e) => {setPhone(e.target.value)}} required/>
+                    <TextInput max={20} className='w-full md:w-48 lg:w-52' id='phone' defaultValue={phone} placeholder='Phone' type='text' onChange={(e) => {setPhone(e.target.value)}} required/>
                   </div>
                 </div>
 
                 <div className="flex max-md:flex-col md:justify-between">
                 <div className='mb-2 block max-md:mx-auto max-md:w-full'>
                     <Label htmlFor='language' value='Language'/>
-                    <Select id="language" className="w-full md:w-48 lg:w-52" defaultValue={languages[25].name} onChange={(e) => setLanguage(e.target.value)} required>
+                    <Select id="language" className="w-full md:w-48 lg:w-52" onChange={(e) => setLanguage(e.target.value)} required>
+                      <option defaultValue={'Select Language'} selected disabled>Select Language</option>
                       {
                           languages.map((lang, idx) => 
                             <option key={idx} value={lang.name}>{lang.name}</option>

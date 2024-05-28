@@ -32,20 +32,19 @@ const Maintenance = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       iD = localStorage.getItem("ID")
-      setId(parseInt(iD!))
     }
   },[])
 
   useEffect(() => {
     const getMainReq = async(userId: number) => {
-      const mainReq = await getMaintenance(userId)
+      const mainReq = await getMaintenance(parseInt(iD!))
 
       setMainArr(mainReq)
 
     }
 
     const getContract = async(userId: number) => {
-      const contReq = await getContractors(userId)
+      const contReq = await getContractors(parseInt(iD!))
       setContArr(contReq)
     }
     getMainReq(id)
@@ -83,7 +82,7 @@ const Maintenance = () => {
             <div className="bg-white border-2 border-black rounded-xl grid grid-rows-3 min-h-[450px] mb-5">
               <div className="">
                 <p className="text-lg md:text-2xl pl-4 pt-2">To-Do</p>
-                <div className="flex overflow-x-auto mx-5 my-3 space-x-5">
+                <div className="flex overflow-x-auto mx-5 my-3 space-x-5 min-h-24">
                   {
                     Array.isArray(mainArr) && mainArr.filter((main) => 
                       main.status === 'To Do'
@@ -103,7 +102,7 @@ const Maintenance = () => {
               </div>
               <div className="">
                 <p className="text-lg md:text-2xl pl-4 pt-2">In Progress</p>
-                <div className="flex overflow-x-auto mx-5 my-3 space-x-5">
+                <div className="flex overflow-x-auto mx-5 my-3 space-x-5 min-h-24">
                   {
                     Array.isArray(mainArr) && mainArr.filter((main) => 
                       main.status === 'In Progress'
@@ -149,7 +148,7 @@ const Maintenance = () => {
                 <Plus size={20} className="my-auto"/>
               </div>
               </div>
-              <div className="overflow-x-auto flex flex-row flex-grow-0 mt-3 pb-3">
+              <div className="overflow-x-auto flex flex-row flex-grow-0 mt-3 pb-3 min-h-32">
                 {
                   Array.isArray(contArr) && contArr.map((cont, idx) => 
                     <div key={idx} className="bg-white min-w-72 md:w-80 min-h-32 md:h-36 rounded-xl border-2 border-black mx-2">

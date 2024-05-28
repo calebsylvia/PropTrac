@@ -321,7 +321,7 @@ const PropertyInfo = () => {
                     <TextInput
                       id="address"
                       placeholder="Address"
-                      defaultValue={address}
+                      defaultValue={address.trim()}
                       type="text"
                       onChange={(e) => {
                         let splitAdd = e.target.value.split(" ");

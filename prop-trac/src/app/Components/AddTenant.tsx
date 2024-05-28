@@ -35,7 +35,7 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
 
     setId(parseInt(iD))
     const getProps = async() => {
-        const properties: IProperties[] = await getProperties(iD!)
+        const properties: IProperties[] = await getProperties(parseInt(iD!))
         let filteredProps = properties.filter((elem, index) => index === properties.findIndex((element) => element.id === elem.id))
         console.log(filteredProps)
         console.log(properties)
@@ -138,17 +138,18 @@ const AddTenant = (props: { open: boolean; onClose: () => void, addProp: () => v
             <div className="flex max-md:flex-col md:justify-between mx-6">
                 <div className="block mb-2">
                     <Label value="Lease Start" htmlFor="dates"/>
-                    <Datepicker className="w-36 md:w-48" id="dates" onSelectedDateChanged={(date) => setStart(date)} required/>
+                    <Datepicker className="w-36 md:w-48" id="dates" defaultValue={current.toString()} onSelectedDateChanged={(date) => setStart(date)} required/>
                 </div>
                 <div className="block mb-2">
                     <Label value="Lease End" htmlFor="date"/>
-                    <Datepicker className="w-36 md:w-48" id="date" onSelectedDateChanged={(date) => setEnd(date)} required/>
+                    <Datepicker className="w-36 md:w-48" id="date" defaultValue={current.toString()} onSelectedDateChanged={(date) => setEnd(date)} required/>
                 </div>
             </div>
             <div className="flex justify-between mx-6">
               <div className="block mb-2">
                 <Label value="Location" htmlFor="loc" />
                 <Select id="loc" className="w-36 md:w-48" onChange={(e) => setSelect(parseInt(e.target.value))}>
+                  <option disabled selected>Select Property</option>
                   {prop.map((p, idx) => (
                     <option key={idx} value={p.id}>{`${p.houseNumber} ${p.street}, ${p.city} ${p.state}`}</option>
                   ))}
