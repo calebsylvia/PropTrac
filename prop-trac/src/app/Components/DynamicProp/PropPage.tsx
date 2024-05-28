@@ -174,7 +174,7 @@ const createQueryString = (name: string, value: IProperties[]) => {
               <div className={`${isOpen ? 'block' : 'hidden'}`}>
               <div className='bg-black bg-opacity-25 z-50 w-full h-full md:h-[127vh] fixed'>
                 
-            <div className=' bg-white rounded-xl w-11/12 md:w-3/5 lg:w-1/2 xl:w-1/3 min-h-[400px] mx-auto left-5 md:left-[20%] lg:left-[25%] xl:left-[35%] top-[10%] md:top-[20%] fixed'>
+            <div className=' bg-white rounded-xl w-11/12 md:w-3/5 lg:w-1/2 xl:w-1/3 min-h-[400px] max-h-[600px] mx-auto left-5 md:left-[20%] lg:left-[25%] xl:left-[35%] top-[10%] md:top-[15%] overflow-auto fixed'>
                 <p className={`${first || second ? 'hidden' : 'block'} text-center text-xl py-4`}>Add Property</p>
                 <p className={`${first && !second ? 'block' : 'hidden'} text-center text-xl py-4`}>Property Details</p>
                 <p className={`${second ? 'block' : 'hidden'} text-center text-xl py-4`}>Financial Information</p>
@@ -222,6 +222,7 @@ const createQueryString = (name: string, value: IProperties[]) => {
                           <Select onChange={(e) => {setHouseOrRoomType(e.target.value);
                               e.target.value === 'Rooms' ? setIsRooms(true) : setIsRooms(false)
                           }} required>
+                            <option disabled selected >Select Type</option>
                             <option value='House'>Whole House</option>
                             <option value='Rooms'>Rooms</option>
                           </Select>
@@ -247,11 +248,11 @@ const createQueryString = (name: string, value: IProperties[]) => {
                       <div className='flex mx-auto w-5/6 space-x-4'>
                           <div className='block mb-2'>
                               <Label value='Room(s)' htmlFor='rooms'/>
-                              <TextInput max={8} placeholder='Rooms' id='rooms' type='number'  onChange={(e) => {parseInt(e.target.value) <= 8 ? setRooms(parseInt(e.target.value)) : toast({description: 'Max Rooms is 8', variant:'destructive'})}} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
+                              <TextInput max={8} placeholder='Rooms' id='rooms' type='number'  onChange={(e) => {parseInt(e.target.value) <= 20 ? setRooms(parseInt(e.target.value)) : toast({description: 'Max Rooms is 20', variant:'destructive'})}} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
                           </div>
                           <div className='block mb-2'>
                               <Label value='Bath(s)' htmlFor='baths'/>
-                              <TextInput max={8} placeholder='Baths' id='baths' type='number' onChange={(e) => {parseInt(e.target.value) <= 8 ? setBaths(parseInt(e.target.value)) : toast({description: 'Max Baths is 8', variant:'destructive'})}} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
+                              <TextInput max={8} placeholder='Baths' id='baths' type='number' onChange={(e) => {parseInt(e.target.value) <= 20 ? setBaths(parseInt(e.target.value)) : toast({description: 'Max Baths is 20', variant:'destructive'})}} onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}/>
                           </div>
                           <div className='block mb-2'>
                               <Label value='Square Ft.' htmlFor='sqft'/>
