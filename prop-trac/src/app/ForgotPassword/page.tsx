@@ -102,7 +102,7 @@ const ForgotPassword = () => {
             <br />
             TRAC
           </h1>
-          <p className="max-lg:text-xs">Property management at your fingertips</p>
+          <p className="md:text-sm max-md:pb-8 md:pb-10">Property management at your fingertips</p>
         </div>
         <div className="w-72 md:w-96 lg:w-[400px] max-lg:mt-8 min-h-2/5 m-auto bg-white rounded-xl">
           <p className="text-center text-lg lg:text-2xl pt-8">Reset Password</p>

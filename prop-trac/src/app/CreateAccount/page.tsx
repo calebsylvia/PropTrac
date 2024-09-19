@@ -36,7 +36,7 @@ const CreateAccount = () => {
       setSecurityArray(questions);
     };
 
-    console.log(username.length);
+    // console.log(username.length);
     getQuestions();
   }, []);
 
